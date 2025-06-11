@@ -86,7 +86,7 @@ export const metadata = {
     template: `%s — ${sharedMetadata.title}`
   },
   description: sharedMetadata.description,
-  keywords: ['熊布朗', 'Peng.G', 'me.deeptoai.com'],
+  keywords: ['Penn Lam', 'me.deeptoai.com'],
   openGraph: {
     title: {
       default: sharedMetadata.title,

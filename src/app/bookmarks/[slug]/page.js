@@ -63,7 +63,7 @@ export async function generateMetadata(props) {
 
   const siteUrl = `/bookmarks/${currentBookmark.slug}`
   const seoTitle = `${currentBookmark.title} | Bookmarks`
-  const seoDescription = `A curated selection of various handpicked ${currentBookmark.title.toLowerCase()} bookmarks by 熊布朗 (Peng.G)`
+  const seoDescription = `A curated selection of various handpicked ${currentBookmark.title.toLowerCase()} bookmarks by Penn`
 
   return {
     title: seoTitle,

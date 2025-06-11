@@ -11,7 +11,7 @@ export async function GET() {
   const date = new Date()
   const siteURL = 'https://me.deeptoai.com'
   const author = {
-    name: '熊布朗 (Peng.G)',
+    name: 'Penn',
     link: 'https://me.deeptoai.com'
   }
 

@@ -1,7 +1,7 @@
 export const sharedMetadata = {
-  title: '熊布朗（Peng.G）',
+  title: 'Penn Lam',
   description:
-    "Paris-based AI Product Manager & vibecoder, shipping AI products and open-source projects with a maker's spirit.",
+    "Shenzhen-based AI Infra Developer & technical founder, building agent memory infrastructure and next-gen AI-first social platforms with a hacker’s mindset.",
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://me.deeptoai.com',
   ogImage: {
     width: 1200,

@@ -14,8 +14,8 @@ import {
 export const PROFILES = {
   twitter: {
     title: 'X (Twitter)',
-    username: '熊布朗', // 请替换为您的 Twitter 用户名
-    url: 'https://x.com/Stephen4171127', // 请替换为您的 Twitter 个人资料 URL
+    username: 'Penn_Lam', // 请替换为您的 Twitter 用户名
+    url: 'https://x.com/PennLam17887', // 请替换为您的 Twitter 个人资料 URL
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -37,12 +37,12 @@ export const PROFILES = {
   },
   github: {
     title: 'GitHub',
-    url: 'https://github.com/foreveryh',
+    url: 'https://github.com/Penn-Lam',
     icon: <GithubIcon size={16} />
   },
   linkedin: {
     title: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/peng-g', // 请替换为您的 LinkedIn 个人资料 URL
+    url: 'https://www.linkedin.com/in/penn-lam', // 请替换为您的 LinkedIn 个人资料 URL
     icon: <LinkedinIcon size={16} />
   }
   /* medium: {

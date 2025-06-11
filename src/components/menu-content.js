@@ -9,7 +9,7 @@ export const MenuContent = () => (
       <Link href="/" className="link-card inline-flex items-center gap-2 p-2">
         <img
           src="/assets/me.avif"
-          alt="熊布朗 (Peng.G)"
+          alt="Penn"
           width={40}
           height={40}
           loading="lazy"
@@ -18,8 +18,8 @@ export const MenuContent = () => (
           nopin="nopin"
         />
         <div className="flex flex-col">
-          <span className="font-semibold tracking-tight">熊布朗 (Peng.G)</span>
-          <span className="text-gray-600">AI Product Manager</span>
+          <span className="font-semibold tracking-tight">Penn</span>
+          <span className="text-gray-600">Technical Founder</span>
         </div>
       </Link>
       <div className="flex flex-col gap-1">

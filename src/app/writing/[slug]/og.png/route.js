@@ -33,7 +33,7 @@ export async function GET(_, props) {
 
     if (!seoData || !seoData.seo) {
       // Return a default OG image for posts that don't have SEO data
-      return new ImageResponse(<OpenGraphImage title="Blog Post" description="by 熊布朗 (Peng.G)" url="writing" />, {
+      return new ImageResponse(<OpenGraphImage title="Blog Post" description="by Penn" url="writing" />, {
         ...size,
         fonts: [
           {
@@ -60,7 +60,7 @@ export async function GET(_, props) {
       (
         <OpenGraphImage
           title={ogImageTitle || title}
-          description={ogImageSubtitle || 'by 熊布朗 (Peng.G)'}
+          description={ogImageSubtitle || 'by Penn'}
           url="writing"
         />
       ),
@@ -88,7 +88,7 @@ export async function GET(_, props) {
     // Return a simple fallback OG image if everything fails
     const [regularFontData, boldFontData] = await Promise.all([getRegularFont(), getBoldFont()])
 
-    return new ImageResponse(<OpenGraphImage title="Blog Post" description="by 熊布朗 (Peng.G)" url="writing" />, {
+    return new ImageResponse(<OpenGraphImage title="Blog Post" description="by Penn" url="writing" />, {
       ...size,
       fonts: [
         {
