@@ -126,10 +126,9 @@ export function QuickPostButton() {
     'Quote',
     'Reflection',
     'Daily',
-    'Woman',
     'Wealth',
     'Toybox',
-    'Wine',
+    'Coffee',
     'Work',
     'Workout',
     'Wisdom'

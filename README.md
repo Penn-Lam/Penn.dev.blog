@@ -248,7 +248,7 @@ bookmarks. Follow these steps to set up the integration properly:
      - **Name**: `Personal Website` (or any name you prefer)
      - **Description**: `For personal website bookmarks display`
      - **Site**: Your website URL (e.g., `https://yourdomain.com`)
-     - **Redirect URI**: Your website URL (same as above)
+     - **Redirect URI**: Your website URL (e.g., `https://yourdomain.com`)
 
 ### Step 2: Generate Access Token
 

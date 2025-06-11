@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/scroll-area'
 async function getMusings() {
   try {
     // 首先尝试从GitHub获取真实数据
-    const response = await fetch('https://raw.githubusercontent.com/foreveryh/git-thoughts/main/public/issues.json', {
+    const response = await fetch('https://raw.githubusercontent.com/Penn-Lam/git-thoughts/main/public/issues.json', {
       next: { revalidate: 86400 } // 24小时重新验证 (86400秒)
     })
 
