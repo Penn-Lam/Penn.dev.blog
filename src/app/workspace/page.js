@@ -40,7 +40,7 @@ export default async function Workspace() {
             <NowTag projects={nowData} />
           </section>
 
-          {/* Active Projects */}
+          {/* Active Projects - 已隐藏
           <section className="mb-20">
             <h2 className="mb-6 text-3xl font-bold text-gray-900">Active Projects</h2>
             <p className="mb-8 text-gray-600">
@@ -53,7 +53,7 @@ export default async function Workspace() {
             </div>
           </section>
 
-          {/* Work Log */}
+          {/* Work Log - 已隐藏
           <section className="mb-20">
             <h2 className="mb-6 text-3xl font-bold text-gray-900">Work Log</h2>
             <p className="mb-8 text-gray-600">
@@ -62,6 +62,7 @@ export default async function Workspace() {
             </p>
             <Timeline entries={logData} />
           </section>
+          */}
 
           {/* Desk Setup */}
           <section className="mb-20">

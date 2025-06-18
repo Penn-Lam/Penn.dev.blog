@@ -10,12 +10,16 @@ export function HardwareList({ items }) {
         return '💻'
       case 'display':
         return '🖥️'
-      case 'input':
+      case 'keyboard':
         return '⌨️'
+      case 'mouse':
+        return '🖱️'
       case 'audio':
         return '🎧'
       case 'lighting':
         return '💡'
+      case 'xr':
+        return '👓'
       default:
         return '⚙️'
     }
@@ -27,7 +31,7 @@ export function HardwareList({ items }) {
       <div className="flex justify-center">
         <div className="relative aspect-[4/3] w-full max-w-lg overflow-hidden rounded-lg shadow-sm">
           <CldImage
-            src="1748866677990_ibhgdc"
+            src="IMG_0282_kitech"
             alt="My Desk Setup"
             width={600}
             height={450}

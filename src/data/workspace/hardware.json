@@ -1,38 +1,38 @@
 [
   {
-    "name": "MacBook Pro M2",
-    "detail": "64GB RAM, 2TB SSD, 16-inch",
-    "role": "Main development machine",
+    "name": "MacBook Air M1",
+    "detail": "8GB RAM, 256GB SSD, 13-inch",
+    "role": "Mac development machine",
     "category": "laptop"
   },
   {
-    "name": "LG UltraFine Display",
-    "detail": "32-inch, 4K UHD, USB-C",
-    "role": "Primary monitor",
-    "category": "display"
+    "name": "MateBook X Pro 2023",
+    "detail": "16GB RAM, 1TB SSD, 14-inch",
+    "role": "Win development machine",
+    "category": "laptop"
   },
   {
-    "name": "Apple Magic Trackpad",
-    "detail": "Multi-Touch, Space Gray",
-    "role": "Primary input device",
-    "category": "input"
+    "name": "Razer Pro Click Mini",
+    "detail": "Wireless, compact",
+    "role": "Daily mouse",
+    "category": "mouse"
   },
   {
-    "name": "Logitech MX Keys Mini",
-    "detail": "Wireless, backlit, compact layout",
+    "name": "Nuphy Air75",
+    "detail": "Wireless, low-profile",
     "role": "Daily keyboard",
-    "category": "input"
+    "category": "keyboard"
   },
   {
-    "name": "B&O Beoplay HX & iFLYBUDS Pro",
-    "detail": "Premium over-ear headphones & wireless earbuds",
-    "role": "Audio monitoring and calls",
-    "category": "audio"
+    "name": "Keydous NJ98",
+    "detail": "Wireless, mechanical",
+    "role": "Secondary keyboard",
+    "category": "keyboard"
   },
   {
-    "name": "Elgato Ring Light",
-    "detail": "12-inch, adjustable brightness",
-    "role": "Video calls lighting",
-    "category": "lighting"
+    "name": "Rokid AR Lite",
+    "detail": "AR glasses",
+    "role": "Personal AR device",
+    "category": "xr"
   }
 ]

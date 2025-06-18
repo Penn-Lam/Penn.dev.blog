@@ -27,15 +27,11 @@ export default async function Home() {
         <div className="content">
           <PageTitle title="Home" className="lg:hidden" />
           <p>
-            Hi, I am Penn Lam
-            <br />
-            AI Agent Infra Developer & Technical Founder 👋
-            <br />
-            Building agent memory infra & next-gen AI-first social platforms.
-            <br />
-            Born in China, trained in civil engineering, now hacking AI from Shenzhen.
-            <br />
-            Bridging GenAI × personal computing—let’s connect and build the future.
+            Hi, I’m Penn Lam 👋<br />
+            AI Agent Infra Developer, Technical Founder, and Popping Dancer 🤠<br />
+            Building agent memory infra and next-gen AI-first social platforms.<br />
+            Born in China, trained in civil engineering, now hacking AI in Shenzhen.<br />
+            Bridging GenAI × personal computing — let’s connect and shape the future together.
           </p>
           <Button asChild variant="link" className="inline px-0">
             <Link href="/writing">

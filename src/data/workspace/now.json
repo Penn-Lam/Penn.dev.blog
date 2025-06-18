@@ -1,12 +1,12 @@
 [
   {
-    "project": "Building ARA - Autonomous Research Agent",
-    "description": "Advanced AI research agent powered by LangGraph for autonomous information discovery and synthesis",
-    "since": "2025-05-01"
+    "project": "MemoryBank - Maintaining Memories Across Platforms",
+    "description": "A platform built on the MCP ecosystem, leveraging mem0 to maintain memories from various sources.",
+    "since": "2025-05-02"
   },
   {
-    "project": "Building Latour - Free Image Generation Service",
-    "description": "Web-based platform providing free AI image generation services for everyone",
-    "since": "2025-05-01"
+    "project": "MemExtract - Mining User Preferences from Conversations",
+    "description": "This project systematically processes raw conversation data, applying topic segmentation, summarization, and semantic similarity to identify and merge related content. It then uses LLMs to mine implicit user preferences, which are subsequently integrated and persisted via memory SDKs like mem0 or Zep.",
+    "since": "2025-05-21"
   }
 ]

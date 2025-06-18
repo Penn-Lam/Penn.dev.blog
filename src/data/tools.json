@@ -21,12 +21,12 @@
           "tip": "Try image + text prompts"
         },
         {
-          "slug": "craft",
-          "name": "Craft",
+          "slug": "notion",
+          "name": "Notion",
           "desc": "Structured note workspace",
-          "url": "https://www.craft.do",
+          "url": "https://www.notion.so/",
           "tags": ["Notes"],
-          "tip": "Cmd + E for quick capture"
+          "tip": "Ctrl/Cmd + Shift+ L: Quickly switch between dark/bright mode"
         },
         {
           "slug": "warp",
@@ -43,20 +43,12 @@
       "name": "Dev & Infra",
       "tools": [
         {
-          "slug": "cursor",
-          "name": "Cursor",
+          "slug": "windsurf",
+          "name": "Windsurf",
           "desc": "AI-powered code editor",
-          "url": "https://cursor.sh",
+          "url": "https://windsurf.io",
           "tags": ["Dev", "AI IDE"],
-          "tip": "Ctrl + K for AI chat in editor"
-        },
-        {
-          "slug": "trae",
-          "name": "Trae",
-          "desc": "Anthoer AI-powered IDE",
-          "url": "https://www.trae.ai/",
-          "tags": ["Dev", "AI IDE"],
-          "tip": "Cursor alternative"
+          "tip": "Ctrl + I for AI chat in editor"
         },
         {
           "slug": "orbstack",
@@ -65,86 +57,6 @@
           "url": "https://orbstack.dev",
           "tags": ["Infra", "Dev"],
           "tip": "Docker Desktop replacement"
-        }
-      ]
-    },
-    {
-      "id": "ai-playground",
-      "name": "AI Playground",
-      "tools": [
-        {
-          "slug": "ollama",
-          "name": "Ollama",
-          "desc": "Local LLM runner toolkit",
-          "url": "https://ollama.ai",
-          "tags": ["AI", "LLM"],
-          "tip": "Run models locally & privately"
-        },
-        {
-          "slug": "stackability-matrix",
-          "name": "Stackability Matrix",
-          "desc": "ComfyUI node profiling UI",
-          "url": "https://github.com/stackability/matrix",
-          "tags": ["AI", "Image"],
-          "tip": "Optimize ComfyUI workflows"
-        },
-        {
-          "slug": "langgraph",
-          "name": "Langgraph",
-          "desc": "Composable LLM workflows",
-          "url": "https://langchain-ai.github.io/langgraph/",
-          "tags": ["AI", "Framework"],
-          "tip": "My choice for building agents"
-        }
-      ]
-    },
-    {
-      "id": "creative-stack",
-      "name": "Creative Stack",
-      "tools": [
-        {
-          "slug": "figma",
-          "name": "Figma",
-          "desc": "Collaborative design canvas",
-          "url": "https://figma.com",
-          "tags": ["Design"],
-          "tip": "Shift + 1 for zoom to fit"
-        }
-      ]
-    },
-    {
-      "id": "productivity-hacks",
-      "name": "Productivity Hacks",
-      "tools": [
-        {
-          "slug": "super-productivity",
-          "name": "Super Productivity",
-          "desc": "Task & time tracker",
-          "url": "https://super-productivity.com",
-          "tags": ["Productivity"],
-          "tip": "Pomodoro + task tracking in one"
-        },
-        {
-          "slug": "ice",
-          "name": "Ice",
-          "desc": "Clipper & launcher app",
-          "url": "https://github.com/jordanbaird/Ice",
-          "tags": ["Productivity", "Launcher"],
-          "tip": "Hide menu bar clutter"
-        }
-      ]
-    },
-    {
-      "id": "life-utilities",
-      "name": "Life Utilities",
-      "tools": [
-        {
-          "slug": "youtube-music",
-          "name": "YouTube Music",
-          "desc": "Streamlined audio streaming",
-          "url": "https://github.com/th-ch/youtube-music",
-          "tags": ["Music"],
-          "tip": "Upload your own music library"
         }
       ]
     }
