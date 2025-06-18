@@ -67,8 +67,10 @@ export const getPost = cache(async (slug, preview = isDevelopment) => {
             slug
             date
             seo {
-              title
-              description
+              ... on Seo {
+                title
+                description
+              }
             }
             content {
               json
@@ -162,11 +164,13 @@ export const getWritingSeo = cache(async (slug, preview = isDevelopment) => {
           items {
             date
             seo {
-              title
-              description
-              ogImageTitle
-              ogImageSubtitle
-              keywords
+              ... on Seo {
+                title
+                description
+                ogImageTitle
+                ogImageSubtitle
+                keywords
+              }
             }
             sys {
               firstPublishedAt
@@ -200,11 +204,13 @@ export const getPageSeo = cache(async (slug, preview = isDevelopment) => {
         pageCollection(where: { slug: "${slug}" }, preview: ${preview}, limit: 1) {
           items {
             seo {
-              title
-              description
-              ogImageTitle
-              ogImageSubtitle
-              keywords
+              ... on Seo {
+                title
+                description
+                ogImageTitle
+                ogImageSubtitle
+                keywords
+              }
             }
           }
         }

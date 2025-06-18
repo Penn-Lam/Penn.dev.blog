@@ -65,9 +65,24 @@ NEXT_REVALIDATE_SECRET=your_revalidation_secret
 
 **Rich Text Configuration**:
 
-- Enable: Headings (H2-H6), Bold, Italic, Unordered List, Ordered List
-- Enable: Hyperlinks, Entry Links, Asset Links
-- Enable: Embedded Entries (for code blocks, embeds)
+The following rich text formats are supported for `Logbook.description`:
+
+- **Headings:** H2, H3
+- **Paragraphs**
+- **Unordered and Ordered Lists**
+- **List Items**
+- **Blockquotes**
+- **Horizontal Rules**
+- **Links**
+- **Bold, Italic, Inline Code**
+- **Embedded Assets:** Images (with alt, description, width, height, lazy loading)
+- **Embedded Entries:**
+  - `ContentEmbed` (YouTube video, SoundCloud audio only)
+  - `CodeBlock` (title, code)
+  - `Tweet` (tweet card, by id)
+  - `Carousel` (image gallery)
+
+> Other rich text features (such as tables, H1/H4/H5/H6, underline, strikethrough, custom colors, etc.) are **not supported** by the current frontend implementation.
 
 ### 3. Page Content Model
 
@@ -79,6 +94,7 @@ NEXT_REVALIDATE_SECRET=your_revalidation_secret
 | Slug       | `slug`    | Short text | Required, Unique | URL slug                  |
 | Content    | `content` | Rich text  | Required         | Page content              |
 | SEO        | `seo`     | Reference  | Optional         | Link to SEO content model |
+| hasCustomPage        | `hasCustomPage`     | Boolean  | Optional         | Whether the page has a custom page |
 
 ### 4. Logbook Content Model
 
@@ -88,8 +104,10 @@ NEXT_REVALIDATE_SECRET=your_revalidation_secret
 | ---------- | ---------- | ----------- | ---------- | --------------- |
 | Title      | `title`    | Short text  | Required   | Entry title     |
 | Date       | `date`     | Date & time | Required   | Entry date      |
-| Content    | `content`  | Rich text   | Required   | Journey content |
-| Location   | `location` | Short text  | Optional   | Location info   |
+| Description    | `description`  | Rich text   | Required   | Journey content |
+| Image   | `image` | Asset  | Optional   | Image   |
+
+
 
 ### 5. Embedded Content Models
 
@@ -101,7 +119,7 @@ NEXT_REVALIDATE_SECRET=your_revalidation_secret
 | ---------- | ---------- | ---------- | -------------------- |
 | Language   | `language` | Short text | Programming language |
 | Code       | `code`     | Long text  | Code content         |
-| Filename   | `filename` | Short text | Optional filename    |
+| title   | `title` | Short text | title    |
 
 #### Tweet Embed Content Model
 
@@ -111,6 +129,32 @@ NEXT_REVALIDATE_SECRET=your_revalidation_secret
 | ---------- | -------- | ---------- | ----------------- |
 | Tweet URL  | `url`    | Short text | Full Twitter URL  |
 | Tweet ID   | `id`     | Short text | Twitter status ID |
+
+#### ContentEmbed Content Model
+
+**Content Type ID**: `contentEmbed`
+
+| Field Name | Field ID   | Type       | Description                                   |
+| ---------- | ---------- | ---------- | --------------------------------------------- |
+| Title      | `title`    | Short text | Optional title for the embed                  |
+| Embed URL  | `embedUrl` | Short text | Embed URL (YouTube or SoundCloud embed link)  |
+| Type       | `type`     | Short text | Supported values: `Video` (YouTube), `SoundCloud` |
+
+> **Currently Supported:**
+> - `Video`: Only YouTube embeds are supported. Use the official YouTube embed URL format (e.g. `https://www.youtube.com/embed/xxxx`).
+>   **Important:** Do NOT include any extra parameters (such as `?si=...` or any query string) in the YouTube embed URL. Only use the clean format `https://www.youtube.com/embed/VIDEO_ID`. Extra parameters may cause playback errors.
+> - `SoundCloud`: Only SoundCloud embeds are supported. Use the official SoundCloud embed URL.
+>
+> Other platforms/types (e.g. Vimeo, Bilibili, Figma, Notion, etc.) are NOT supported unless you extend the codebase.
+
+
+#### Carousel Content Model
+
+**Content Type ID**: `carousel`
+
+| Field Name | Field ID | Type             | Description                 |
+| ---------- | -------- | ---------------- | --------------------------- |
+| Images     | `images` | Media, Multiple | Collection of images for the carousel |
 
 ## Content Creation Workflow
 
