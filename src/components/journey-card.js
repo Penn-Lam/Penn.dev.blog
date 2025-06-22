@@ -1,16 +1,13 @@
-import dynamic from 'next/dynamic'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { memo } from 'react'
 
-const MarkdownRenderer = dynamic(() => import('@/components/markdown-renderer').then((mod) => mod.MarkdownRenderer))
-
 export const JourneyCard = memo(({ title, description, image, index }) => {
-  // Convert backslash line breaks to markdown line breaks
-  const processedDescription = description?.replace(/\\\s*/g, '  \n')
-
   return (
     <div className="word-break-word flex flex-col">
       <span className="mb-px font-semibold tracking-tight">{title}</span>
-      {processedDescription && <MarkdownRenderer className="text-sm">{processedDescription}</MarkdownRenderer>}
+      {description?.json && (
+        <div className="text-sm rich-text-journey">{documentToReactComponents(description.json)}</div>
+      )}
       {image?.url && (
         <div className="mt-2.5 overflow-hidden rounded-xl bg-white">
           <img

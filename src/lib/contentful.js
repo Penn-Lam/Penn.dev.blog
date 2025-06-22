@@ -5,24 +5,44 @@ import { cache } from 'react'
 import { isDevelopment } from '@/lib/utils'
 
 const fetchGraphQL = cache(async (query, preview = isDevelopment) => {
+  const accessToken = preview
+    ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN
+    : process.env.CONTENTFUL_ACCESS_TOKEN
+
+  if (!process.env.CONTENTFUL_SPACE_ID || !accessToken) {
+    const missingVars = [
+      !process.env.CONTENTFUL_SPACE_ID && 'CONTENTFUL_SPACE_ID',
+      !accessToken && (preview ? 'CONTENTFUL_PREVIEW_ACCESS_TOKEN' : 'CONTENTFUL_ACCESS_TOKEN')
+    ]
+      .filter(Boolean)
+      .join(', ')
+    throw new Error(
+      `Contentful environment variable(s) are not set: ${missingVars}. Please check your .env.local file.`
+    )
+  }
+
   try {
     const res = await fetch(`https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`, {
-      cache: 'force-cache',
+      cache: isDevelopment ? 'no-store' : 'force-cache',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${
-          preview ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN : process.env.CONTENTFUL_ACCESS_TOKEN
-        }`
+        Authorization: `Bearer ${accessToken}`
       },
       body: JSON.stringify({ query })
     })
 
-    if (!res.ok) return null
-    return res.json()
+    if (!res.ok) {
+      const errorBody = await res.text()
+      throw new Error(`Failed to fetch from Contentful. Status: ${res.status}. Body: ${errorBody}`)
+    }
+    const json = await res.json()
+    if (json.errors) {
+      throw new Error(`Contentful GraphQL Errors: ${json.errors.map((e) => e.message).join('\n')}`)
+    }
+    return json
   } catch (error) {
-    console.info(error)
-    return null
+    throw new Error('Failed to fetch data from Contentful. Please check server logs for more details.')
   }
 })
 
@@ -325,7 +345,9 @@ export const getAllLogbook = cache(async (preview = isDevelopment) => {
           items {
             title
             date
-            description
+            description {
+              json
+            }
             image {
               url(transform: {
                 format: AVIF,
