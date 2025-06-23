@@ -15,7 +15,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
     <a
       key={bookmark._id}
       className="thumbnail-shadow flex aspect-auto min-w-0 cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 transition-colors duration-300 hover:bg-gray-100"
-      href={`${bookmark.link}?ref=me.deeptoai.com`}
+      href={`${bookmark.link}?ref=pennlam.com`}
       target="_blank"
       rel="noopener noreferrer"
       data-bookmark-order={order}

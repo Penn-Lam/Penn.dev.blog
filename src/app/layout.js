@@ -76,7 +76,7 @@ export default async function RootLayout({ children }) {
 }
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://me.deeptoai.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://pennlam.com'),
   robots: {
     index: true,
     follow: true
@@ -86,7 +86,7 @@ export const metadata = {
     template: `%s — ${sharedMetadata.title}`
   },
   description: sharedMetadata.description,
-  keywords: ['Penn Lam', 'me.deeptoai.com'],
+  keywords: ['Penn Lam', 'pennlam.com'],
   openGraph: {
     title: {
       default: sharedMetadata.title,
@@ -95,7 +95,7 @@ export const metadata = {
     description: sharedMetadata.description,
     alt: sharedMetadata.title,
     type: 'website',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://me.deeptoai.com',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://pennlam.com',
     siteName: sharedMetadata.title,
     locale: 'en_IE',
     images: [

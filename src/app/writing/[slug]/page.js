@@ -68,7 +68,7 @@ export default async function WritingSlug(props) {
       '@type': 'Person',
       name: 'Penn'
     },
-    url: `https://me.deeptoai.com/writing/${slug}`
+    url: `https://pennlam.com/writing/${slug}`
   }
 
   return (

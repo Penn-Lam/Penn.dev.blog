@@ -211,7 +211,7 @@ If you've published new GitHub Issues but the blog doesn't show the latest conte
 2. **Manual API call**:
    ```bash
    # POST request to revalidation endpoint
-   curl -X POST "https://me.deeptoai.com/api/revalidate?path=/musings"
+   curl -X POST "https://pennlam.com/api/revalidate?path=/musings"
    ```
 
 3. **Wait for automatic update**:

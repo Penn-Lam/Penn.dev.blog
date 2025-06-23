@@ -1,7 +1,7 @@
 import { sharedMetadata } from '@/app/shared-metadata'
 
 export default function DebugOG() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://me.deeptoai.com'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pennlam.com'
 
   return (
     <div className="container mx-auto p-8">

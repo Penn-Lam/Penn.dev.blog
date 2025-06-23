@@ -3,7 +3,7 @@
 # 碎碎念页面ISR缓存重新验证脚本
 # 当GitHub Issues更新但博客没有显示新内容时使用
 
-DOMAIN=${1:-"https://me.deeptoai.com"}
+DOMAIN=${1:-"https://pennlam.com"}
 SECRET=${2:-""}
 
 echo "🔄 重新验证碎碎念页面缓存..."

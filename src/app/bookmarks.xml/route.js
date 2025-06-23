@@ -7,7 +7,7 @@ export const dynamic = 'force-static'
 export async function GET() {
   const bookmarks = await getBookmarks()
   const date = new Date()
-  const siteURL = 'https://me.deeptoai.com'
+  const siteURL = 'https://pennlam.com'
   const author = {
     name: 'Onur Şuyalçınkaya',
     link: 'https://onur.dev'

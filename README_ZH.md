@@ -203,7 +203,7 @@ GITHUB_PAT=ghp_your_github_personal_access_token
 2. **手动 API 调用**：
    ```bash
    # POST 请求到重新验证端点
-   curl -X POST "https://me.deeptoai.com/api/revalidate?path=/musings"
+   curl -X POST "https://pennlam.com/api/revalidate?path=/musings"
    ```
 
 3. **等待自动更新**：

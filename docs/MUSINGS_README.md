@@ -403,16 +403,16 @@ const processedBody = content.replace(/\n/g, '  \n').trim()
    ./scripts/revalidate-musings.sh "http://localhost:3000"
    
    # 使用密钥重新验证（如果配置了 REVALIDATE_SECRET）
-   ./scripts/revalidate-musings.sh "https://me.deeptoai.com" "your-secret"
+   ./scripts/revalidate-musings.sh "https://pennlam.com" "your-secret"
    ```
 
 2. **手动API调用**：
    ```bash
    # POST 请求到重新验证端点
-   curl -X POST "https://me.deeptoai.com/api/revalidate?path=/musings"
+   curl -X POST "https://pennlam.com/api/revalidate?path=/musings"
    
    # 或者在浏览器中访问
-   # https://me.deeptoai.com/api/revalidate （查看使用说明）
+   # https://pennlam.com/api/revalidate （查看使用说明）
    ```
 
 3. **等待自动更新**：

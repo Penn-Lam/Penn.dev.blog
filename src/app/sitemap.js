@@ -8,7 +8,7 @@ export default async function sitemap() {
   const sortedWritings = getSortedPosts(allPosts)
   const writings = sortedWritings.map((post) => {
     return {
-      url: `https://me.deeptoai.com/writing/${post.slug}`,
+      url: `https://pennlam.com/writing/${post.slug}`,
       lastModified: post.sys.publishedAt,
       changeFrequency: 'yearly',
       priority: 0.5
@@ -17,7 +17,7 @@ export default async function sitemap() {
 
   const mappedBookmarks = bookmarks.map((bookmark) => {
     return {
-      url: `https://me.deeptoai.com/bookmarks/${bookmark.slug}`,
+      url: `https://pennlam.com/bookmarks/${bookmark.slug}`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1
@@ -37,7 +37,7 @@ export default async function sitemap() {
     if (['bookmarks'].includes(page.slug)) priority = 1
 
     return {
-      url: `https://me.deeptoai.com/${page.slug}`,
+      url: `https://pennlam.com/${page.slug}`,
       lastModified,
       changeFrequency,
       priority
@@ -46,13 +46,13 @@ export default async function sitemap() {
 
   return [
     {
-      url: 'https://me.deeptoai.com',
+      url: 'https://pennlam.com',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 1
     },
     {
-      url: 'https://me.deeptoai.com/musings',
+      url: 'https://pennlam.com/musings',
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8

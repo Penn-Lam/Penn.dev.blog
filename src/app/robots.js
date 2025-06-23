@@ -4,7 +4,7 @@ export default function robots() {
       userAgent: '*',
       allow: '/'
     },
-    sitemap: 'https://me.deeptoai.com/sitemap.xml',
-    host: 'https://me.deeptoai.com'
+    sitemap: 'https://pennlam.com/sitemap.xml',
+    host: 'https://pennlam.com'
   }
 }

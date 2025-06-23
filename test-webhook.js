@@ -81,5 +81,5 @@ async function testWebhook(baseUrl) {
 }
 
 // 运行测试
-const baseUrl = process.argv[2] || 'https://me.deeptoai.com'
+const baseUrl = process.argv[2] || 'https://pennlam.com'
 testWebhook(baseUrl).catch(console.error)

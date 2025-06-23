@@ -4,7 +4,7 @@
 # 使用方法: ./verify-revalidate.sh https://yoursite.vercel.app
 
 SECRET="R5SIkzrbOocVTaBngWP8tRN3ESUljZAUvf/fhk0/rMI="
-SITE_URL=${1:-"https://me.deeptoai.com"}
+SITE_URL=${1:-"https://pennlam.com"}
 
 echo "🔄 Verifying Revalidate API at: $SITE_URL"
 echo ""
