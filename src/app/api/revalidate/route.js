@@ -52,8 +52,15 @@ export async function POST(request) {
       // Manual API call format
       contentTypeId = payload.contentTypeId
       slug = payload.slug
-    } else if (payload.sys && payload.sys.contentType) {
-      // Contentful webhook format
+    } else if (payload.sys?.type === 'DeletedEntry') {
+      // It's a delete/unpublish event, handle it and exit.
+      return Response.json({
+        revalidated: true,
+        now: Date.now(),
+        message: 'Skipping revalidation for DeletedEntry.'
+      })
+    } else if (payload.sys?.contentType) {
+      // It's a publish/update event.
       contentTypeId = payload.sys.contentType.sys.id
       slug = payload.fields?.slug?.['en-US'] || payload.fields?.slug
     } else {
