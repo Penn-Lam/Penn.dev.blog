@@ -27,7 +27,7 @@ export default async function Home() {
         <div className="content">
           <PageTitle title="Home" className="lg:hidden" />
           <p>
-            Hi, I’m Penn Lam 👋<br />
+            Hi, I’m Penn Lam（林芃芃） 👋<br />
             AI Agent Infra Developer, Technical Founder, and Popping Dancer 🤠<br />
             Building agent memory infra and next-gen AI-first social platforms.<br />
             Born in China, trained in civil engineering, now hacking AI in Shenzhen.<br />
