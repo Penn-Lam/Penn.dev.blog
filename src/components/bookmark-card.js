@@ -1,11 +1,11 @@
-import { Link2Icon } from 'lucide-react'
+import { Link2Icon, Tag } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
 const TweetCard = dynamic(() => import('@/components/tweet-card/tweet-card').then((mod) => mod.TweetCard))
-import { TWEETS_COLLECTION_ID } from '@/lib/constants'
+import { TWEETS_COLLECTION_IDS } from '@/lib/constants'
 
 export const BookmarkCard = ({ bookmark, order }) => {
-  if (bookmark.link && bookmark.collectionId === TWEETS_COLLECTION_ID) {
+  if (bookmark.link && TWEETS_COLLECTION_IDS.includes(bookmark.collectionId)) {
     const match = bookmark.link.match(/\/status\/(\d+)/) ?? []
     const tweetId = match[1]
     return <TweetCard id={tweetId} />
@@ -43,6 +43,21 @@ export const BookmarkCard = ({ bookmark, order }) => {
           {bookmark.domain}
         </span>
         <span className="line-clamp-6 text-sm">{bookmark.excerpt || bookmark.note}</span>
+
+        {/* Tags */}
+        {bookmark.tags && bookmark.tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {bookmark.tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1 rounded-full bg-gray-50 px-2 py-0.5 text-xs font-medium text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900"
+              >
+                <Tag size={10} className="text-gray-400" />
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </a>
   )

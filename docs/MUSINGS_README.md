@@ -39,7 +39,7 @@ The Musings system is an innovative microblogging platform that uses **GitHub Is
 
 ### 1. Data Source: GitHub Issues
 
-The system leverages the [git-thoughts repository](https://github.com/foreveryh/git-thoughts) which:
+The system leverages the [git-thoughts repository](https://github.com/Penn-Lam/git-thoughts) which:
 
 - **Automatically processes** GitHub Issues labeled "Public"
 - **Exports content** to `public/issues.json` via GitHub Actions
@@ -53,7 +53,7 @@ The system leverages the [git-thoughts repository](https://github.com/foreveryh/
   "number": 42,
   "title": "Auto-generated from content",
   "body": "The actual musing content with line breaks preserved",
-  "url": "https://github.com/foreveryh/git-thoughts/issues/42",
+  "url": "https://github.com/Penn-Lam/git-thoughts/issues/42",
   "created_at": "2023-01-01T10:00:00Z",
   "updated_at": "2023-01-01T11:00:00Z",
   "tags": ["Daily", "Reflection"]
@@ -498,6 +498,6 @@ This implementation follows the same license as the parent project. Refer to the
 
 ---
 
-**Reference Implementation:** https://github.com/foreveryh/git-thoughts  
+**Reference Implementation:** https://github.com/Penn-Lam/git-thoughts  
 **Documentation Version:** 1.0  
 **Last Updated:** December 2024 

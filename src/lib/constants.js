@@ -76,10 +76,20 @@ export const PROFILES = {
     url: 'https://nl.pinterest.com/onurschu'
   } */
 }
+// 支持多个 Twitter 收藏夹
+export const TWEETS_COLLECTION_IDS = [56369164]
 
-export const TWEETS_COLLECTION_ID = 56369164
-
-export const COLLECTION_IDS = [56865149 ,56369365, TWEETS_COLLECTION_ID, 56374013 ,56376224, 56815657, 56815349, 56815543]
+export const COLLECTION_IDS = [
+  56865149,
+  56369365,
+  ...TWEETS_COLLECTION_IDS, // 支持多个 Twitter 收藏夹
+  56374013,
+  57484893,
+  56376224,
+  56815657,
+  56815349,
+  56815543
+]
 
 export const LINKS = [
   {
