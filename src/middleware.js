@@ -7,7 +7,7 @@ export function middleware(request, event) {
   async function sendAnalytics() {
     const URL =
       process.env.NODE_ENV === 'production'
-        ? 'https://pennlam.com/api/increment-views'
+        ? `${request.nextUrl.origin}/api/increment-views`
         : 'http://localhost:3000/api/increment-views'
 
     try {

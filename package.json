@@ -1,9 +1,9 @@
 {
-  "name": "onur.dev",
+  "name": "pennlam.com",
   "description": "My personal website.",
   "author": {
-    "name": "Onur Şuyalçınkaya",
-    "url": "https://onur.dev"
+    "name": "Penn Lam",
+    "url": "https://pennlam.com"
   },
   "scripts": {
     "dev": "next dev",
