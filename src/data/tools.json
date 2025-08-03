@@ -27,14 +27,6 @@
           "url": "https://www.notion.so/",
           "tags": ["Notes"],
           "tip": "Ctrl/Cmd + Shift+ L: Quickly switch between dark/bright mode"
-        },
-        {
-          "slug": "warp",
-          "name": "Warp",
-          "desc": "GPU-accelerated terminal",
-          "url": "https://www.warp.dev",
-          "tags": ["Dev"],
-          "tip": "AI command suggestions built-in"
         }
       ]
     },
@@ -57,6 +49,22 @@
           "url": "https://orbstack.dev",
           "tags": ["Infra", "Dev"],
           "tip": "Docker Desktop replacement"
+        },
+        {
+          "slug": "warp",
+          "name": "Warp",
+          "desc": "GPU-accelerated terminal",
+          "url": "https://www.warp.dev",
+          "tags": ["Dev"],
+          "tip": "AI command suggestions built-in"
+        },
+        {
+          "slug": "fork",
+          "name": "Fork",
+          "desc": "A fast git client",
+          "url": "https://git-fork.com/",
+          "tags": ["Dev", "Git"],
+          "tip": "Drag-and-drop interactive rebase"
         }
       ]
     }

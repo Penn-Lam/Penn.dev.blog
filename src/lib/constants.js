@@ -8,7 +8,8 @@ import {
   NavigationIcon,
   PencilLineIcon,
   SparklesIcon,
-  Wand2Icon
+  Wand2Icon,
+  HandIcon
 } from 'lucide-react'
 
 export const PROFILES = {
@@ -44,7 +45,12 @@ export const PROFILES = {
     title: 'LinkedIn',
     url: 'https://www.linkedin.com/in/penn-lam', // 请替换为您的 LinkedIn 个人资料 URL
     icon: <LinkedinIcon size={16} />
-  }
+  },
+  bonjour: {
+    title: 'Bonjour',
+    url: 'https://bonjour.bio/pennlam',
+    icon: <HandIcon size={16} />
+  },
   /* medium: {
     title: 'Medium',
     url: 'https://suyalcinkaya.medium.com'
