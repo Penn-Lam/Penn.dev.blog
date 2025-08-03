@@ -71,6 +71,33 @@
     font-family: "Noto Serif SC", "Source Han Serif SC", "思源宋体", serif;
   }
 
+  /* 为写作页面添加霞鹜文楷字体 */
+  .writing-content,
+  .writing-content * {
+    font-family: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+  }
+
+  /* 确保写作页面的内容使用霞鹜文楷 */
+  .writing-content .content,
+  .writing-content .content * {
+    font-family: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+  }
+
+  /* 针对写作页面的特定样式 */
+  .writing-content h1,
+  .writing-content h2,
+  .writing-content h3,
+  .writing-content h4,
+  .writing-content h5,
+  .writing-content h6,
+  .writing-content p,
+  .writing-content li,
+  .writing-content blockquote,
+  .writing-content article,
+  .writing-content .prose {
+    font-family: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+  }
+
   #__next {
     @apply min-h-dvh;
   }

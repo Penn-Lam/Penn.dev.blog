@@ -37,6 +37,10 @@ export default async function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body suppressHydrationWarning>
         <ErrorBoundary>

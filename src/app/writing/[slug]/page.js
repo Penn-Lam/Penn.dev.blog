@@ -73,7 +73,7 @@ export default async function WritingSlug(props) {
 
   return (
     <>
-      <ScrollArea className="bg-white" useScrollAreaId>
+      <ScrollArea className="bg-white writing-content" useScrollAreaId>
         <FloatingHeader scrollTitle={title} goBackLink="/writing">
           <WritingViews slug={slug} />
         </FloatingHeader>
