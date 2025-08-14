@@ -5,9 +5,7 @@ import { cache } from 'react'
 import { isDevelopment } from '@/lib/utils'
 
 const fetchGraphQL = cache(async (query, preview = isDevelopment) => {
-  const accessToken = preview
-    ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN
-    : process.env.CONTENTFUL_ACCESS_TOKEN
+  const accessToken = preview ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN : process.env.CONTENTFUL_ACCESS_TOKEN
 
   if (!process.env.CONTENTFUL_SPACE_ID || !accessToken) {
     const missingVars = [
@@ -101,9 +99,10 @@ export const getPost = cache(async (slug, preview = isDevelopment) => {
                       id
                     }
                     url(transform: {
-                      format: AVIF,
+                      format: WEBP,
                       quality: 50
                     })
+                    gifUrl: url
                     title
                     width
                     height
@@ -139,9 +138,10 @@ export const getPost = cache(async (slug, preview = isDevelopment) => {
                           title
                           description
                           url(transform: {
-                            format: AVIF,
+                            format: WEBP,
                             quality: 50
                           })
+                          gifUrl: url
                         }
                       }
                     }
@@ -308,9 +308,10 @@ export const getPage = cache(async (slug, preview = isDevelopment) => {
                       id
                     }
                     url(transform: {
-                      format: AVIF,
+                      format: WEBP,
                       quality: 50
                     })
+                    gifUrl: url
                     title
                     width
                     height
@@ -350,9 +351,10 @@ export const getAllLogbook = cache(async (preview = isDevelopment) => {
             }
             image {
               url(transform: {
-                format: AVIF,
+                format: WEBP,
                 quality: 50
               })
+              gifUrl: url
               title
               description
               width
