@@ -48,7 +48,7 @@ export const useViewData = (slug) => {
         .on(
           'postgres_changes',
           {
-            event: 'UPDATE',
+            event: '*',
             schema: 'public',
             table: SUPABASE_TABLE_NAME
           },
@@ -56,7 +56,7 @@ export const useViewData = (slug) => {
             if (!payload?.new?.slug) return
 
             setViewData((prev) => {
-              if (!prev) return null
+              if (!prev) return [payload.new]
 
               const index = prev.findIndex((item) => item.slug === payload.new.slug)
               if (index === -1) return [...prev, payload.new]

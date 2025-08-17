@@ -1,6 +1,8 @@
-# Cursor Rules for onur.dev Blog Project
+# Communication
 
-## 🚨 重要环境配置 🚨
+- 永远使用简体中文进行思考和对话
+
+# 重要环境配置
 
 ### 包管理器要求
 - **必须使用 Bun**: 这个项目专门配置为使用 Bun 作为包管理器和运行时
@@ -11,11 +13,11 @@
 
 ### 开发环境启动
 ```bash
-# ✅ 正确方式
+# 正确方式
 bun install
 bun dev
 
-# ❌ 错误方式 - 不要使用
+# 错误方式 - 不要使用
 pnpm install
 pnpm dev
 ```
@@ -42,7 +44,7 @@ pnpm dev
 - 常见原因: useMemo 不当使用，props 作为依赖项
 - 解决: 避免在 useMemo 中包裹整个 JSX 返回值
 
-## 📝 开发指南
+## 开发指南
 
 ### 调试步骤
 1. 确认使用 `bun dev` 启动
@@ -55,7 +57,7 @@ pnpm dev
 - 需要环境变量: `MUSING_CODE`, `GITHUB_PAT`, `GITHUB_REPO`
 - 确保 Vercel 配置使用正确的构建命令
 
-## 🔧 技术栈
+## 技术栈
 - Next.js 15.2.4
 - React 19
 - Bun 1.2.2 (包管理器 + 运行时)
@@ -63,12 +65,8 @@ pnpm dev
 - Vercel Analytics
 - Cloudinary (visual assets)
 
-## 💡 最佳实践
+## 最佳实践
 - 保持环境一致性：开发、测试、部署都使用相同的包管理器
 - 新依赖安装使用: `bun add <package>`
 - 移除依赖使用: `bun remove <package>`
 - 不要混用 npm/pnpm/yarn 和 bun
-
----
-**最后更新**: 2025-06-09
-**维护者**: 需要了解 Bun 环境配置的重要性 
