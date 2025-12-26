@@ -2,6 +2,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import { ClientOnly } from '@/components/client-only'
+import { CommentSection } from '@/components/comment-section'
 import { RichText } from '@/components/contentful/rich-text'
 import { FloatingHeader } from '@/components/floating-header'
 import { PageTitle } from '@/components/page-title'
@@ -73,7 +74,7 @@ export default async function WritingSlug(props) {
 
   return (
     <>
-      <ScrollArea className="bg-white writing-content" useScrollAreaId>
+      <ScrollArea className="writing-content bg-white" useScrollAreaId>
         <FloatingHeader scrollTitle={title} goBackLink="/writing">
           <WritingViews slug={slug} />
         </FloatingHeader>
@@ -90,6 +91,7 @@ export default async function WritingSlug(props) {
             />
             <RichText content={content} />
           </article>
+          <CommentSection page={`writing:${slug}`} className="mt-12 border-t border-gray-100 pt-8" />
         </div>
       </ScrollArea>
       <ClientOnly>

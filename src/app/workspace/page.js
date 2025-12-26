@@ -21,7 +21,6 @@ export default async function Workspace() {
       <div className="content-wrapper">
         <div className="content">
           <PageTitle title="Workspace" />
-
           {/* Introduction */}
           <div className="mb-12">
             <p className="mb-4 text-lg leading-relaxed text-gray-600">
@@ -34,12 +33,11 @@ export default async function Workspace() {
               tool serves a purpose, and every line of code brings us closer to solving meaningful problems.
             </p>
           </div>
-
           {/* Current Focus */}
-          <section className="mb-20">
+          {/* <section className="mb-20">
             <NowTag projects={nowData} />
           </section>
-
+          */}
           {/* Active Projects - 已隐藏
           <section className="mb-20">
             <h2 className="mb-6 text-3xl font-bold text-gray-900">Active Projects</h2>
@@ -63,7 +61,6 @@ export default async function Workspace() {
             <Timeline entries={logData} />
           </section>
           */}
-
           {/* Desk Setup */}
           <section className="mb-20">
             <h2 className="mb-6 text-3xl font-bold text-gray-900">My Desk Setup</h2>
@@ -72,7 +69,6 @@ export default async function Workspace() {
             </p>
             <HardwareList items={hardwareData} />
           </section>
-
           {/* Footer note */}
           <div className="mt-16 rounded-lg bg-gray-50 p-6 text-center">
             <p className="text-gray-600">

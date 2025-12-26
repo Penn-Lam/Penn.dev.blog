@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@fuma-comment/react/preset.css';
 
 @plugin '@tailwindcss/container-queries';
 @plugin 'tailwindcss-animate';
@@ -64,23 +65,51 @@
     @apply font-sans text-base text-gray-900;
   }
 
+  [data-radix-portal] {
+    position: relative;
+    z-index: 60;
+    isolation: isolate;
+  }
+
+  [data-radix-popper-content-wrapper] {
+    z-index: 70;
+  }
+
+  [role='dialog'][data-state] {
+    z-index: 1000;
+  }
+
+  [data-state][class*='overlay'] {
+    z-index: 900;
+  }
+
+  [role='dialog'][data-state] .bg-fc-popover {
+    opacity: 1;
+  }
+
+  [data-radix-portal] .bg-fc-popover,
+  [data-radix-portal] .bg-fc-card,
+  [data-radix-portal] .bg-fc-background {
+    opacity: 1;
+  }
+
   /* 为中文文本添加思源宋体 */
   :lang(zh),
-  [lang="zh"],
+  [lang='zh'],
   .chinese-text {
-    font-family: "Noto Serif SC", "Source Han Serif SC", "思源宋体", serif;
+    font-family: 'Noto Serif SC', 'Source Han Serif SC', '思源宋体', serif;
   }
 
   /* 为写作页面添加霞鹜文楷字体 */
   .writing-content,
   .writing-content * {
-    font-family: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+    font-family: 'LXGW WenKai', '霞鹜文楷', 'Noto Serif SC', serif;
   }
 
   /* 确保写作页面的内容使用霞鹜文楷 */
   .writing-content .content,
   .writing-content .content * {
-    font-family: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+    font-family: 'LXGW WenKai', '霞鹜文楷', 'Noto Serif SC', serif;
   }
 
   /* 针对写作页面的特定样式 */
@@ -95,7 +124,7 @@
   .writing-content blockquote,
   .writing-content article,
   .writing-content .prose {
-    font-family: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+    font-family: 'LXGW WenKai', '霞鹜文楷', 'Noto Serif SC', serif;
   }
 
   #__next {
@@ -284,7 +313,7 @@
 
 /* --- Markdown 表格美化: 默认带边框，hover 高亮 --- */
 .prose table {
-  @apply w-full border border-gray-200 rounded-lg overflow-hidden transition-shadow;
+  @apply w-full overflow-hidden rounded-lg border border-gray-200 transition-shadow;
 }
 .prose thead th {
   @apply border-b border-gray-200 bg-gray-50 px-3 py-2 text-left font-semibold text-gray-700;
