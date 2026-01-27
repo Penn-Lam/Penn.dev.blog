@@ -3,7 +3,11 @@
     "allow": [
       "Bash(curl:*)",
       "Bash(echo:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(tree:*)",
+      "Bash(git --no-pager diff src/components/ src/globals.css)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

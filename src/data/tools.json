@@ -35,12 +35,12 @@
       "name": "Dev & Infra",
       "tools": [
         {
-          "slug": "windsurf",
-          "name": "Windsurf",
-          "desc": "AI-powered code editor",
-          "url": "https://windsurf.io",
+          "slug": "zed",
+          "name": "Zed",
+          "desc": "Minimal code editor crafted for speed",
+          "url": "https://zed.dev/",
           "tags": ["Dev", "AI IDE"],
-          "tip": "Ctrl + I for AI chat in editor"
+          "tip": "Use ACP to unify the frontend of SWE agents"
         },
         {
           "slug": "orbstack",
@@ -48,15 +48,15 @@
           "desc": "Lightweight macOS container",
           "url": "https://orbstack.dev",
           "tags": ["Infra", "Dev"],
-          "tip": "Docker Desktop replacement"
+          "tip": "Provide free k8s"
         },
         {
-          "slug": "warp",
-          "name": "Warp",
-          "desc": "GPU-accelerated terminal",
-          "url": "https://www.warp.dev",
+          "slug": "ghostty",
+          "name": "Ghostty",
+          "desc": "A fast terminal emulator",
+          "url": "https://ghostty.org/",
           "tags": ["Dev"],
-          "tip": "AI command suggestions built-in"
+          "tip": ""
         },
         {
           "slug": "fork",
