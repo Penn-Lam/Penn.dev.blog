@@ -372,6 +372,27 @@
   overflow-x: hidden;
 }
 
+/* ==========================================================================
+   ANIMATION LAYER: Performance-optimized animations
+   ========================================================================== */
+
+/* CSS keyframes for component animations - GPU accelerated */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Performance: Use will-change sparingly */
+.will-change-transform-opacity {
+  will-change: transform, opacity;
+}
+
 @utility link-card {
   @apply -mx-1.5 -my-1 rounded-sm bg-transparent px-1.5 py-1 transition-colors duration-300 hover:bg-gray-200;
 }

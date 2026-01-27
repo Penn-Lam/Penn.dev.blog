@@ -8,15 +8,30 @@ const nextConfig = {
   trailingSlash: false,
   images: {
     deviceSizes: [390, 435, 768, 1024, 1280],
-    formats: ['image/avif'],
+    formats: ['image/avif', 'image/webp'],
+    // Contentful 图片优化
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: '*.ctfassets.net',
+        port: '',
+        pathname: '/**'
       }
-    ]
+    ],
+    // 性能优化: 更积极的缓存策略
+    minimumCacheTTL: 60 * 60 * 24 * 30 // 30 days
   },
   async redirects() {
     return [
