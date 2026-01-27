@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { KonamiListener } from '@/lib/konami'
 
@@ -9,30 +9,7 @@ export const EasterEgg = ({ tools = [] }) => {
   const [displayText, setDisplayText] = useState('')
   const [isAnimating, setIsAnimating] = useState(false)
 
-  useEffect(() => {
-    const listener = new KonamiListener(() => {
-      startTerminalAnimation()
-    })
-
-    listener.start()
-    return () => listener.stop()
-  }, [tools])
-
-  const startTerminalAnimation = () => {
-    setIsActive(true)
-    setIsAnimating(true)
-    setDisplayText('~/stack $ ls -la\n\n')
-
-    // Collect all tools
-    const allTools = tools.flatMap((category) => category.tools || [])
-
-    // Start typing animation with delay
-    setTimeout(() => {
-      animateTools(allTools)
-    }, 500)
-  }
-
-  const animateTools = (allTools) => {
+  const animateTools = useCallback((allTools) => {
     if (!allTools || allTools.length === 0) {
       setDisplayText((prev) => prev + 'No tools found...\n')
       setIsAnimating(false)
@@ -58,7 +35,30 @@ export const EasterEgg = ({ tools = [] }) => {
     }
 
     typeNextTool()
-  }
+  }, [])
+
+  const startTerminalAnimation = useCallback(() => {
+    setIsActive(true)
+    setIsAnimating(true)
+    setDisplayText('~/stack $ ls -la\n\n')
+
+    // Collect all tools
+    const allTools = tools.flatMap((category) => category.tools || [])
+
+    // Start typing animation with delay
+    setTimeout(() => {
+      animateTools(allTools)
+    }, 500)
+  }, [tools, animateTools])
+
+  useEffect(() => {
+    const listener = new KonamiListener(() => {
+      startTerminalAnimation()
+    })
+
+    listener.start()
+    return () => listener.stop()
+  }, [startTerminalAnimation])
 
   const closeEasterEgg = () => {
     setIsActive(false)

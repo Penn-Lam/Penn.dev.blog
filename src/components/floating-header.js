@@ -4,7 +4,7 @@ import { ArrowLeftIcon, RadioIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Balancer from 'react-wrap-balancer'
 
 import { LoadingSpinner } from '@/components/loading-spinner'
@@ -60,19 +60,18 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
   const isBookmarkPath = pathname.startsWith('/bookmarks')
 
   // 滚动处理函数 - 使用节流
-  const handleScroll = useCallback(
-    throttle((scrollY) => {
-      // 简化计算：translateY 随滚动递减
-      const newTranslateY = Math.max(100 - scrollY, 0)
+  const handleScroll = useCallback((scrollY) => {
+    // 简化计算：translateY 随滚动递减
+    const newTranslateY = Math.max(100 - scrollY, 0)
 
-      // 简化的透明度计算：当滚动超过阈值时逐渐显示
-      const newOpacity = scrollY > MOBILE_SCROLL_THRESHOLD ? 1 : scrollY / MOBILE_SCROLL_THRESHOLD
+    // 简化的透明度计算：当滚动超过阈值时逐渐显示
+    const newOpacity = scrollY > MOBILE_SCROLL_THRESHOLD ? 1 : scrollY / MOBILE_SCROLL_THRESHOLD
 
-      transformRef.current = { translateY: newTranslateY, opacity: newOpacity }
-      forceUpdate((n) => n + 1)
-    }, 16),
-    []
-  )
+    transformRef.current = { translateY: newTranslateY, opacity: newOpacity }
+    forceUpdate((n) => n + 1)
+  }, [])
+
+  const throttledHandleScroll = useMemo(() => throttle(handleScroll, 16), [handleScroll])
 
   useEffect(() => {
     if (!scrollTitle) return
@@ -81,12 +80,12 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
     if (!scrollAreaElem) return
 
     // 使用节流的滚动处理
-    const onScroll = (e) => handleScroll(e.target.scrollTop)
+    const onScroll = (e) => throttledHandleScroll(e.target.scrollTop)
 
     scrollAreaElem.addEventListener('scroll', onScroll, { passive: true })
 
     return () => scrollAreaElem.removeEventListener('scroll', onScroll)
-  }, [scrollTitle, handleScroll])
+  }, [scrollTitle, throttledHandleScroll])
 
   // 标题渲染 - 使用 CSS will-change 提示 GPU
   const titleElement = scrollTitle ? (

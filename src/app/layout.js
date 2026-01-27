@@ -6,6 +6,7 @@ import classix from 'classix'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import { EyeIcon } from 'lucide-react'
+import { LXGW_WenKai_TC, Noto_Serif_SC } from 'next/font/google'
 import { draftMode } from 'next/headers'
 import Script from 'next/script'
 
@@ -20,6 +21,20 @@ import { Toaster } from '@/components/ui/sonner'
 import { PROFILES } from '@/lib/constants'
 import { preloadGetAllPosts } from '@/lib/contentful'
 
+const notoSerifSc = Noto_Serif_SC({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-noto-serif-sc',
+  display: 'swap'
+})
+
+const lxgwWenKai = LXGW_WenKai_TC({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  variable: '--font-lxgw-wenkai',
+  display: 'swap'
+})
+
 export const fetchCache = 'default-cache'
 
 export default async function RootLayout({ children }) {
@@ -30,19 +45,9 @@ export default async function RootLayout({ children }) {
     <html
       lang="en"
       data-theme="light"
-      className={classix(GeistSans.variable, GeistMono.variable)}
+      className={classix(GeistSans.variable, GeistMono.variable, notoSerifSc.variable, lxgwWenKai.variable)}
       suppressHydrationWarning
     >
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body suppressHydrationWarning>
         <ErrorBoundary>
           <DialogStateProvider>
