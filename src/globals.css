@@ -148,8 +148,8 @@
     @apply transition-colors duration-300;
   }
 
-  button:focus {
-    @apply outline-hidden;
+  button:focus-visible {
+    @apply outline-2 outline-offset-2 outline-gray-950;
   }
 
   button:disabled,
@@ -237,6 +237,139 @@
   lite-youtube {
     @apply max-w-full! overflow-hidden rounded-xl;
   }
+}
+
+/* ==========================================================================
+   HARDENING LAYER: Accessibility & Edge Cases
+   ========================================================================== */
+
+/* --- Reduced Motion Preference (WCAG 2.3.3) --- */
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+/* --- High Contrast Mode Support (WCAG 1.4.11) --- */
+@media (prefers-contrast: more), (-ms-high-contrast: active) {
+  :focus-visible {
+    outline: 2px solid currentColor !important;
+    outline-offset: 2px !important;
+  }
+
+  button,
+  a {
+    border: 1px solid currentColor !important;
+  }
+
+  img {
+    filter: contrast(1.2);
+  }
+}
+
+/* --- Forced Color Mode --- */
+@media (forced-colors: active) {
+  .thumbnail-shadow {
+    border: 1px solid CanvasText;
+  }
+
+  [data-state][class*='overlay'] {
+    background-color: Canvas;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+  }
+}
+
+/* --- RTL (Right-to-Left) Language Support --- */
+/* 使用逻辑属性而非方向属性 */
+[dir='rtl'] {
+  /* 翻转外部链接图标 */
+  .link[target='_blank'] .after\:content-\[\'\_\↗\'\]::after {
+    content: '↖' !important;
+  }
+
+  /* 导航翻转 */
+  [dir='rtl'] .side-menu {
+    border-left: none !important;
+    border-right: 1px solid;
+  }
+}
+
+/* 逻辑属性 - 自动适配 LTR/RTL */
+.logical-margin-start {
+  margin-inline-start: 1rem;
+}
+
+.logical-margin-end {
+  margin-inline-end: 1rem;
+}
+
+.logical-padding {
+  padding-inline: 1rem;
+}
+
+.logical-border-end {
+  border-inline-end: 1px solid;
+}
+
+/* --- Text Overflow & Wrapping --- */
+/* 防止 flex 子元素溢出 */
+.flex-overflow-safe {
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* 长文本换行 */
+.text-wrap-safe {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* --- Touch Target Size (WCAG 2.5.5) --- */
+/* 最小 44x44px 触摸目标 */
+.touch-target-safe {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* --- Focus Visible Enhancement --- */
+/* 移除全局的 outline-hidden，改为 focus-visible */
+.focus-visible-enhanced:focus-visible {
+  @apply outline-2 outline-offset-2 outline-gray-950;
+}
+
+/* ==========================================================================
+   UTILITY LAYER: Enhanced Text Handling
+   ========================================================================== */
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility truncate-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--line-clamp, 2);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@utility container-safe {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 @utility link-card {

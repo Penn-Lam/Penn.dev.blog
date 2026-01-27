@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
-import { memo, useCallback, useMemo } from 'react'
+import { memo, useCallback, useMemo, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -13,7 +13,44 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 
+/**
+ * [INPUT]: 依赖 zod 验证、react-hook-form、sonner toast
+ * [OUTPUT]: 对外提供 SubmitBookmarkForm 组件，提交书签表单
+ * [POS]: components/submit-bookmark 的核心表单组件
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
+// 网络错误状态
+const NETWORK_ERRORS = {
+  TIMEOUT: 'Request timed out. Please check your connection.',
+  OFFLINE: 'You appear to be offline. Please check your connection.',
+  SERVER_ERROR: 'Server error. Please try again later.',
+  UNKNOWN: 'An unexpected error occurred. Please try again.'
+}
+
+/**
+ * 处理网络错误
+ * @param {Error} error - 错误对象
+ * @returns {string} 用户友好的错误消息
+ */
+function getNetworkErrorMessage(error) {
+  if (!navigator.onLine) {
+    return NETWORK_ERRORS.OFFLINE
+  }
+  if (error.message?.includes('timed out') || error.name === 'TimeoutError') {
+    return NETWORK_ERRORS.TIMEOUT
+  }
+  if (error.message?.includes('500') || error.message?.includes('server')) {
+    return NETWORK_ERRORS.SERVER_ERROR
+  }
+  return error.message || NETWORK_ERRORS.UNKNOWN
+}
+
 export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, currentBookmark }) => {
+  const [isPending, startTransition] = useTransition()
+  const [retryCount, setRetryCount] = useState(0)
+
+  // 表单选项 - 包含类型验证
   const memoizedFormOptions = useMemo(
     () => ({
       resolver: zodResolver(formSchema),
@@ -32,46 +69,90 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
   const { isSubmitting, errors, isValid } = formState
   const hasErrors = useMemo(() => Object.keys(errors).length > 0, [errors])
 
+  // 防止重复提交
+  const [isSubmittingLocked, setIsSubmittingLocked] = useState(false)
+
   const onSubmit = useCallback(
     async (values) => {
+      if (isSubmittingLocked) return
+
+      setIsSubmittingLocked(true)
       try {
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 30000) // 30s 超时
+
         const response = await fetch('/api/submit-bookmark', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ ...values })
+          body: JSON.stringify({ ...values }),
+          signal: controller.signal
         })
+
+        clearTimeout(timeoutId)
+
         const data = await response.json()
 
         if (!response.ok) {
-          throw new Error(data.error)
+          // 处理速率限制
+          if (response.status === 429) {
+            throw new Error('Rate limit exceeded. Please wait before submitting again.')
+          }
+          throw new Error(data.error || 'Submission failed')
         }
 
+        // 成功
         form.reset()
-        toast('Bookmark submitted', {
+        setRetryCount(0)
+        toast.success('Bookmark submitted', {
           description: (
             <span>
               <span className="underline underline-offset-4">{values.url}</span> has been submitted. Thank you for your
               contribution!
             </span>
-          )
+          ),
+          duration: 5000
         })
       } catch (error) {
-        toast.error(error.message)
+        const errorMessage = getNetworkErrorMessage(error)
+        toast.error(errorMessage, {
+          action: retryCount < 3
+            ? {
+                label: 'Retry',
+                onClick: () => {
+                  setRetryCount((c) => c + 1)
+                  onSubmit(values)
+                }
+              }
+            : undefined
+        })
       } finally {
-        setFormOpen(false)
+        setIsSubmittingLocked(false)
+        startTransition(() => {
+          setFormOpen(false)
+        })
       }
     },
-    [form, setFormOpen]
+    [form, setFormOpen, isSubmittingLocked, retryCount]
   )
 
   const renderUrlField = useCallback(
     ({ field }) => (
       <FormItem>
-        <FormLabel>Website URL</FormLabel>
+        <FormLabel>
+          Website URL
+          <span className="ml-1 text-red-500" aria-hidden="true">
+            *
+          </span>
+        </FormLabel>
         <FormControl>
-          <Input placeholder="https://example.com" {...field} />
+          <Input
+            placeholder="https://example.com"
+            {...field}
+            aria-required="true"
+            aria-describedby={field.name === 'url' ? 'url-hint' : undefined}
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -82,9 +163,14 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
   const renderEmailField = useCallback(
     ({ field }) => (
       <FormItem>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>
+          Email
+          <span className="ml-1 text-red-500" aria-hidden="true">
+            *
+          </span>
+        </FormLabel>
         <FormControl>
-          <Input placeholder="johndoe@gmail.com" {...field} />
+          <Input placeholder="johndoe@gmail.com" {...field} aria-required="true" />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -98,11 +184,15 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
         <FormLabel>Type</FormLabel>
         <Select onValueChange={field.onChange} defaultValue={field.value}>
           <FormControl>
-            <SelectTrigger>
+            <SelectTrigger aria-describedby="type-description">
               <SelectValue placeholder="Select a bookmark type" />
             </SelectTrigger>
           </FormControl>
           <SelectContent>
+            {/* 空选项 */}
+            <SelectItem value="" disabled>
+              <span className="text-gray-400">Select a type...</span>
+            </SelectItem>
             {bookmarks.map((bookmark) => (
               <SelectItem key={bookmark.slug} value={bookmark.title}>
                 {bookmark.title}
@@ -110,7 +200,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
             ))}
           </SelectContent>
         </Select>
-        <FormDescription>Optional but helps me categorize the bookmark.</FormDescription>
+        <FormDescription id="type-description">Optional but helps me categorize the bookmark.</FormDescription>
         <FormMessage />
       </FormItem>
     ),
@@ -119,25 +209,35 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={cn('flex flex-col gap-6', className)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={cn('flex flex-col gap-6', className)}
+        noValidate
+        aria-label="Submit bookmark form"
+      >
         <FormField control={form.control} name="url" render={renderUrlField} />
         <FormField control={form.control} name="email" render={renderEmailField} />
         <FormField control={form.control} name="type" render={renderTypeField} />
-        <Button type="submit" className="w-full" disabled={isSubmitting || errors?.api?.limitError || !isValid}>
-          {hasErrors ? (
-            'Submit'
-          ) : (
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isSubmitting || isPending || errors?.api?.limitError || !isValid}
+          aria-busy={isSubmitting}
+        >
+          {isSubmitting ? (
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
-                key={isSubmitting ? 'submitting' : 'submit'}
+                key="submitting"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.15 }}
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                Submitting...
               </motion.span>
             </AnimatePresence>
+          ) : (
+            'Submit'
           )}
         </Button>
       </form>

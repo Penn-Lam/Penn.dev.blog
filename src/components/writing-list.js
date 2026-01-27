@@ -7,8 +7,65 @@ import { useMemo } from 'react'
 import { useViewData } from '@/hooks/useViewData'
 import { cn, dateWithDayAndMonthFormatter, dateWithMonthAndYearFormatter, viewCountFormatter } from '@/lib/utils'
 
-export const WritingList = ({ items }) => {
-  const { viewData, error, isLoading } = useViewData()
+/**
+ * [INPUT]: 依赖 @/hooks/useViewData 的视图数据，@/lib/utils 的格式化函数
+ * [OUTPUT]: 对外提供 WritingList 组件，年度分组文章列表
+ * [POS]: components/writing 的核心列表组件
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
+// 空状态组件
+function EmptyState({ header }) {
+  return (
+    <div className="py-8 text-center" role="status">
+      <p className="text-gray-500">No writings found.</p>
+      <p className="mt-2 text-sm text-gray-400">Check back later for new content.</p>
+    </div>
+  )
+}
+
+// 错误状态组件
+function ErrorState({ error, onRetry }) {
+  return (
+    <div className="mb-4 rounded-md bg-red-50 p-4 text-red-600" role="alert">
+      <p className="font-medium">Failed to load writings</p>
+      <p className="mt-1 text-sm">{error}</p>
+      {onRetry && (
+        <button
+          onClick={onRetry}
+          className="mt-2 text-sm underline hover:text-red-800"
+          aria-label="Retry loading writings"
+        >
+          Try again
+        </button>
+      )}
+    </div>
+  )
+}
+
+// 加载状态组件
+function LoadingState() {
+  return (
+    <div className="animate-pulse space-y-4">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="grid grid-cols-6 gap-2 border-t border-gray-200 py-4">
+          <div className="col-span-1 hidden h-4 w-12 rounded bg-gray-200 md:block" />
+          <div className="col-span-5 grid grid-cols-4 gap-2 md:grid-cols-8">
+            <div className="col-span-1 h-4 w-16 rounded bg-gray-200" />
+            <div className="col-span-2 h-4 w-3/4 rounded bg-gray-200 md:col-span-6" />
+            <div className="col-span-1 h-4 w-12 rounded bg-gray-200" />
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export const WritingList = ({ items, header = 'Writing' }) => {
+  const { viewData, error, isLoading, refetch } = useViewData()
+
+  // 空数据检查
+  const isEmpty = !items || items.length === 0
 
   // Preprocess viewData into a map for efficient lookups
   const viewDataMap = useMemo(() => {
@@ -33,12 +90,19 @@ export const WritingList = ({ items }) => {
 
   // Memoize the items mapping to prevent unnecessary re-renders
   const renderedItems = useMemo(() => {
+    if (isEmpty) return null
+
     return items.map((item) => {
       const [year, itemsArr] = item
 
       return (
         <ul className="group/list list-none" key={year}>
           {itemsArr.map((item, itemIndex) => {
+            // 边界情况：检查必要字段
+            if (!item || !item.sys) {
+              return null
+            }
+
             const {
               title,
               slug,
@@ -65,6 +129,7 @@ export const WritingList = ({ items }) => {
                 <Link
                   href={`/writing/${slug}`}
                   className="col-span-6 group-hover/list-item:text-gray-900 md:col-span-5"
+                  aria-label={`Read "${title}" published on ${dateWithMonthAndYear}`}
                 >
                   <span className="grid grid-cols-4 items-center gap-2 border-t border-gray-200 py-4 md:grid-cols-8">
                     <span className="col-span-1 text-left tabular-nums">
@@ -75,12 +140,14 @@ export const WritingList = ({ items }) => {
                         {dateWithMonthAndYear}
                       </time>
                     </span>
-                    <span className="col-span-2 line-clamp-4 md:col-span-6">{title}</span>
+                    {/* 标题：文本溢出处理 */}
+                    <span className="col-span-2 line-clamp-4 min-w-0 md:col-span-6">{title}</span>
                     {isLoading ? (
                       <span className="col-span-1">
                         <m.span
                           key={`${slug}-views-loading`}
                           className="flex animate-pulse justify-end text-gray-400 tabular-nums"
+                          aria-label="Loading view count"
                         >
                           ...
                         </m.span>
@@ -105,17 +172,37 @@ export const WritingList = ({ items }) => {
         </ul>
       )
     })
-  }, [animationProps, items, viewDataMap, isLoading])
+  }, [animationProps, items, viewDataMap, isLoading, isEmpty])
+
+  // 显示空状态
+  if (isEmpty && !isLoading) {
+    return (
+      <LazyMotion features={domAnimation}>
+        <div className="text-sm" aria-label={`${header} list`}>
+          <div className="grid grid-cols-6 py-2 font-medium text-gray-500">
+            <span className="col-span-1 hidden text-left md:grid">Year</span>
+            <span className="col-span-6 md:col-span-5">
+              <span className="grid grid-cols-4 items-center md:grid-cols-8">
+                <span className="col-span-1 text-left">Date</span>
+                <span className="col-span-2 md:col-span-6">Title</span>
+                <span className="col-span-1 text-right">Views</span>
+              </span>
+            </span>
+          </div>
+          <EmptyState header={header} />
+        </div>
+      </LazyMotion>
+    )
+  }
 
   return useMemo(
     () => (
       <LazyMotion features={domAnimation}>
-        <div className="text-sm">
-          {error && (
-            <div className="mb-4 rounded-md bg-red-50 p-4 text-red-500">
-              <p>Error loading view counts: {error}</p>
-            </div>
-          )}
+        <div className="text-sm" aria-label={`${header} list`}>
+          {/* 错误状态 */}
+          {error && <ErrorState error={error} onRetry={refetch} />}
+
+          {/* 表头 */}
           <div className="grid grid-cols-6 py-2 font-medium text-gray-500">
             <span className="col-span-1 hidden text-left md:grid">Year</span>
             <span className="col-span-6 md:col-span-5">
@@ -127,10 +214,11 @@ export const WritingList = ({ items }) => {
             </span>
           </div>
 
-          <div className="group/list-wrapper">{renderedItems}</div>
+          {/* 加载状态或内容 */}
+          {isLoading ? <LoadingState /> : <div className="group/list-wrapper">{renderedItems}</div>}
         </div>
       </LazyMotion>
     ),
-    [renderedItems, error]
+    [renderedItems, error, isLoading, refetch, header]
   )
 }
