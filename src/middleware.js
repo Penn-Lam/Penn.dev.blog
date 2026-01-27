@@ -1,8 +1,11 @@
+import { isbot } from 'isbot'
 import { NextResponse } from 'next/server'
 
 export function middleware(request, event) {
   const { pathname } = request.nextUrl
   const writingSlug = pathname.match(/^\/writing\/([^\/]+)$/)?.[1]
+  const userAgent = request.headers.get('user-agent')
+  const isBotRequest = !userAgent || isbot(userAgent)
 
   async function sendAnalytics() {
     const URL = `${request.nextUrl.origin}/api/increment-views`
@@ -27,7 +30,7 @@ export function middleware(request, event) {
    * It enables the response to proceed without waiting for the completion of `sendAnalytics()`.
    * This ensures that the user experience remains uninterrupted and free from unnecessary delays.
    */
-  if (writingSlug) event.waitUntil(sendAnalytics())
+  if (writingSlug && !isBotRequest) event.waitUntil(sendAnalytics())
   return NextResponse.next()
 }
 

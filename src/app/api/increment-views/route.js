@@ -1,3 +1,4 @@
+import { isbot } from 'isbot'
 import { NextResponse } from 'next/server'
 
 import supabase from '@/lib/supabase/private'
@@ -10,6 +11,11 @@ export async function POST(request) {
   const searchParams = request.nextUrl.searchParams
   const slug = searchParams.get('slug')
   if (!slug) return NextResponse.json({ error: 'Missing slug parameter' }, { status: 400 })
+
+  const userAgent = request.headers.get('user-agent')
+  if (!userAgent || isbot(userAgent)) {
+    return NextResponse.json({ message: 'Ignored bot request' }, { status: 200 })
+  }
 
   try {
     const { error: rpcError } = await supabase.rpc('increment_view_count', { page_slug: slug })
