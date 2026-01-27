@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { formSchema } from '@/components/submit-bookmark/utils'
+import { getDelightfulMessage } from '@/components/console-easter-egg'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -46,6 +47,19 @@ function getNetworkErrorMessage(error) {
   return error.message || NETWORK_ERRORS.UNKNOWN
 }
 
+// 获取随机 delightful 消息
+function getRandomSuccessMessage() {
+  const messages = [
+    '📚 Bookmark saved! Your knowledge graph grows.',
+    '🎯 Nice catch! That\'s a great find.',
+    '⭐ Added to your collection. Well done!',
+    '🔖 Saved for later. Your future self will thank you.',
+    '✨ Another gem for your digital garden.',
+    '📝 Indexed and ready for retrieval.'
+  ]
+  return messages[Math.floor(Math.random() * messages.length)]
+}
+
 export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, currentBookmark }) => {
   const [isPending, startTransition] = useTransition()
   const [retryCount, setRetryCount] = useState(0)
@@ -67,7 +81,6 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
   const form = useForm(memoizedFormOptions)
   const formState = useMemo(() => form.formState, [form.formState])
   const { isSubmitting, errors, isValid } = formState
-  const hasErrors = useMemo(() => Object.keys(errors).length > 0, [errors])
 
   // 防止重复提交
   const [isSubmittingLocked, setIsSubmittingLocked] = useState(false)
@@ -102,15 +115,25 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
           throw new Error(data.error || 'Submission failed')
         }
 
-        // 成功
+        // 成功 - 使用 delightful 消息
         form.reset()
         setRetryCount(0)
+
+        // 随机成功消息
+        const successMessages = [
+          getRandomSuccessMessage(),
+          getDelightfulMessage('bookmarkSubmit')
+        ]
+        const randomMessage = successMessages[Math.floor(Math.random() * successMessages.length)]
+
         toast.success('Bookmark submitted', {
           description: (
-            <span>
-              <span className="underline underline-offset-4">{values.url}</span> has been submitted. Thank you for your
-              contribution!
-            </span>
+            <div className="space-y-1">
+              <p>{randomMessage}</p>
+              <p className="text-xs text-gray-500">
+                <span className="underline underline-offset-4">{values.url}</span>
+              </p>
+            </div>
           ),
           duration: 5000
         })
