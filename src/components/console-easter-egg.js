@@ -75,32 +75,32 @@ export function ConsoleEasterEgg() {
       /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false
 
     // 欢迎信息
-    console.log('%c' + ASCII_TITLE, 'font-family: monospace; font-size: 10px; line-height: 1.2; color: #6366f1;')
-    console.log('%c✨ Welcome to Penn.dev!', 'font-size: 14px; font-weight: bold; color: #6366f1;')
-    console.log('%c📝 A technical blog by Penn Lam - AI Agent Developer', 'font-size: 12px; color: #64748b;')
-    console.log('')
+    console.info('%c' + ASCII_TITLE, 'font-family: monospace; font-size: 10px; line-height: 1.2; color: #6366f1;')
+    console.info('%c✨ Welcome to Penn.dev!', 'font-size: 14px; font-weight: bold; color: #6366f1;')
+    console.info('%c📝 A technical blog by Penn Lam - AI Agent Developer', 'font-size: 12px; color: #64748b;')
+    console.info('')
 
     if (isDevToolsOpen) {
-      console.log('%c👀 Developer tools detected! You must be a developer too.', 'font-size: 12px; color: #22c55e;')
-      console.log('%c💡 Try typing these commands in the console:', 'font-size: 12px; color: #64748b;')
-      console.log('  • help    • coffee  • whois  • source')
-      console.log('  • secret  • ping    • ls     • date')
-      console.log('')
+      console.info('%c👀 Developer tools detected! You must be a developer too.', 'font-size: 12px; color: #22c55e;')
+      console.info('%c💡 Try typing these commands in the console:', 'font-size: 12px; color: #64748b;')
+      console.info('  • help    • coffee  • whois  • source')
+      console.info('  • secret  • ping    • ls     • date')
+      console.info('')
     }
 
     // 每日笑话
-    console.log('%c😄 Developer joke of the moment:', 'font-size: 12px; color: #f59e0b;')
-    console.log('%c' + getRandomJoke(), 'font-size: 11px; font-style: italic; color: #64748b;')
-    console.log('')
+    console.info('%c😄 Developer joke of the moment:', 'font-size: 12px; color: #f59e0b;')
+    console.info('%c' + getRandomJoke(), 'font-size: 11px; font-style: italic; color: #64748b;')
+    console.info('')
 
     // 隐藏命令监听
-    const originalLog = console.log
+    const originalInfo = console.info
 
     // 拦截命令
     const handleCommand = (command) => {
       const cmd = command.toLowerCase().trim()
       if (hiddenCommands[cmd]) {
-        originalLog(`%c${hiddenCommands[cmd]}`, 'font-size: 12px; color: #22c55e; font-family: monospace;')
+        originalInfo(`%c${hiddenCommands[cmd]}`, 'font-size: 12px; color: #22c55e; font-family: monospace;')
         return true
       }
       return false
@@ -109,7 +109,7 @@ export function ConsoleEasterEgg() {
     // 监听全局输入
     window.executeCommand = (cmd) => handleCommand(cmd)
 
-    console.log('%c🔒 Type a command above or use executeCommand("command")', 'font-size: 11px; color: #94a3b8;')
+    console.info('%c🔒 Type a command above or use executeCommand("command")', 'font-size: 11px; color: #94a3b8;')
   }, [])
 
   return null

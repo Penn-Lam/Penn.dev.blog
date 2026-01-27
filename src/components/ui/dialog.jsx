@@ -77,7 +77,7 @@ const DialogContent = memo(({ className, children, ...props }) => {
         <DialogPrimitive.Close
           className={cn(
             'absolute top-4 right-4 rounded-md opacity-70 ring-offset-white transition-all',
-            'hover:opacity-100 hover:bg-gray-100 hover:scale-110',
+            'hover:scale-110 hover:bg-gray-100 hover:opacity-100',
             'focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 focus:outline-hidden',
             'disabled:pointer-events-none data-[state=open]:bg-gray-100 data-[state=open]:text-gray-500',
             '[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4'

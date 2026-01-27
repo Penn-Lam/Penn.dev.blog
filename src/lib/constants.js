@@ -2,14 +2,14 @@ import {
   ArmchairIcon,
   BookmarkIcon,
   GithubIcon,
+  HandIcon,
   ImageIcon,
   LinkedinIcon,
   MessageCircleIcon,
   NavigationIcon,
   PencilLineIcon,
   SparklesIcon,
-  Wand2Icon,
-  HandIcon
+  Wand2Icon
 } from 'lucide-react'
 
 export const PROFILES = {
@@ -50,7 +50,7 @@ export const PROFILES = {
     title: 'Bonjour',
     url: 'https://bonjour.bio/pennlam',
     icon: <HandIcon size={16} />
-  },
+  }
   /* medium: {
     title: 'Medium',
     url: 'https://suyalcinkaya.medium.com'
@@ -86,20 +86,20 @@ export const PROFILES = {
 export const TWEETS_COLLECTION_IDS = [56369164]
 
 export const COLLECTION_IDS = [
-  56865149,  // AI
-  56369365,  // books
-  56374013,  // Kits
-  57484893,  // Tools
-  56376224,  // Icons
-  58457558,  // Blogs
-  56815543,  // Frontend
-  62739440,  // Backend
-  62741470,  // Infra & Hosting
-  62741405,  // OPA
-  56815657,  // Art
-  60507989,  // Music
-  56815349,  // Reading
-  ...TWEETS_COLLECTION_IDS, // 支持多个 Twitter 收藏夹
+  56865149, // AI
+  56369365, // books
+  56374013, // Kits
+  57484893, // Tools
+  56376224, // Icons
+  58457558, // Blogs
+  56815543, // Frontend
+  62739440, // Backend
+  62741470, // Infra & Hosting
+  62741405, // OPA
+  56815657, // Art
+  60507989, // Music
+  56815349, // Reading
+  ...TWEETS_COLLECTION_IDS // 支持多个 Twitter 收藏夹
 ]
 
 export const LINKS = [

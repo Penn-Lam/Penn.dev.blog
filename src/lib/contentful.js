@@ -39,7 +39,7 @@ const fetchGraphQL = cache(async (query, preview = isDevelopment) => {
       throw new Error(`Contentful GraphQL Errors: ${json.errors.map((e) => e.message).join('\n')}`)
     }
     return json
-  } catch (error) {
+  } catch {
     throw new Error('Failed to fetch data from Contentful. Please check server logs for more details.')
   }
 })

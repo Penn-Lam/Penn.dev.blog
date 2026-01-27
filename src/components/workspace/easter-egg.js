@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export function EasterEgg({ trigger = 'work hard' }) {
   const [isActive, setIsActive] = useState(false)
-  const [keySequence, setKeySequence] = useState('')
+  const [, setKeySequence] = useState('')
   const timeoutRef = useRef(null)
 
   useEffect(() => {

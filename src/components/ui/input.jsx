@@ -14,9 +14,9 @@ function Input({ className, type, error, 'aria-describedby': ariaDescribedBy, ..
       aria-describedby={ariaDescribedBy}
       className={cn(
         // 基础样式 - min-w-0 防止 flex 子元素溢出
-        'flex h-9 min-w-0 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-xs transition-colors',
+        'flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-sm shadow-xs transition-colors',
         // 文本溢出处理
-        'overflow-hidden text-overflow:ellipsis whitespace-nowrap',
+        'text-overflow:ellipsis overflow-hidden whitespace-nowrap',
         // 默认状态
         'border-gray-200 placeholder:text-gray-500',
         // 聚焦状态

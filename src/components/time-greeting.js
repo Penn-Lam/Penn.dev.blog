@@ -50,7 +50,7 @@ const timeBasedGreetings = {
   deepnight: {
     icon: '✨',
     greeting: 'Working late?',
-    tagline: 'The code isn\'t going to write itself'
+    tagline: "The code isn't going to write itself"
   }
 }
 
@@ -68,8 +68,8 @@ function getTimePeriod() {
 // 随机技术格言
 const techQuotes = [
   'First, solve the problem. Then, write the code.',
-  'Programming is not about typing, it\'s about thinking.',
-  'The best code is code you don\'t have to write.',
+  "Programming is not about typing, it's about thinking.",
+  "The best code is code you don't have to write.",
   'Simplicity is the ultimate sophistication.',
   'Debugging is like being a detective in a crime movie.',
   'Every great developer you know got there by solving problems.',
@@ -102,14 +102,9 @@ export function TimeGreeting({ className }) {
     <div className={cn('space-y-1', className)}>
       <div className="flex items-center gap-2">
         <span className="text-lg">{timeData.icon}</span>
-        <span className="text-sm font-medium text-gray-700">
-          {timeData.greeting}
-        </span>
+        <span className="text-sm font-medium text-gray-700">{timeData.greeting}</span>
       </div>
-      <p className="text-xs text-gray-500 italic">
-        "{quote}"
-      </p>
+      <p className="text-xs text-gray-500 italic">"{quote}"</p>
     </div>
   )
 }
-

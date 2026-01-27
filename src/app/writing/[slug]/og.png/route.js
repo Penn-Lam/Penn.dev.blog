@@ -57,13 +57,7 @@ export async function GET(_, props) {
     } = seoData
 
     return new ImageResponse(
-      (
-        <OpenGraphImage
-          title={ogImageTitle || title}
-          description={ogImageSubtitle || 'by Penn'}
-          url="writing"
-        />
-      ),
+      <OpenGraphImage title={ogImageTitle || title} description={ogImageSubtitle || 'by Penn'} url="writing" />,
       {
         ...size,
         fonts: [

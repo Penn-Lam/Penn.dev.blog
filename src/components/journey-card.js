@@ -25,7 +25,7 @@ export const JourneyCard = memo(({ title, description, image, index }) => {
     <div className="word-break-word flex flex-col">
       <span className="mb-px font-semibold tracking-tight">{title}</span>
       {description?.json && (
-        <div className="text-sm rich-text-journey">{documentToReactComponents(description.json)}</div>
+        <div className="rich-text-journey text-sm">{documentToReactComponents(description.json)}</div>
       )}
       {image?.url && (
         <div className="mt-2.5 overflow-hidden rounded-xl bg-white">
@@ -42,7 +42,6 @@ export const JourneyCard = memo(({ title, description, image, index }) => {
             // 性能优化: 自动格式选择
             quality={80}
             className="animate-reveal object-cover"
-            // eslint-disable-next-line react/no-unknown-property
             nopin="nopin"
           />
         </div>

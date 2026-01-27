@@ -158,9 +158,7 @@ export const ToolCard = memo(function ToolCard({ tool, index }) {
 
         {/* Peel-Up Tip - 优化: 使用 CSS transition 替代 Framer Motion */}
         {tool.tip && (
-          <div
-            className="absolute inset-x-0 bottom-0 border-t border-gray-100/50 bg-gradient-to-t from-white/95 to-transparent px-4 py-3 text-xs text-gray-500 opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100"
-          >
+          <div className="absolute inset-x-0 bottom-0 border-t border-gray-100/50 bg-gradient-to-t from-white/95 to-transparent px-4 py-3 text-xs text-gray-500 opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100">
             {tool.tip}
           </div>
         )}

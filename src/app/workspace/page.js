@@ -4,13 +4,7 @@ import { PageTitle } from '@/components/page-title'
 import { ScrollArea } from '@/components/scroll-area'
 import { EasterEgg } from '@/components/workspace/easter-egg'
 import { HardwareList } from '@/components/workspace/hardware-list'
-import { NowTag } from '@/components/workspace/now-tag'
-import { ProjectCard } from '@/components/workspace/project-card'
-import { Timeline } from '@/components/workspace/timeline'
 import hardwareData from '@/data/workspace/hardware.json'
-import logData from '@/data/workspace/log.json'
-import nowData from '@/data/workspace/now.json'
-import projectsData from '@/data/workspace/projects.json'
 import { getPageSeo } from '@/lib/contentful'
 
 export default async function Workspace() {

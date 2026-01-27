@@ -64,14 +64,12 @@ export async function GET(_, props) {
   }
 
   return new ImageResponse(
-    (
-      <OpenGraphImage
-        title={ogImageTitle || title}
-        description={ogImageSubtitle || description}
-        icon={icon}
-        url={slug}
-      />
-    ),
+    <OpenGraphImage
+      title={ogImageTitle || title}
+      description={ogImageSubtitle || description}
+      icon={icon}
+      url={slug}
+    />,
     {
       ...size,
       fonts: [

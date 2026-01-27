@@ -34,14 +34,17 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-between gap-2 rounded-lg p-2 overflow-hidden transition-colors duration-200 hover:bg-gray-200"
+        className="group relative flex items-center justify-between gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-200 hover:bg-gray-200"
       >
         {/* 涟漪效果背景 */}
         <span className="absolute inset-0 scale-0 rounded-lg bg-gray-300/50 transition-transform duration-300 group-hover:scale-100" />
         <span className="relative inline-flex items-center gap-2 font-medium">
           {iconCmp} {label}
         </span>
-        <ArrowUpRightIcon size={16} className="relative transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        <ArrowUpRightIcon
+          size={16}
+          className="relative transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
       </a>
     )
   }
@@ -63,9 +66,7 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
       )}
     >
       {/* 活跃状态涟漪 */}
-      {isActive && (
-        <span className="absolute inset-0 rounded-lg bg-gray-800 animate-pulse-light" />
-      )}
+      {isActive && <span className="animate-pulse-light absolute inset-0 rounded-lg bg-gray-800" />}
       <span className="relative flex items-center gap-2">
         {iconCmp}
         <span className={cn('font-medium', isActive && 'text-white')}>{label}</span>
@@ -75,7 +76,7 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
           className={cn(
             'relative hidden size-5 place-content-center rounded-sm border text-xs font-medium transition-all duration-200 lg:grid',
             'border-gray-200 bg-gray-100 text-gray-500',
-            'group-hover:border-gray-300 group-hover:bg-gray-200 group-hover:scale-110',
+            'group-hover:scale-110 group-hover:border-gray-300 group-hover:bg-gray-200',
             isActive && 'border-gray-600 bg-gray-700 text-gray-200 group-hover:border-gray-600'
           )}
           title={`Shortcut key: ${shortcutNumber}`}

@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { useEffect, useMemo, useState } from 'react'
 
 import { authClient } from '@/lib/auth-client'
 

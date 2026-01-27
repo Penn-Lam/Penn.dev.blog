@@ -4,7 +4,7 @@ import { ArrowLeftIcon, RadioIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { memo, useEffect, useState, useRef, useCallback } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import Balancer from 'react-wrap-balancer'
 
 import { LoadingSpinner } from '@/components/loading-spinner'
@@ -91,7 +91,7 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
   // 标题渲染 - 使用 CSS will-change 提示 GPU
   const titleElement = scrollTitle ? (
     <span
-      className="line-clamp-2 font-semibold tracking-tight will-change-transform-opacity"
+      className="will-change-transform-opacity line-clamp-2 font-semibold tracking-tight"
       style={{
         transform: `translateY(${transformRef.current.translateY}%)`,
         opacity: transformRef.current.opacity

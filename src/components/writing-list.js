@@ -1,8 +1,8 @@
 'use client'
 
-import { domAnimation, LazyMotion, m } from 'framer-motion'
+import { domAnimation, LazyMotion } from 'framer-motion'
 import Link from 'next/link'
-import { memo, useMemo, useCallback } from 'react'
+import { memo, useMemo } from 'react'
 
 import { useViewData } from '@/hooks/useViewData'
 import { cn, dateWithDayAndMonthFormatter, dateWithMonthAndYearFormatter, viewCountFormatter } from '@/lib/utils'
@@ -18,7 +18,6 @@ import { cn, dateWithDayAndMonthFormatter, dateWithMonthAndYearFormatter, viewCo
 // 性能优化:
 // 1. 使用 React.memo 包裹子组件，避免不必要的重渲染
 // 2. 移除外层 useMemo 封装 JSX（可能导致无限渲染循环）
-// 3. 使用 useCallback 缓存回调函数
 // ==========================================================================
 
 // 空状态组件 - 使用 memo 避免重渲染
@@ -74,7 +73,11 @@ const ViewCount = memo(function ViewCount({ count, isLoading }) {
     return <span className="flex animate-pulse justify-end text-gray-400 tabular-nums">...</span>
   }
   if (count) {
-    return <span className="flex justify-end tabular-nums" title={`${count} views`}>{count}</span>
+    return (
+      <span className="flex justify-end tabular-nums" title={`${count} views`}>
+        {count}
+      </span>
+    )
   }
   return null
 })
@@ -104,8 +107,12 @@ const WritingItem = memo(function WritingItem({ item, year, isFirst, viewCount, 
       >
         <span className="grid grid-cols-4 items-center gap-2 border-t border-gray-200 py-4 md:grid-cols-8">
           <span className="col-span-1 text-left tabular-nums">
-            <time dateTime={date} className="hidden md:block">{dateWithDayAndMonth}</time>
-            <time dateTime={date} className="md:hidden">{dateWithMonthAndYear}</time>
+            <time dateTime={date} className="hidden md:block">
+              {dateWithDayAndMonth}
+            </time>
+            <time dateTime={date} className="md:hidden">
+              {dateWithMonthAndYear}
+            </time>
           </span>
           <span className="col-span-2 line-clamp-4 min-w-0 md:col-span-6">{title}</span>
           <span className="col-span-1">

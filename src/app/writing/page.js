@@ -17,7 +17,7 @@ export default async function Writing() {
   const { sortedPosts } = await fetchData()
 
   return (
-    <ScrollArea className="lg:hidden writing-content">
+    <ScrollArea className="writing-content lg:hidden">
       <FloatingHeader title="Writing" />
       <Suspense fallback={<ScreenLoadingSpinner />}>
         <WritingListLayout list={sortedPosts} isMobile />

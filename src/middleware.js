@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export function middleware(request, event) {
   const { pathname } = request.nextUrl
-  const writingSlug = pathname.match(/^\/writing\/([^\/]+)$/)?.[1]
+  const writingSlug = pathname.match(/^\/writing\/([^/]+)$/)?.[1]
   const userAgent = request.headers.get('user-agent')
   const isBotRequest = !userAgent || isbot(userAgent)
 

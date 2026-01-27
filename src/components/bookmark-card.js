@@ -83,7 +83,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
         {/* 域名：截断处理 */}
         <span className="line-clamp-1 inline-flex min-w-0 items-center gap-1 text-sm text-gray-500">
           <Link2Icon size={16} aria-hidden="true" />
-          <span className="truncate min-w-0">{bookmark.domain}</span>
+          <span className="min-w-0 truncate">{bookmark.domain}</span>
         </span>
         {/* 摘要：截断处理 */}
         <span className="line-clamp-6 min-w-0 text-sm">{bookmark.excerpt || bookmark.note}</span>
