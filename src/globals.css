@@ -16,7 +16,7 @@
 }
 
 @theme {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-ia-writer-quattro-s);
   --font-mono: var(--font-geist-mono);
 
   --breakpoint-xs: 390px;
@@ -97,19 +97,19 @@
   :lang(zh),
   [lang='zh'],
   .chinese-text {
-    font-family: var(--font-noto-serif-sc), 'Source Han Serif SC', '思源宋体', serif;
+    font-family: var(--font-fz-pingxian-yasong), 'Source Han Serif SC', '思源宋体', serif;
   }
 
   /* 为写作页面添加霞鹜文楷字体 */
   .writing-content,
   .writing-content * {
-    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-noto-serif-sc), serif;
+    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-fz-pingxian-yasong), serif;
   }
 
   /* 确保写作页面的内容使用霞鹜文楷 */
   .writing-content .content,
   .writing-content .content * {
-    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-noto-serif-sc), serif;
+    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-fz-pingxian-yasong), serif;
   }
 
   /* 针对写作页面的特定样式 */
@@ -124,7 +124,7 @@
   .writing-content blockquote,
   .writing-content article,
   .writing-content .prose {
-    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-noto-serif-sc), serif;
+    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-fz-pingxian-yasong), serif;
   }
 
   #__next {

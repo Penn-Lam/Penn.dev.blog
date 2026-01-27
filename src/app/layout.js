@@ -4,9 +4,9 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import classix from 'classix'
 import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import { EyeIcon } from 'lucide-react'
-import { LXGW_WenKai_TC, Noto_Serif_SC } from 'next/font/google'
+import { LXGW_WenKai_TC } from 'next/font/google'
+import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import Script from 'next/script'
 
@@ -21,10 +21,20 @@ import { Toaster } from '@/components/ui/sonner'
 import { PROFILES } from '@/lib/constants'
 import { preloadGetAllPosts } from '@/lib/contentful'
 
-const notoSerifSc = Noto_Serif_SC({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-noto-serif-sc',
+const iaWriterQuattroS = localFont({
+  src: [
+    { path: '../assets/fonts/iAWriterQuattroSRegular.ttf', weight: '400', style: 'normal' },
+    { path: '../assets/fonts/iAWriterQuattroSItalic.ttf', weight: '400', style: 'italic' },
+    { path: '../assets/fonts/iAWriterQuattroSBold.ttf', weight: '700', style: 'normal' },
+    { path: '../assets/fonts/iAWriterQuattroSBoldItalic.ttf', weight: '700', style: 'italic' }
+  ],
+  variable: '--font-ia-writer-quattro-s',
+  display: 'swap'
+})
+
+const fzPingXianYaSong = localFont({
+  src: [{ path: '../assets/fonts/FZPingXianYaSong-Regular.ttf', weight: '400', style: 'normal' }],
+  variable: '--font-fz-pingxian-yasong',
   display: 'swap'
 })
 
@@ -45,7 +55,7 @@ export default async function RootLayout({ children }) {
     <html
       lang="en"
       data-theme="light"
-      className={classix(GeistSans.variable, GeistMono.variable, notoSerifSc.variable, lxgwWenKai.variable)}
+      className={classix(GeistMono.variable, iaWriterQuattroS.variable, fzPingXianYaSong.variable, lxgwWenKai.variable)}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>
