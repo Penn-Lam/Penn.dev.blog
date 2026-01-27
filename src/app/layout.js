@@ -10,7 +10,6 @@ import { draftMode } from 'next/headers'
 import Script from 'next/script'
 
 import { sharedMetadata } from '@/app/shared-metadata'
-import { CommandPalette, CommandPaletteHint } from '@/components/command-palette'
 import { ConsoleEasterEgg } from '@/components/console-easter-egg'
 import { MenuContent } from '@/components/menu-content'
 import { DialogStateProvider } from '@/components/quick-post-button'
@@ -66,8 +65,6 @@ export default async function RootLayout({ children }) {
             </main>
             <Toaster />
             <TailwindIndicator />
-            <CommandPalette />
-            <CommandPaletteHint />
             <ConsoleEasterEgg />
           </DialogStateProvider>
         </ErrorBoundary>

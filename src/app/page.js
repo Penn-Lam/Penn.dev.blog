@@ -3,7 +3,6 @@ import { Suspense } from 'react'
 
 import { FloatingHeader } from '@/components/floating-header'
 import { PageTitle } from '@/components/page-title'
-import { RandomFact } from '@/components/time-greeting'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
 import { TimeGreeting } from '@/components/time-greeting'
@@ -40,7 +39,6 @@ export default async function Home() {
             <br />
             Bridging GenAI × personal computing — let's connect and shape the future together.
           </p>
-          <RandomFact />
           <Button asChild variant="link" className="inline px-0">
             <Link href="/writing">
               <h2 className="mt-8 mb-4">Writing</h2>

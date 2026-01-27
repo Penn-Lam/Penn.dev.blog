@@ -50,12 +50,12 @@ function getNetworkErrorMessage(error) {
 // 获取随机 delightful 消息
 function getRandomSuccessMessage() {
   const messages = [
-    '📚 Bookmark saved! Your knowledge graph grows.',
-    '🎯 Nice catch! That\'s a great find.',
-    '⭐ Added to your collection. Well done!',
-    '🔖 Saved for later. Your future self will thank you.',
-    '✨ Another gem for your digital garden.',
-    '📝 Indexed and ready for retrieval.'
+    'Bookmark saved! Your knowledge graph grows.',
+    "Nice catch! That's a great find.",
+    'Added to your collection. Well done!',
+    'Saved for later. Your future self will thank you.',
+    'Another gem for your digital garden.',
+    'Indexed and ready for retrieval.'
   ]
   return messages[Math.floor(Math.random() * messages.length)]
 }
@@ -120,10 +120,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
         setRetryCount(0)
 
         // 随机成功消息
-        const successMessages = [
-          getRandomSuccessMessage(),
-          getDelightfulMessage('bookmarkSubmit')
-        ]
+        const successMessages = [getRandomSuccessMessage(), getDelightfulMessage('bookmarkSubmit')]
         const randomMessage = successMessages[Math.floor(Math.random() * successMessages.length)]
 
         toast.success('Bookmark submitted', {
@@ -140,15 +137,16 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
       } catch (error) {
         const errorMessage = getNetworkErrorMessage(error)
         toast.error(errorMessage, {
-          action: retryCount < 3
-            ? {
-                label: 'Retry',
-                onClick: () => {
-                  setRetryCount((c) => c + 1)
-                  onSubmit(values)
+          action:
+            retryCount < 3
+              ? {
+                  label: 'Retry',
+                  onClick: () => {
+                    setRetryCount((c) => c + 1)
+                    onSubmit(values)
+                  }
                 }
-              }
-            : undefined
+              : undefined
         })
       } finally {
         setIsSubmittingLocked(false)
