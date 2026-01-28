@@ -59,7 +59,7 @@
     "class-variance-authority": "^0.7.1",
     "classix": "^2.2.2",
     "cloudinary": "^2.6.1",
-    "drizzle-orm": "^0.33.0",
+    "drizzle-orm": "^0.44.7",
     "dotenv": "^16.5.0",
     "embla-carousel-react": "^8.6.0",
     "feed": "^4.2.2",
