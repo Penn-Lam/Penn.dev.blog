@@ -11,7 +11,7 @@ import { memo } from 'react'
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
-// 标签颜色映射 - 低饱和度配色
+// 标签颜色映射 - 使用统一的低饱和度风格
 const TAG_COLORS = {
   AI: 'bg-slate-100 text-slate-600',
   Prod: 'bg-blue-50 text-blue-600',
@@ -33,9 +33,6 @@ const TAG_COLORS = {
   'AI IDE': 'bg-purple-50 text-purple-600'
 }
 
-const getToolIcon = (slug) => `/tools/${slug}.svg`
-const getTagColor = (tag) => TAG_COLORS[tag] || 'bg-gray-50 text-gray-600'
-
 export const ToolCard = memo(function ToolCard({ tool }) {
   return (
     <a
@@ -49,7 +46,7 @@ export const ToolCard = memo(function ToolCard({ tool }) {
         <div className="flex items-center gap-3">
           <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-gray-50">
             <Image
-              src={getToolIcon(tool.slug)}
+              src={`/tools/${tool.slug}.svg`}
               alt={`${tool.name} icon`}
               width={32}
               height={32}
@@ -65,7 +62,7 @@ export const ToolCard = memo(function ToolCard({ tool }) {
         </div>
         <ArrowUpRightIcon
           size={14}
-          className="mt-1 text-gray-300 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gray-500"
+          className="mt-1 text-gray-300 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gray-500"
         />
       </div>
 
@@ -77,7 +74,7 @@ export const ToolCard = memo(function ToolCard({ tool }) {
         {tool.tags.map((tag) => (
           <span
             key={tag}
-            className={`inline-flex items-center rounded-lg px-2 py-1 text-[11px] font-medium tracking-wide ${getTagColor(tag)}`}
+            className={`inline-flex items-center rounded-lg px-2 py-1 text-[11px] font-medium tracking-wide ${TAG_COLORS[tag] || 'bg-gray-50 text-gray-600'}`}
           >
             {tag}
           </span>

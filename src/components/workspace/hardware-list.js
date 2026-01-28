@@ -10,49 +10,14 @@ import { CldImage } from 'next-cloudinary'
  */
 
 const CATEGORY_CONFIG = {
-  laptop: {
-    icon: '💻',
-    label: 'Computer',
-    color: 'bg-blue-50 text-blue-600'
-  },
-  display: {
-    icon: '🖥️',
-    label: 'Display',
-    color: 'bg-purple-50 text-purple-600'
-  },
-  keyboard: {
-    icon: '⌨️',
-    label: 'Keyboard',
-    color: 'bg-emerald-50 text-emerald-600'
-  },
-  mouse: {
-    icon: '🖱️',
-    label: 'Mouse',
-    color: 'bg-orange-50 text-orange-600'
-  },
-  audio: {
-    icon: '🎧',
-    label: 'Audio',
-    color: 'bg-pink-50 text-pink-600'
-  },
-  lighting: {
-    icon: '💡',
-    label: 'Lighting',
-    color: 'bg-amber-50 text-amber-600'
-  },
-  xr: {
-    icon: '👓',
-    label: 'XR Device',
-    color: 'bg-indigo-50 text-indigo-600'
-  },
-  default: {
-    icon: '⚙️',
-    label: 'Device',
-    color: 'bg-gray-50 text-gray-600'
-  }
+  laptop: { icon: '💻', label: 'Computer', color: 'bg-blue-50 text-blue-600' },
+  display: { icon: '🖥️', label: 'Display', color: 'bg-purple-50 text-purple-600' },
+  keyboard: { icon: '⌨️', label: 'Keyboard', color: 'bg-emerald-50 text-emerald-600' },
+  mouse: { icon: '🖱️', label: 'Mouse', color: 'bg-orange-50 text-orange-600' },
+  audio: { icon: '🎧', label: 'Audio', color: 'bg-pink-50 text-pink-600' },
+  lighting: { icon: '💡', label: 'Lighting', color: 'bg-amber-50 text-amber-600' },
+  xr: { icon: '👓', label: 'XR Device', color: 'bg-indigo-50 text-indigo-600' }
 }
-
-const getCategoryConfig = (category) => CATEGORY_CONFIG[category] || CATEGORY_CONFIG.default
 
 export function HardwareList({ items }) {
   return (
@@ -78,22 +43,21 @@ export function HardwareList({ items }) {
       {/* Hardware Grid */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item, index) => {
-          const config = getCategoryConfig(item.category)
+          const config = CATEGORY_CONFIG[item.category] || {
+            icon: '⚙️',
+            label: 'Device',
+            color: 'bg-gray-50 text-gray-600'
+          }
           return (
             <div
               key={index}
               className="group flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-4 transition-all duration-300 hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
             >
-              {/* Icon Badge */}
               <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-lg ${config.color}`}>
                 {config.icon}
               </div>
-
-              {/* Content */}
               <div className="min-w-0 flex-1">
-                <div className="mb-1 flex items-center gap-2">
-                  <h3 className="text-sm font-semibold text-gray-900">{item.name}</h3>
-                </div>
+                <h3 className="mb-1 text-sm font-semibold text-gray-900">{item.name}</h3>
                 <p className="mb-1 text-sm text-gray-500">{item.detail}</p>
                 <p className="text-xs text-gray-400">{item.role}</p>
               </div>

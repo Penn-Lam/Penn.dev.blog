@@ -10,29 +10,13 @@ import { ExternalLinkIcon } from 'lucide-react'
  */
 
 const STATUS_CONFIG = {
-  Live: {
-    color: 'bg-emerald-50 text-emerald-600 border-emerald-100',
-    dot: 'bg-emerald-500'
-  },
-  Building: {
-    color: 'bg-amber-50 text-amber-600 border-amber-100',
-    dot: 'bg-amber-500'
-  },
-  Planned: {
-    color: 'bg-gray-50 text-gray-600 border-gray-100',
-    dot: 'bg-gray-400'
-  }
-}
-
-const getStatusConfig = (status) => STATUS_CONFIG[status] || STATUS_CONFIG.Planned
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+  Live: { color: 'bg-emerald-50 text-emerald-600 border-emerald-100', dot: 'bg-emerald-500' },
+  Building: { color: 'bg-amber-50 text-amber-600 border-amber-100', dot: 'bg-amber-500' },
+  Planned: { color: 'bg-gray-50 text-gray-600 border-gray-100', dot: 'bg-gray-400' }
 }
 
 export function ProjectCard({ title, tagline, status, stack, link, startDate }) {
-  const statusConfig = getStatusConfig(status)
+  const statusConfig = STATUS_CONFIG[status] || STATUS_CONFIG.Planned
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 transition-all duration-300 hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
@@ -62,7 +46,11 @@ export function ProjectCard({ title, tagline, status, stack, link, startDate }) 
           <span className={`h-1.5 w-1.5 rounded-full ${statusConfig.dot}`} />
           {status}
         </span>
-        {startDate && <span className="text-xs text-gray-400">{formatDate(startDate)}</span>}
+        {startDate && (
+          <span className="text-xs text-gray-400">
+            {new Date(startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+          </span>
+        )}
       </div>
 
       {/* Tech Stack */}

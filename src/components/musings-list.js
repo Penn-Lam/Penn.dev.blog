@@ -25,24 +25,18 @@ function MusingCard({ musing }) {
     day: 'numeric'
   })
 
-  const processedBody = useMemo(() => {
-    if (!musing.body) return ''
-    return musing.body.replace(/\n/g, '  \n').trim()
-  }, [musing.body])
-
-  const hasImage = /!\[.*?\]\(.*?\)/.test(processedBody)
   const contentRef = useRef(null)
-  const [isOverflow, setIsOverflow] = useState(false)
+  const [showExpand, setShowExpand] = useState(false)
 
   useEffect(() => {
-    if (hasImage && !expanded) {
-      setIsOverflow(true)
-    } else if (contentRef.current && !expanded) {
-      setIsOverflow(contentRef.current.scrollHeight > 400)
-    } else {
-      setIsOverflow(false)
+    if (expanded || !contentRef.current) {
+      setShowExpand(false)
+      return
     }
-  }, [expanded, processedBody, hasImage])
+    const el = contentRef.current
+    const hasImage = el.querySelector('img') !== null
+    setShowExpand(hasImage || el.scrollHeight > 400)
+  }, [expanded])
 
   return (
     <article className="group mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 transition-all duration-300 hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
@@ -68,14 +62,16 @@ function MusingCard({ musing }) {
         style={!expanded ? { maxHeight: 400, overflow: 'hidden' } : {}}
         ref={contentRef}
       >
-        <ReactMarkdown remarkPlugins={[remarkBreaks, remarkGfm]}>{processedBody}</ReactMarkdown>
-        {!expanded && isOverflow && (
+        <ReactMarkdown remarkPlugins={[remarkBreaks, remarkGfm]}>
+          {musing.body?.replace(/\n/g, '  \n').trim() || ''}
+        </ReactMarkdown>
+        {!expanded && showExpand && (
           <div className="pointer-events-none absolute bottom-0 left-0 h-20 w-full bg-gradient-to-t from-white to-transparent" />
         )}
       </div>
 
       {/* Expand button */}
-      {isOverflow && (
+      {showExpand && (
         <button
           className="mt-4 self-start rounded-lg border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-500 transition-all duration-200 hover:border-gray-300 hover:text-gray-700 hover:shadow-sm"
           onClick={() => setExpanded((v) => !v)}
@@ -85,7 +81,7 @@ function MusingCard({ musing }) {
       )}
 
       {/* Tags */}
-      {musing.tags && musing.tags.length > 0 && (
+      {musing.tags?.length > 0 && (
         <div className="mt-5 flex flex-wrap gap-2">
           {musing.tags.map((tag) => (
             <span
