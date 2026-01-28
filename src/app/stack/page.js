@@ -16,13 +16,15 @@ export default async function StackPage() {
         <div className="content">
           <PageTitle title="Stack" />
 
-          <div className="mb-8">
-            <p className="leading-relaxed text-gray-600">
-              Here's my curated collection of daily tools, from development essentials to productivity boosters. Each
-              tool has been battle-tested in real workflows and genuinely improves my output.
-            </p>
-            <p className="mt-2 text-sm text-gray-500">💡 Pro tip: Try the ↑ ↑ ↓ ↓ ← → ← → sequence...</p>
-          </div>
+          <p className="mb-2 leading-relaxed text-gray-600">
+            Here's my curated collection of daily tools, from development essentials to productivity boosters. Each tool
+            has been battle-tested in real workflows and genuinely improves my output.
+          </p>
+
+          {/* Pro tip */}
+          <p className="mb-10 text-sm text-gray-400">
+            💡 Try the <span className="font-mono text-xs">↑ ↑ ↓ ↓ ← → ← →</span> sequence
+          </p>
 
           {toolsData.categories.map((category) => (
             <CategorySection key={category.id} id={category.id} name={category.name} tools={category.tools} />

@@ -111,25 +111,18 @@ export function EasterEgg({ trigger = 'work hard' }) {
 
   return (
     <>
-      {/* Easter egg hint */}
-      <div className="fixed right-4 bottom-4 z-40">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ delay: 2, duration: 0.6 }}
-          className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-lg"
-        >
-          <div className="flex items-center gap-2">
-            <span className="text-lg">💡</span>
-            <div>
-              <p className="font-medium">Pro tip:</p>
-              <p className="text-xs text-gray-500">
-                Try typing "<span className="font-mono font-semibold text-blue-600">{trigger}</span>" for a surprise...
-              </p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+      {/* Easter egg hint - Minimal toast */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2, duration: 0.3 }}
+        className="fixed right-6 bottom-6 z-40 flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-sm text-white shadow-lg"
+      >
+        <span>💡</span>
+        <span>
+          Try typing <span className="font-mono text-amber-300">{trigger}</span>
+        </span>
+      </motion.div>
 
       {/* Matrix rain effect */}
       <AnimatePresence>

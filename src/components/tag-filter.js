@@ -1,17 +1,24 @@
+'use client'
+
 import Link from 'next/link'
+
+/**
+ * [INPUT]: 依赖 next/link
+ * [OUTPUT]: 对外提供 TagFilter 组件，标签筛选器
+ * [POS]: components/ 的标签筛选组件
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
 
 export function TagFilter({ tags, selectedTag }) {
   if (tags.length === 0) return null
 
   return (
-    <div className="mb-4 border-b border-gray-100 pb-4">
+    <div className="mb-6">
       <div className="flex flex-wrap gap-2">
         <Link
           href="/musings"
-          className={`rounded-full px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
-            !selectedTag
-              ? 'bg-gray-900 text-white shadow-sm'
-              : 'bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+          className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
+            !selectedTag ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
           }`}
         >
           All
@@ -20,10 +27,10 @@ export function TagFilter({ tags, selectedTag }) {
           <Link
             key={tag}
             href={`/musings?tag=${encodeURIComponent(tag)}`}
-            className={`rounded-full px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
+            className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
               selectedTag === tag
-                ? 'bg-gray-900 text-white shadow-sm'
-                : 'bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                ? 'bg-gray-900 text-white'
+                : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
             }`}
           >
             {tag}

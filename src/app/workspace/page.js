@@ -64,10 +64,9 @@ export default async function Workspace() {
             <HardwareList items={hardwareData} />
           </section>
           {/* Footer note */}
-          <div className="mt-16 rounded-lg bg-gray-50 p-6 text-center">
-            <p className="text-gray-600">
-              This workspace is constantly evolving. Check back regularly for updates on new projects, tools, and
-              insights from my development journey.
+          <div className="mt-16 text-center">
+            <p className="text-sm text-gray-400">
+              🌱 This workspace evolves constantly. New projects and tools are added as the journey unfolds.
             </p>
           </div>
         </div>

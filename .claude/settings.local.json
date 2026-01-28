@@ -7,7 +7,8 @@
       "Bash(tree:*)",
       "Bash(git --no-pager diff src/components/ src/globals.css)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(bun run lint:*)"
     ],
     "deny": []
   }

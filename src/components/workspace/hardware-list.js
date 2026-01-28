@@ -1,76 +1,105 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { CldImage } from 'next-cloudinary'
 
-export function HardwareList({ items }) {
-  const getCategoryIcon = (category) => {
-    switch (category) {
-      case 'laptop':
-        return '💻'
-      case 'display':
-        return '🖥️'
-      case 'keyboard':
-        return '⌨️'
-      case 'mouse':
-        return '🖱️'
-      case 'audio':
-        return '🎧'
-      case 'lighting':
-        return '💡'
-      case 'xr':
-        return '👓'
-      default:
-        return '⚙️'
-    }
-  }
+/**
+ * [INPUT]: 依赖 next-cloudinary 的 CldImage 组件
+ * [OUTPUT]: 对外提供 HardwareList 组件，展示硬件设备列表
+ * [POS]: components/workspace/ 的硬件展示组件
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
 
+const CATEGORY_CONFIG = {
+  laptop: {
+    icon: '💻',
+    label: 'Computer',
+    color: 'bg-blue-50 text-blue-600'
+  },
+  display: {
+    icon: '🖥️',
+    label: 'Display',
+    color: 'bg-purple-50 text-purple-600'
+  },
+  keyboard: {
+    icon: '⌨️',
+    label: 'Keyboard',
+    color: 'bg-emerald-50 text-emerald-600'
+  },
+  mouse: {
+    icon: '🖱️',
+    label: 'Mouse',
+    color: 'bg-orange-50 text-orange-600'
+  },
+  audio: {
+    icon: '🎧',
+    label: 'Audio',
+    color: 'bg-pink-50 text-pink-600'
+  },
+  lighting: {
+    icon: '💡',
+    label: 'Lighting',
+    color: 'bg-amber-50 text-amber-600'
+  },
+  xr: {
+    icon: '👓',
+    label: 'XR Device',
+    color: 'bg-indigo-50 text-indigo-600'
+  },
+  default: {
+    icon: '⚙️',
+    label: 'Device',
+    color: 'bg-gray-50 text-gray-600'
+  }
+}
+
+const getCategoryConfig = (category) => CATEGORY_CONFIG[category] || CATEGORY_CONFIG.default
+
+export function HardwareList({ items }) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Desk Setup Photo */}
-      <div className="flex justify-center">
-        <div className="relative aspect-[4/3] w-full max-w-lg overflow-hidden rounded-lg shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white p-2">
+        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-gray-50">
           <CldImage
             src="IMG_0282_kitech"
             alt="My Desk Setup"
-            width={600}
-            height={450}
+            width={1200}
+            height={750}
             quality="auto"
             format="auto"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, 800px"
             className="h-full w-full object-cover"
             crop="fill"
             gravity="center"
           />
-
-          {/* Decorative elements */}
-          <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-white/20" />
-          <div className="absolute bottom-4 left-4 h-6 w-6 rounded-full bg-white/30" />
         </div>
       </div>
 
-      {/* Hardware List */}
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="group rounded-lg border bg-white p-3 shadow-sm transition-all duration-200 hover:shadow-md"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-base">
-                {getCategoryIcon(item.category)}
+      {/* Hardware Grid */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item, index) => {
+          const config = getCategoryConfig(item.category)
+          return (
+            <div
+              key={index}
+              className="group flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-4 transition-all duration-300 hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+            >
+              {/* Icon Badge */}
+              <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-lg ${config.color}`}>
+                {config.icon}
               </div>
+
+              {/* Content */}
               <div className="min-w-0 flex-1">
-                <h3 className="text-sm font-semibold text-gray-900">{item.name}</h3>
-                <p className="truncate text-xs text-gray-600">{item.detail}</p>
-                <p className="text-xs text-gray-500">{item.role}</p>
+                <div className="mb-1 flex items-center gap-2">
+                  <h3 className="text-sm font-semibold text-gray-900">{item.name}</h3>
+                </div>
+                <p className="mb-1 text-sm text-gray-500">{item.detail}</p>
+                <p className="text-xs text-gray-400">{item.role}</p>
               </div>
             </div>
-          </motion.div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
