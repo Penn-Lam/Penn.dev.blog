@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 
 import { FloatingHeader } from '@/components/floating-header'
 import { PageTitle } from '@/components/page-title'
+import { PenflowSignature } from '@/components/penflow-signature'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
 import { TimeGreeting } from '@/components/time-greeting'
@@ -47,6 +48,7 @@ export default async function Home() {
           <Suspense fallback={<ScreenLoadingSpinner />}>
             <WritingList items={items} header="Writing" />
           </Suspense>
+          <PenflowSignature />
         </div>
       </div>
     </ScrollArea>
