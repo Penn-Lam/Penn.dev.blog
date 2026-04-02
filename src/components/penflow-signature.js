@@ -1,19 +1,38 @@
 'use client'
 
 import { Penflow } from 'penflow/react'
+import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
+import { SCROLL_AREA_ID } from '@/lib/constants'
+
 export function PenflowSignature() {
+  const [root, setRoot] = useState(null)
+  const [playCount, setPlayCount] = useState(0)
+
+  useEffect(() => {
+    setRoot(document.getElementById(SCROLL_AREA_ID))
+  }, [])
+
   const { ref, inView } = useInView({
-    rootMargin: '0px 0px -15% 0px',
-    triggerOnce: false
+    root,
+    rootMargin: '0px',
+    triggerOnce: false,
+    fallbackInView: true
   })
 
+  useEffect(() => {
+    if (inView) {
+      setPlayCount((count) => count + 1)
+    }
+  }, [inView])
+
   return (
-    <section ref={ref} className="mt-14 border-t border-gray-200 pt-10">
+    <section ref={ref} className="mt-14 pt-10">
       <div className="mx-auto flex max-w-xs justify-center">
         {inView ? (
           <Penflow
+            key={playCount}
             text="Penn Lam"
             fontUrl="/fonts/BrittanySignature.ttf"
             color="#222222"
