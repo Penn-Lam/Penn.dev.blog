@@ -1,6 +1,7 @@
 {
   "name": "pennlam.com",
   "description": "My personal website.",
+  "packageManager": "bun@1.3.8",
   "author": {
     "name": "Penn Lam",
     "url": "https://pennlam.com"
