@@ -100,19 +100,19 @@
     font-family: var(--font-fz-pingxian-yasong), 'Source Han Serif SC', '思源宋体', serif;
   }
 
-  /* 为写作页面添加霞鹜文楷字体 */
+  /* Use FZ PingXian YaSong for writing content */
   .writing-content,
   .writing-content * {
-    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-fz-pingxian-yasong), serif;
+    font-family: var(--font-fz-pingxian-yasong), 'Source Han Serif SC', '思源宋体', serif;
   }
 
-  /* 确保写作页面的内容使用霞鹜文楷 */
+  /* Keep nested writing content aligned with the main serif font */
   .writing-content .content,
   .writing-content .content * {
-    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-fz-pingxian-yasong), serif;
+    font-family: var(--font-fz-pingxian-yasong), 'Source Han Serif SC', '思源宋体', serif;
   }
 
-  /* 针对写作页面的特定样式 */
+  /* Keep writing typography consistent across common rich text tags */
   .writing-content h1,
   .writing-content h2,
   .writing-content h3,
@@ -124,7 +124,7 @@
   .writing-content blockquote,
   .writing-content article,
   .writing-content .prose {
-    font-family: var(--font-lxgw-wenkai), '霞鹜文楷', var(--font-fz-pingxian-yasong), serif;
+    font-family: var(--font-fz-pingxian-yasong), 'Source Han Serif SC', '思源宋体', serif;
   }
 
   #__next {

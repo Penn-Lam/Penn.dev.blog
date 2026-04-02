@@ -5,7 +5,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import classix from 'classix'
 import { GeistMono } from 'geist/font/mono'
 import { EyeIcon } from 'lucide-react'
-import { LXGW_WenKai_TC } from 'next/font/google'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import Script from 'next/script'
@@ -38,13 +37,6 @@ const fzPingXianYaSong = localFont({
   display: 'swap'
 })
 
-const lxgwWenKai = LXGW_WenKai_TC({
-  subsets: ['latin'],
-  weight: ['300', '400', '700'],
-  variable: '--font-lxgw-wenkai',
-  display: 'swap'
-})
-
 export const fetchCache = 'default-cache'
 
 export default async function RootLayout({ children }) {
@@ -55,7 +47,7 @@ export default async function RootLayout({ children }) {
     <html
       lang="en"
       data-theme="light"
-      className={classix(GeistMono.variable, iaWriterQuattroS.variable, fzPingXianYaSong.variable, lxgwWenKai.variable)}
+      className={classix(GeistMono.variable, iaWriterQuattroS.variable, fzPingXianYaSong.variable)}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>
