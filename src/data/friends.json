@@ -1,0 +1,25 @@
+{
+  "friends": [
+    {
+      "name": "Penn",
+      "url": "https://pennlam.com/",
+      "avatar": "https://www.pennlam.com/assets/me.avif",
+      "github": "penn-lam",
+      "signature": "Penn Lam"
+    },
+    {
+      "name": "Zen",
+      "url": "https://zenhungyep.com/",
+      "avatar": "https://zenhungyep.com/assets/dp.jpg",
+      "github": "autism-ip",
+      "signature": "Zen Yep"
+    },
+    {
+      "name": "Caden",
+      "url": "https://chenqiucaden.com/",
+      "avatar": "https://chenqiucaden.com/_next/image?url=%2Favatar.jpg&w=3840&q=75",
+      "github": "QiuChen-Caden",
+      "signature": "Qiu Chen"
+    }
+  ]
+}

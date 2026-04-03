@@ -1,0 +1,15 @@
+hook:
+    - conventional
+scopes:
+    - description: application pages, routes, layouts, and server-side logic
+      name: app
+    - description: reusable shared components and design system elements
+      name: ui
+    - description: core utility functions, constants, database, and external api integrations
+      name: lib
+    - description: static content, tool definitions, and workspace configuration files
+      name: data
+    - description: custom react hooks for state management and data fetching
+      name: hooks
+    - description: utility and maintenance scripts for build/deploy tasks
+      name: scripts
