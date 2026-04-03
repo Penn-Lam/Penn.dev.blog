@@ -1,13 +1,13 @@
 'use client'
 
 /**
- * [INPUT]: 无外部依赖，使用 public/assets/leaves.png 素材
+ * [INPUT]: 无外部依赖，使用 public/assets/leaves.png 素材和 public/assets/summer-garden-ambience.mp3 BGM
  * [OUTPUT]: 对外提供 SunnyToggle（iOS 风格开关 + 提示语）和 SunnyOverlay（光影覆盖层）
  * [POS]: components/ 的阳光模式组件，被 app/page.js 使用
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
-import { useCallback, useEffect, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react'
 
 const STORAGE_KEY = 'sunny-mode'
 const SHUTTER_COUNT = 23
@@ -80,8 +80,26 @@ export function SunnyToggle() {
 /* ========================================================================
    阳光光影覆盖层 — fixed 定位，不阻挡交互
    ======================================================================== */
+const BGM_SRC = '/assets/summer-garden-ambience.mp3'
+
 export function SunnyOverlay() {
   const { active } = useSunnyMode()
+  const audioRef = useRef(null)
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      const audio = new Audio(BGM_SRC)
+      audio.loop = true
+      audio.volume = 0.4
+      audioRef.current = audio
+    }
+    if (active) {
+      audioRef.current.play().catch(() => {})
+    } else {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+    }
+  }, [active])
 
   return (
     <div className="pointer-events-none fixed inset-0 z-40" aria-hidden="true">
