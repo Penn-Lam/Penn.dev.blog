@@ -4,6 +4,14 @@
 @plugin '@tailwindcss/container-queries';
 @plugin 'tailwindcss-animate';
 
+@font-face {
+  font-family: 'Brittany Signature';
+  src: url('/fonts/BrittanySignature.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme static {
   --sh-identifier: #171717;
   --sh-sign: #8996a3;

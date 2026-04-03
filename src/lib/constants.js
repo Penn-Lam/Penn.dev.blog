@@ -5,6 +5,7 @@ import {
   HandIcon,
   ImageIcon,
   LinkedinIcon,
+  LinkIcon,
   MessageCircleIcon,
   NavigationIcon,
   PencilLineIcon,
@@ -137,6 +138,11 @@ export const LINKS = [
     href: '/bookmarks',
     label: 'Bookmarks',
     icon: <BookmarkIcon size={16} />
+  },
+  {
+    href: '/friends',
+    label: 'Friends',
+    icon: <LinkIcon size={16} />
   },
   {
     href: '/musings',
