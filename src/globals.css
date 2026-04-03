@@ -448,6 +448,31 @@
 }
 
 /* ==========================================================================
+   SUNNY MODE: 阳光透窗光影效果
+   ========================================================================== */
+
+/* 树叶风动 — 微风中的呼吸感 */
+.sunny-leaves {
+  animation: sunny-billow 8s ease-in-out infinite;
+}
+
+@keyframes sunny-billow {
+  0% { transform: perspective(400px) rotateX(0deg) rotateY(0deg) scale(1); }
+  25% { transform: perspective(400px) rotateX(1deg) rotateY(2deg) scale(1.02); }
+  50% { transform: perspective(400px) rotateX(-4deg) rotateY(-2deg) scale(0.97); }
+  75% { transform: perspective(400px) rotateX(1deg) rotateY(-1deg) scale(1.04); }
+  100% { transform: perspective(400px) rotateX(0deg) rotateY(0deg) scale(1); }
+}
+
+/* prefers-reduced-motion 降级 */
+@media (prefers-reduced-motion: reduce) {
+  .sunny-leaves {
+    animation: none !important;
+    filter: none !important;
+  }
+}
+
+/* ==========================================================================
    ENTRANCE ANIMATION UTILITIES
    ========================================================================== */
 

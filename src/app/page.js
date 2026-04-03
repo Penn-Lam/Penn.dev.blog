@@ -6,6 +6,7 @@ import { PageTitle } from '@/components/page-title'
 import { PenflowSignature } from '@/components/penflow-signature'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
+import { SunnyOverlay, SunnyToggle } from '@/components/sunny-mode'
 import { TimeGreeting } from '@/components/time-greeting'
 import { Button } from '@/components/ui/button'
 import { WritingList } from '@/components/writing-list'
@@ -24,6 +25,7 @@ export default async function Home() {
 
   return (
     <ScrollArea useScrollAreaId>
+      <SunnyOverlay />
       <FloatingHeader scrollTitle="Penn" />
       <div className="content-wrapper">
         <div className="content">
@@ -40,6 +42,7 @@ export default async function Home() {
             <br />
             Bridging GenAI × personal computing — let's connect and shape the future together.
           </p>
+          <SunnyToggle />
           <Button asChild variant="link" className="inline px-0">
             <Link href="/writing">
               <h2 className="mt-8 mb-4">Writing</h2>
