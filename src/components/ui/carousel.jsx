@@ -81,8 +81,10 @@ const Carousel = memo(({ orientation = 'horizontal', opts, setApi, plugins, clas
     api.on('select', onSelect)
 
     return () => {
-      api.off('reInit', onSelect)
-      api.off('select', onSelect)
+      if (typeof api.off === 'function') {
+        api.off('reInit', onSelect)
+        api.off('select', onSelect)
+      }
     }
   }, [api, onSelect])
 

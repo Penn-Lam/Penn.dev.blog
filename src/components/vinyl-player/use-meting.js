@@ -60,7 +60,7 @@ export function useMeting() {
     return () => {
       clearInterval(poll)
       const ap = aplayerRef.current
-      if (ap) {
+      if (ap && typeof ap.off === 'function') {
         ap.off('play')
         ap.off('pause')
         ap.off('listswitch')
