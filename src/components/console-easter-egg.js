@@ -47,7 +47,7 @@ const hiddenCommands = {
   hire     - Check if we're hiring
   source   - View source code`,
   coffee: '☕ Thanks for the virtual coffee! Send real one to linpengpeng@gmail.com',
-  hire: "We're always looking for talented developers. Email us at hiring@ penn.dev",
+  hire: "We're always looking for talented developers. Email us at charon@autopia.chat",
   source: 'This site is open source! Check the GitHub repo for all the code.',
   secret: '🎉 You found the secret! Try the Konami Code: ↑↑↓↓←→←→BA',
   whois: 'Penn Lam - AI Agent Developer, Technical Founder, Popping Dancer 🤠',

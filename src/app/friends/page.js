@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 依赖 @/data/friends.json 的友链数据，@/components/friend-card 的 FriendCard 组件
+ * [INPUT]: 依赖 @/data/friends.json 的友链数据，@/components/friend-card、@/components/submit-friend/dialog
  * [OUTPUT]: 对外提供 FriendsPage 页面组件和 generateMetadata 元数据
  * [POS]: app/friends/ 的页面入口，友链展示页面
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -10,6 +10,7 @@ import { FriendCard } from '@/components/friend-card'
 import { GradientBg5 } from '@/components/gradient-bg'
 import { PageTitle } from '@/components/page-title'
 import { ScrollArea } from '@/components/scroll-area'
+import { SubmitFriendDialog } from '@/components/submit-friend/dialog'
 import friendsData from '@/data/friends.json'
 import { getPageSeo } from '@/lib/contentful'
 
@@ -20,7 +21,10 @@ export default function FriendsPage() {
       <FloatingHeader title="Friends" />
       <div className="content-wrapper">
         <div className="content">
-          <PageTitle title="Friends" />
+          <div className="mb-6 flex items-center justify-between">
+            <PageTitle title="Friends" className="mb-0" />
+            <SubmitFriendDialog />
+          </div>
           <p className="mb-10 leading-relaxed text-gray-600">
             Write code and tinker with fun things in our own corners — then meet here.
           </p>

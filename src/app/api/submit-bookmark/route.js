@@ -42,7 +42,7 @@ export async function POST(req) {
     const { url, email, type } = data.data
     const token = await getLarkTenantToken()
     const res = await createBitableRecord(token, {
-      URL: url,
+      URL: { link: url, text: url },
       Email: email,
       Date: Date.now(),
       Type: type || 'Other'
