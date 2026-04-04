@@ -5,6 +5,7 @@ const Toaster = ({ ...props }) => {
     <Sonner
       theme="light"
       className="toaster group"
+      closeButton={false}
       toastOptions={{
         classNames: {
           toast:
