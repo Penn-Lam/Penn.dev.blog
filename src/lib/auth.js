@@ -7,6 +7,15 @@ import { nextCookies } from 'better-auth/next-js'
 import { db } from '@/lib/database'
 import * as schema from '@/lib/schema'
 
+function normalizeUrl(url) {
+  return url?.trim().replace(/\/$/, '') || undefined
+}
+
+const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL)
+const betterAuthUrl = normalizeUrl(process.env.BETTER_AUTH_URL)
+const vercelUrl = normalizeUrl(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined)
+const baseURL = process.env.NODE_ENV === 'production' ? siteUrl || betterAuthUrl || vercelUrl : undefined
+
 const socialProviders = {
   github: {
     clientId: process.env.GITHUB_CLIENT_ID,
@@ -15,6 +24,7 @@ const socialProviders = {
 }
 
 export const auth = betterAuth({
+  baseURL,
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema: {
@@ -23,5 +33,9 @@ export const auth = betterAuth({
     }
   }),
   socialProviders,
+  trustedOrigins: (request) =>
+    Array.from(
+      new Set([siteUrl, betterAuthUrl, vercelUrl, request ? new URL(request.url).origin : undefined].filter(Boolean))
+    ),
   plugins: [nextCookies()]
 })

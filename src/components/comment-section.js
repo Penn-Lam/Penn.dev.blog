@@ -2,8 +2,6 @@
 
 import { Comments } from '@fuma-comment/react'
 
-import { authClient } from '@/lib/auth-client'
-
 export function CommentSection({ page, className }) {
   return (
     <section className={className}>
@@ -13,16 +11,11 @@ export function CommentSection({ page, className }) {
           page={page}
           auth={{
             type: 'api',
-            signIn: async () => {
-              const response = await authClient.signIn.social({
-                provider: 'github',
-                callbackURL: window.location.href,
-                errorCallbackURL: '/sign-in?error=github',
-                disableRedirect: true
+            signIn: () => {
+              const params = new URLSearchParams({
+                callback: window.location.href
               })
-              if (response?.data?.url) {
-                window.location.href = response.data.url
-              }
+              window.location.href = `/sign-in?${params.toString()}`
             }
           }}
         />
