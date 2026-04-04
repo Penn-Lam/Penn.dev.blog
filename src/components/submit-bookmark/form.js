@@ -191,7 +191,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
           </span>
         </FormLabel>
         <FormControl>
-          <Input placeholder="johndoe@gmail.com" {...field} aria-required="true" />
+          <Input placeholder="example@gmail.com" {...field} aria-required="true" />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -210,10 +210,6 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
             </SelectTrigger>
           </FormControl>
           <SelectContent>
-            {/* 空选项 */}
-            <SelectItem value="" disabled>
-              <span className="text-gray-400">Select a type...</span>
-            </SelectItem>
             {bookmarks.map((bookmark) => (
               <SelectItem key={bookmark.slug} value={bookmark.title}>
                 {bookmark.title}

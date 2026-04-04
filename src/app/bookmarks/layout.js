@@ -37,12 +37,7 @@ export default async function BookmarksLayout({ children }) {
         </SideMenu>
         <div className="lg:bg-grid flex-1">{children}</div>
       </div>
-      <Toaster
-        closeButton
-        toastOptions={{
-          duration: 5000
-        }}
-      />
+      <Toaster />
     </>
   )
 }

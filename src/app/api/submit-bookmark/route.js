@@ -1,13 +1,21 @@
+/**
+ * [INPUT]: 依赖 formSchema 验证、isbot 检测、rate-limit 限流、lark API
+ * [OUTPUT]: 对外提供 POST handler，接收书签提交并写入飞书多维表格
+ * [POS]: api/submit-bookmark 的路由处理，书签提交的服务端入口
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
 import ip from '@arcjet/ip'
 import { isbot } from 'isbot'
 import { NextResponse } from 'next/server'
 
 import { formSchema } from '@/components/submit-bookmark/utils'
+import { createBitableRecord, getLarkTenantToken } from '@/lib/lark'
 import rateLimit from '@/lib/rate-limit'
 
 const limiter = rateLimit({
-  interval: 600 * 1000, // 10 minutes (600 seconds * 1000 ms)
-  uniqueTokenPerInterval: 500 // Max 500 IPs
+  interval: 600 * 1000,
+  uniqueTokenPerInterval: 500
 })
 
 export async function POST(req) {
@@ -22,42 +30,23 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Bots are not allowed.' }, { status: 403 })
   }
 
-  // Use the @arcjet/ip package to get the client's IP address. This looks at
-  // the headers set by different hosting platforms to try and get the real IP
-  // address before falling back to the request's remote address. This is
-  // necessary because the IP headers could be spoofed. In non-production
-  // environments we allow private/internal IPs.
-  const clientIp = ip(req, req.headers)
+  const clientIp = ip(req, req.headers) || '127.0.0.1'
 
   try {
-    await limiter.check(5, clientIp) // Limit to 5 requests
+    await limiter.check(5, clientIp)
   } catch {
     return NextResponse.json({ error: 'Rate limit exceeded. Try again later.' }, { status: 429 })
   }
 
   try {
     const { url, email, type } = data.data
-
-    const response = await fetch(
-      `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_BOOKMARKS_TABLE_ID}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.AIRTABLE_PERSONAL_ACCESS_TOKEN}`
-        },
-        body: JSON.stringify({
-          fields: {
-            URL: url,
-            Email: email,
-            Date: new Date().toISOString(),
-            Type: type || 'Other'
-          }
-        })
-      }
-    )
-
-    const res = await response.json()
+    const token = await getLarkTenantToken()
+    const res = await createBitableRecord(token, {
+      URL: url,
+      Email: email,
+      Date: Date.now(),
+      Type: type || 'Other'
+    })
     return NextResponse.json({ res })
   } catch (error) {
     console.info(error)
