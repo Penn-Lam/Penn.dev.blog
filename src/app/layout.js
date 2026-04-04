@@ -83,6 +83,9 @@ export default async function RootLayout({ children }) {
           data-token={process.env.NEXT_PUBLIC_TINYBIRD_TOKEN}
           strategy="lazyOnload"
         />
+        {/* APlayer + MetingJS：黑胶唱片播放器的音频引擎 */}
+        <Script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" strategy="afterInteractive" />
+        <Script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" strategy="afterInteractive" />
       </body>
     </html>
   )

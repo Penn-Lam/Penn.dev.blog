@@ -29,7 +29,8 @@ const keyCodePathnameMapping = {
   Digit5: '/workspace',
   Digit6: '/visual',
   Digit7: '/bookmarks',
-  Digit8: '/musings'
+  Digit8: '/friends',
+  Digit9: '/musings'
 }
 
 export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
@@ -53,7 +54,7 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
     () => (
       <ScrollArea
         className={cn(
-          'hidden bg-zinc-50 lg:flex lg:flex-col lg:border-r',
+          'hidden bg-zinc-50 lg:flex lg:h-screen lg:flex-col lg:border-r',
           isInner ? 'lg:w-80 xl:w-96' : 'lg:w-60 xl:w-72'
         )}
       >
@@ -80,7 +81,7 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
             </div>
           </div>
         )}
-        <div className="bg-zinc-50 p-3">{children}</div>
+        <div className="flex flex-1 flex-col bg-zinc-50 p-3">{children}</div>
       </ScrollArea>
     ),
     [isInner, title, isWritingPath, isBookmarksPath, bookmarks, currentBookmark, children]

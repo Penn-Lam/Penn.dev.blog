@@ -1,6 +1,14 @@
+/**
+ * [INPUT]: 依赖 NavigationLink、VinylPlayer、常量 LINKS/PROFILES
+ * [OUTPUT]: 对外提供 MenuContent 组件
+ * [POS]: components 的主侧边栏内容组件，包含导航、社交链接、黑胶播放器
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
 import Link from 'next/link'
 
 import { NavigationLink } from '@/components/navigation-link'
+import { VinylPlayer } from '@/components/vinyl-player'
 import { LINKS, PROFILES } from '@/lib/constants'
 
 export const MenuContent = () => (
@@ -32,6 +40,7 @@ export const MenuContent = () => (
             shortcutNumber={linkIndex + 1}
           />
         ))}
+        <VinylPlayer />
       </div>
     </div>
     <hr />

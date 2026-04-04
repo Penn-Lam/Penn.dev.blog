@@ -1,0 +1,92 @@
+/* 黑胶唱片：纹路 + 标签 + 旋转动画 */
+
+.record {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #333, black, #555, black, #333);
+  cursor: default;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease-out;
+}
+
+.record[role='button'] {
+  cursor: pointer;
+}
+
+/* 唱片纹路 */
+.record::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle at center, black 2px, transparent 4px);
+}
+
+/* 内圈暗区 */
+.record::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 55%;
+  height: 55%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+/* 中心标签 */
+.label {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 38%;
+  height: 38%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 2;
+  overflow: hidden;
+  padding: 4px;
+}
+
+/* 主轴 */
+.spindle {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  z-index: 3;
+}
+
+/* 旋转动画 */
+.spinning {
+  animation: spin 4s linear infinite;
+}
+
+.stopping {
+  animation: spinStop 1.5s ease-out forwards;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinStop {
+  to {
+    transform: rotate(120deg);
+  }
+}
