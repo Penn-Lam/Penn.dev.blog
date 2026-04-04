@@ -15,7 +15,7 @@ import {
 
 export const PROFILES = {
   twitter: {
-    title: 'X (Twitter)',
+    title: 'Twitter',
     username: 'Penn_Lam', // 请替换为您的 Twitter 用户名
     url: 'https://x.com/PennLam17887', // 请替换为您的 Twitter 个人资料 URL
     icon: (
