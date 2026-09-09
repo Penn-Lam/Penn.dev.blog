@@ -6,7 +6,6 @@ import {
   ImageIcon,
   LinkedinIcon,
   LinkIcon,
-  MessageCircleIcon,
   NavigationIcon,
   PencilLineIcon,
   SparklesIcon,
@@ -17,7 +16,7 @@ export const PROFILES = {
   twitter: {
     title: 'Twitter',
     username: 'Penn_Lam', // 请替换为您的 Twitter 用户名
-    url: 'https://x.com/PennLam17887', // 请替换为您的 Twitter 个人资料 URL
+    url: 'https://x.com/pennlm', // 请替换为您的 Twitter 个人资料 URL
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -143,11 +142,6 @@ export const LINKS = [
     href: '/friends',
     label: 'Friends',
     icon: <LinkIcon size={16} />
-  },
-  {
-    href: '/musings',
-    label: 'Musings',
-    icon: <MessageCircleIcon size={16} />
   }
 ]
 

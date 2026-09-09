@@ -91,7 +91,9 @@ export default async function WritingSlug(props) {
             />
             <RichText content={content} />
           </article>
-          <CommentSection page={`writing:${slug}`} className="mt-12 border-t border-gray-100 pt-8" />
+          <ClientOnly>
+            <CommentSection page={`writing:${slug}`} className="mt-12 border-t border-gray-100 pt-8" />
+          </ClientOnly>
         </div>
       </ScrollArea>
       <ClientOnly>

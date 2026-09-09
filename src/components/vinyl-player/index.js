@@ -19,7 +19,7 @@ import { VinylRecord } from './vinyl-record'
 export const VinylPlayer = memo(() => {
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = useCallback(() => setIsOpen((v) => !v), [])
-  useKeyPress(toggleOpen, ['Digit0'])
+  useKeyPress(toggleOpen, ['Digit9'])
   const { containerRef, isReady, isPlaying, currentTrack, toggle, next, prev } = useMeting()
 
   return (
@@ -43,9 +43,9 @@ export const VinylPlayer = memo(() => {
             'hidden size-5 place-content-center rounded-sm border border-gray-200 bg-gray-100 text-xs font-medium text-gray-500 lg:grid',
             isOpen && 'border-gray-600 bg-gray-700 text-gray-200'
           )}
-          title="Shortcut key: 0"
+          title="Shortcut key: 9"
         >
-          0
+          9
         </span>
       </button>
       {isOpen && isReady && (

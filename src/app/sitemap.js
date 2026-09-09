@@ -51,12 +51,6 @@ export default async function sitemap() {
       changeFrequency: 'yearly',
       priority: 1
     },
-    {
-      url: 'https://pennlam.com/musings',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8
-    },
     ...pages,
     ...writings,
     ...mappedBookmarks
