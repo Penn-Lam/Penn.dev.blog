@@ -13,7 +13,7 @@ export default async function VisualPage() {
       <div className="content-wrapper">
         <div className="content">
           <PageTitle title="Visual Portfolio" className="lg:hidden" />
-          <p className="mb-8 text-gray-600">
+          <p className="text-text-secondary mb-8">
             Explore a curated collection of visual works including photography and AI-generated art. Discover creative
             expressions across different mediums and styles.
           </p>

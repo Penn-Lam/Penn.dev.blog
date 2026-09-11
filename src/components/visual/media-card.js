@@ -40,7 +40,7 @@ export function MediaCard({ item, isHovered, onClick }) {
 
   return (
     <div
-      className="group relative cursor-pointer overflow-hidden rounded bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
+      className="bg-background-primary-default group relative cursor-pointer overflow-hidden rounded shadow-sm transition-all duration-300 hover:shadow-lg"
       onClick={onClick}
     >
       {/* Main Image/Video */}
@@ -65,12 +65,12 @@ export function MediaCard({ item, isHovered, onClick }) {
             ) : null}
             {/* Fallback for video */}
             <div
-              className="absolute inset-0 flex items-center justify-center bg-gray-100"
+              className="bg-background-secondary-default absolute inset-0 flex items-center justify-center"
               style={{ display: thumbnailUrl ? 'none' : 'flex' }}
             >
-              <div className="text-center text-gray-500">
+              <div className="text-text-secondary text-center">
                 <PlayIcon className="mx-auto mb-2 h-12 w-12" />
-                <span className="text-sm">Video</span>
+                <span className="text-body-regular">Video</span>
               </div>
             </div>
           </div>
@@ -113,13 +113,13 @@ export function MediaCard({ item, isHovered, onClick }) {
           transition={{ duration: 0.2 }}
           className="absolute top-4 right-4 flex gap-2"
         >
-          <button className="rounded-full bg-white/90 p-2 text-gray-700 backdrop-blur-sm transition-all hover:scale-110 hover:bg-white">
+          <button className="bg-background-primary-default/90 text-text-secondary hover:bg-background-primary-default rounded-full p-2 backdrop-blur-sm transition-all hover:scale-110">
             <HeartIcon className="h-4 w-4" />
           </button>
-          <button className="rounded-full bg-white/90 p-2 text-gray-700 backdrop-blur-sm transition-all hover:scale-110 hover:bg-white">
+          <button className="bg-background-primary-default/90 text-text-secondary hover:bg-background-primary-default rounded-full p-2 backdrop-blur-sm transition-all hover:scale-110">
             <ShareIcon className="h-4 w-4" />
           </button>
-          <button className="rounded-full bg-white/90 p-2 text-gray-700 backdrop-blur-sm transition-all hover:scale-110 hover:bg-white">
+          <button className="bg-background-primary-default/90 text-text-secondary hover:bg-background-primary-default rounded-full p-2 backdrop-blur-sm transition-all hover:scale-110">
             <EyeIcon className="h-4 w-4" />
           </button>
         </motion.div>
@@ -133,13 +133,13 @@ export function MediaCard({ item, isHovered, onClick }) {
             className="absolute bottom-3 left-3 flex items-center gap-3 text-white"
           >
             {item.likes && (
-              <div className="flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs backdrop-blur-sm">
+              <div className="text-caption-1-regular flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-white backdrop-blur-sm">
                 <HeartIcon className="h-3 w-3" />
                 <span>{item.likes}</span>
               </div>
             )}
             {item.views && (
-              <div className="flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs backdrop-blur-sm">
+              <div className="text-caption-1-regular flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-white backdrop-blur-sm">
                 <EyeIcon className="h-3 w-3" />
                 <span>{item.views}</span>
               </div>

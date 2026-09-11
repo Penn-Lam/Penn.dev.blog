@@ -39,12 +39,12 @@ export const ToolCard = memo(function ToolCard({ tool }) {
       href={tool.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 transition-all duration-300 hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+      className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group relative flex flex-col overflow-hidden rounded-2xl border p-5 transition-all duration-300"
     >
       {/* Header: Icon + Name + Arrow */}
       <div className="mb-3 flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-gray-50">
+          <div className="bg-background-secondary-default relative flex h-12 w-12 items-center justify-center rounded-xl">
             <Image
               src={`/tools/${tool.slug}.svg`}
               alt={`${tool.name} icon`}
@@ -58,23 +58,23 @@ export const ToolCard = memo(function ToolCard({ tool }) {
             />
             <div className="absolute inset-0 hidden items-center justify-center text-xl">🛠️</div>
           </div>
-          <h3 className="text-sm font-semibold text-gray-900">{tool.name}</h3>
+          <h3 className="text-body-semibold text-text-primary">{tool.name}</h3>
         </div>
         <ArrowUpRightIcon
           size={14}
-          className="mt-1 text-gray-300 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gray-500"
+          className="text-text-placeholder group-hover:text-text-secondary mt-1 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
         />
       </div>
 
       {/* Description */}
-      <p className="mb-4 flex-1 text-sm leading-relaxed text-gray-500">{tool.desc}</p>
+      <p className="text-body-regular text-text-secondary mb-4 flex-1 leading-relaxed">{tool.desc}</p>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5">
         {tool.tags.map((tag) => (
           <span
             key={tag}
-            className={`inline-flex items-center rounded-lg px-2 py-1 text-[11px] font-medium tracking-wide ${TAG_COLORS[tag] || 'bg-gray-50 text-gray-600'}`}
+            className={`text-caption-2-medium inline-flex items-center rounded-lg px-2 py-1 tracking-wide ${TAG_COLORS[tag] || 'bg-background-secondary-default text-text-secondary'}`}
           >
             {tag}
           </span>
@@ -83,7 +83,7 @@ export const ToolCard = memo(function ToolCard({ tool }) {
 
       {/* Tip - subtle hover reveal */}
       {tool.tip && (
-        <div className="absolute inset-x-0 bottom-0 border-t border-gray-50 bg-white/95 px-5 py-3 text-xs text-gray-400 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+        <div className="border-separator-border bg-background-primary-default/95 text-caption-1-regular text-text-tertiary absolute inset-x-0 bottom-0 border-t px-5 py-3 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
           {tool.tip}
         </div>
       )}

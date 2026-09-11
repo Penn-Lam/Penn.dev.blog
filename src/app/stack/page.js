@@ -16,14 +16,14 @@ export default async function StackPage() {
         <div className="content">
           <PageTitle title="Stack" />
 
-          <p className="mb-2 leading-relaxed text-gray-600">
+          <p className="text-text-secondary mb-2 leading-relaxed">
             Here's my curated collection of daily tools, from development essentials to productivity boosters. Each tool
             has been battle-tested in real workflows and genuinely improves my output.
           </p>
 
           {/* Pro tip */}
-          <p className="mb-10 text-sm text-gray-400">
-            💡 Try the <span className="font-mono text-xs">↑ ↑ ↓ ↓ ← → ← →</span> sequence
+          <p className="text-body-regular text-text-tertiary mb-10">
+            💡 Try the <span className="text-caption-1-regular font-mono">↑ ↑ ↓ ↓ ← → ← →</span> sequence
           </p>
 
           {toolsData.categories.map((category) => (

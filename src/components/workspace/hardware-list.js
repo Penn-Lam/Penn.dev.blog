@@ -23,8 +23,8 @@ export function HardwareList({ items }) {
   return (
     <div className="space-y-10">
       {/* Desk Setup Photo */}
-      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white p-2">
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-gray-50">
+      <div className="border-separator-border bg-background-primary-default overflow-hidden rounded-2xl border p-2">
+        <div className="bg-background-secondary-default relative aspect-[16/10] w-full overflow-hidden rounded-xl">
           <CldImage
             src="IMG_0282_kitech"
             alt="My Desk Setup"
@@ -46,20 +46,20 @@ export function HardwareList({ items }) {
           const config = CATEGORY_CONFIG[item.category] || {
             icon: '⚙️',
             label: 'Device',
-            color: 'bg-gray-50 text-gray-600'
+            color: 'bg-background-secondary-default text-text-secondary'
           }
           return (
             <div
               key={index}
-              className="group flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-4 transition-all duration-300 hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+              className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group flex items-start gap-4 rounded-2xl border p-4 transition-all duration-300"
             >
               <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-lg ${config.color}`}>
                 {config.icon}
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="mb-1 text-sm font-semibold text-gray-900">{item.name}</h3>
-                <p className="mb-1 text-sm text-gray-500">{item.detail}</p>
-                <p className="text-xs text-gray-400">{item.role}</p>
+                <h3 className="text-body-semibold text-text-primary mb-1">{item.name}</h3>
+                <p className="text-body-regular text-text-secondary mb-1">{item.detail}</p>
+                <p className="text-caption-1-regular text-text-tertiary">{item.role}</p>
               </div>
             </div>
           )

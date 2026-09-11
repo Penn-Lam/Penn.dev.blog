@@ -116,7 +116,7 @@ export function EasterEgg({ trigger = 'work hard' }) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2, duration: 0.3 }}
-        className="fixed right-6 bottom-6 z-40 flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-sm text-white shadow-lg"
+        className="bg-text-primary text-body-regular text-background-primary-default fixed right-6 bottom-6 z-40 flex items-center gap-2 rounded-full px-4 py-2 shadow-lg"
       >
         <span>💡</span>
         <span>

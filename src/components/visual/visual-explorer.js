@@ -44,8 +44,8 @@ export function VisualExplorer() {
     return (
       <div className="flex min-h-[40vh] items-center justify-center">
         <div className="text-center">
-          <h2 className="mb-2 text-xl font-semibold text-gray-900">Something went wrong</h2>
-          <p className="text-gray-600">{error}</p>
+          <h2 className="text-title-2-semibold text-text-primary mb-2">Something went wrong</h2>
+          <p className="text-text-secondary">{error}</p>
         </div>
       </div>
     )
@@ -70,15 +70,15 @@ export function VisualExplorer() {
         >
           {isLoading ? (
             <div className="flex items-center justify-center py-20">
-              <div className="animate-pulse text-gray-500">Loading your visual works...</div>
+              <div className="text-text-secondary animate-pulse">Loading your visual works...</div>
             </div>
           ) : filteredData.length > 0 ? (
             <Gallery items={filteredData} onItemClick={handleMediaClick} />
           ) : (
             <div className="flex items-center justify-center py-20">
               <div className="text-center">
-                <h3 className="mb-2 text-lg font-medium text-gray-700">No content available</h3>
-                <p className="text-gray-500">
+                <h3 className="text-title-3-medium text-text-primary mb-2">No content available</h3>
+                <p className="text-text-secondary">
                   {showAll
                     ? 'No visual works available yet.'
                     : `No ${sourceType === 'photography' ? 'photography' : 'AI-generated'} ${

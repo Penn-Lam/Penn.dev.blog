@@ -12,7 +12,7 @@ import { ToolCard } from './tool-card'
 export const CategorySection = ({ id, name, tools }) => {
   return (
     <section className="mb-16 scroll-mt-20" id={id}>
-      <h2 className="mb-6 text-xl font-bold text-gray-900">{name}</h2>
+      <h2 className="text-title-2-bold text-text-primary mb-6">{name}</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {tools.map((tool) => (
           <ToolCard key={tool.slug} tool={tool} />

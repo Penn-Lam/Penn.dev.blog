@@ -60,13 +60,13 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-white/95"
+        className="bg-background-primary-default/95 fixed inset-0 z-50 flex items-center justify-center"
         onClick={onClose}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 rounded-full bg-white/90 p-2 text-gray-800 shadow-lg transition-colors hover:bg-white"
+          className="bg-background-primary-default/90 text-text-primary hover:bg-background-primary-default absolute top-4 right-4 z-10 rounded-full p-2 shadow-lg transition-colors"
         >
           <XIcon className="h-6 w-6" />
         </button>
@@ -79,7 +79,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
                 e.stopPropagation()
                 navigatePrevious()
               }}
-              className="absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-gray-800 shadow-lg transition-colors hover:bg-white"
+              className="bg-background-primary-default/90 text-text-primary hover:bg-background-primary-default absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-full p-2 shadow-lg transition-colors"
             >
               <ChevronLeftIcon className="h-6 w-6" />
             </button>
@@ -88,7 +88,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
                 e.stopPropagation()
                 navigateNext()
               }}
-              className="absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-gray-800 shadow-lg transition-colors hover:bg-white"
+              className="bg-background-primary-default/90 text-text-primary hover:bg-background-primary-default absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full p-2 shadow-lg transition-colors"
             >
               <ChevronRightIcon className="h-6 w-6" />
             </button>
@@ -129,12 +129,12 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
         </div>
 
         {/* Media Info */}
-        <div className="absolute right-4 bottom-4 left-4 rounded-lg bg-white/90 p-4 text-gray-800 shadow-lg">
-          <h2 className="mb-2 text-lg font-semibold text-gray-900">{media.title || 'Untitled'}</h2>
+        <div className="bg-background-primary-default/90 text-text-primary absolute right-4 bottom-4 left-4 rounded-lg p-4 shadow-lg">
+          <h2 className="text-title-3-semibold text-text-primary mb-2">{media.title || 'Untitled'}</h2>
 
-          {media.description && <p className="mb-3 text-sm text-gray-600">{media.description}</p>}
+          {media.description && <p className="text-body-regular text-text-secondary mb-3">{media.description}</p>}
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+          <div className="text-body-regular text-text-secondary flex flex-wrap items-center gap-4">
             {isVideo && media.duration && <span>Duration: {Math.round(media.duration)}s</span>}
             {media.camera && <span>Camera: {media.camera}</span>}
             {media.location && <span>Location: {media.location}</span>}
@@ -165,7 +165,10 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
           {media.tags && media.tags.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
               {media.tags.map((tag) => (
-                <span key={tag} className="rounded-full bg-gray-200 px-3 py-1 text-xs text-gray-700">
+                <span
+                  key={tag}
+                  className="bg-background-tertiary-default text-caption-1-regular text-text-secondary rounded-full px-3 py-1"
+                >
                   #{tag}
                 </span>
               ))}

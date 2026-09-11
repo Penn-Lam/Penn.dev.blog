@@ -64,7 +64,7 @@ export function TabSelector({ mediaType, sourceType, showAll, onFilterChange }) 
 
   return (
     <div className="mb-6">
-      <div className="flex flex-wrap items-center gap-2 rounded-xl bg-gray-50 p-2">
+      <div className="bg-background-secondary-default flex flex-wrap items-center gap-2 rounded-xl p-2">
         {filterOptions.map((option) => {
           const isActive = currentFilter === option.value
           const Icon = option.icon
@@ -73,14 +73,14 @@ export function TabSelector({ mediaType, sourceType, showAll, onFilterChange }) 
             <button
               key={option.value}
               onClick={() => handleFilterClick(option)}
-              className={`relative flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
-                isActive ? 'text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-800'
+              className={`text-body-medium relative flex items-center gap-2 rounded-lg px-4 py-2.5 transition-all duration-200 ${
+                isActive ? 'text-text-primary shadow-sm' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               {isActive && (
                 <motion.div
                   layoutId="active-filter-bg"
-                  className="absolute inset-0 rounded-lg bg-white shadow-sm"
+                  className="bg-background-primary-default absolute inset-0 rounded-lg shadow-sm"
                   initial={false}
                   transition={{
                     type: 'spring',

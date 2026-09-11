@@ -25,10 +25,10 @@ export const JourneyCard = memo(({ title, description, image, index }) => {
     <div className="word-break-word flex flex-col">
       <span className="mb-px font-semibold tracking-tight">{title}</span>
       {description?.json && (
-        <div className="rich-text-journey text-sm">{documentToReactComponents(description.json)}</div>
+        <div className="rich-text-journey text-body-regular">{documentToReactComponents(description.json)}</div>
       )}
       {image?.url && (
-        <div className="mt-2.5 overflow-hidden rounded-xl bg-white">
+        <div className="bg-background-primary-default mt-2.5 overflow-hidden rounded-xl">
           <Image
             src={image.url}
             alt={image.title || image.description || ''}

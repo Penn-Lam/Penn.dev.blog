@@ -17,12 +17,12 @@ export default async function Workspace() {
           <PageTitle title="Workspace" />
           {/* Introduction */}
           <div className="mb-12">
-            <p className="mb-4 text-lg leading-relaxed text-gray-600">
+            <p className="text-title-3-regular text-text-secondary mb-4 leading-relaxed">
               Welcome to my digital workspace. This is where I document my journey as a developer, researcher, and
               builder. Here you'll find insights into my current projects, work philosophy, and the tools that power my
               daily workflow.
             </p>
-            <p className="leading-relaxed text-gray-600">
+            <p className="text-text-secondary leading-relaxed">
               I believe in transparency, continuous learning, and sharing knowledge. Every project tells a story, every
               tool serves a purpose, and every line of code brings us closer to solving meaningful problems.
             </p>
@@ -57,15 +57,15 @@ export default async function Workspace() {
           */}
           {/* Desk Setup */}
           <section className="mb-20">
-            <h2 className="mb-6 text-3xl font-bold text-gray-900">My Desk Setup</h2>
-            <p className="mb-8 text-gray-600">
+            <h2 className="text-display-4-bold text-text-primary mb-6">My Desk Setup</h2>
+            <p className="text-text-secondary mb-8">
               The hardware and tools that make up my daily development environment. Quality tools enable quality work.
             </p>
             <HardwareList items={hardwareData} />
           </section>
           {/* Footer note */}
           <div className="mt-16 text-center">
-            <p className="text-sm text-gray-400">
+            <p className="text-body-regular text-text-tertiary">
               🌱 This workspace evolves constantly. New projects and tools are added as the journey unfolds.
             </p>
           </div>
