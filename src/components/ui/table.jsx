@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 function Table({ className, ...props }) {
   return (
     <div className="relative w-full overflow-auto">
-      <table className={cn('w-full caption-bottom text-sm', className)} {...props} />
+      <table className={cn('text-body-regular w-full caption-bottom', className)} {...props} />
     </div>
   )
 }
@@ -17,13 +17,21 @@ function TableBody({ className, ...props }) {
 }
 
 function TableFooter({ className, ...props }) {
-  return <tfoot className={cn('border-t bg-gray-100/50 font-medium last:[&>tr]:border-b-0', className)} {...props} />
+  return (
+    <tfoot
+      className={cn('bg-background-secondary-default text-body-medium border-t last:[&>tr]:border-b-0', className)}
+      {...props}
+    />
+  )
 }
 
 function TableRow({ className, ...props }) {
   return (
     <tr
-      className={cn('border-b transition-colors hover:bg-gray-100/50 data-[state=selected]:bg-gray-100', className)}
+      className={cn(
+        'hover:bg-background-secondary-default data-[state=selected]:bg-background-secondary-default border-b transition-colors',
+        className
+      )}
       {...props}
     />
   )
@@ -33,7 +41,7 @@ function TableHead({ className, ...props }) {
   return (
     <th
       className={cn(
-        'h-10 px-2 text-left align-middle font-medium text-gray-500 [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'text-body-medium text-text-secondary h-10 px-2 text-left align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...props}
@@ -51,7 +59,7 @@ function TableCell({ className, ...props }) {
 }
 
 function TableCaption({ className, ...props }) {
-  return <caption className={cn('mt-4 text-sm text-gray-500', className)} {...props} />
+  return <caption className={cn('text-body-regular text-text-secondary mt-4', className)} {...props} />
 }
 
 export { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow }

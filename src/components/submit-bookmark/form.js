@@ -2,16 +2,17 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
-import { memo, useCallback, useMemo, useState, useTransition } from 'react'
+import { memo, useCallback, useId, useMemo, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
+import { Button } from '@/components/base/buttons/button'
+import { Input } from '@/components/base/input/input'
+import { Label } from '@/components/base/input/label'
+import { Select, SelectItem } from '@/components/base/select/select'
 import { getDelightfulMessage } from '@/components/console-easter-egg'
 import { formSchema } from '@/components/submit-bookmark/utils'
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Form, FormField } from '@/components/ui/form'
 import { cn } from '@/lib/utils'
 
 /**
@@ -63,6 +64,7 @@ function getRandomSuccessMessage() {
 export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, currentBookmark }) => {
   const [isPending, startTransition] = useTransition()
   const [retryCount, setRetryCount] = useState(0)
+  const typeLabelId = useId()
 
   // 表单选项 - 包含类型验证
   const memoizedFormOptions = useMemo(
@@ -127,7 +129,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
           description: (
             <div className="space-y-1">
               <p>{randomMessage}</p>
-              <p className="text-xs text-gray-500">
+              <p className="text-caption-1-regular text-text-tertiary">
                 <span className="underline underline-offset-4">{values.url}</span>
               </p>
             </div>
@@ -159,69 +161,70 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
   )
 
   const renderUrlField = useCallback(
-    ({ field }) => (
-      <FormItem>
-        <FormLabel>
-          Website URL
-          <span className="ml-1 text-red-500" aria-hidden="true">
-            *
-          </span>
-        </FormLabel>
-        <FormControl>
-          <Input
-            placeholder="https://example.com"
-            {...field}
-            aria-required="true"
-            aria-describedby={field.name === 'url' ? 'url-hint' : undefined}
-          />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
+    ({ field, fieldState }) => (
+      <Input
+        label="Website URL"
+        isRequired
+        placeholder="https://example.com"
+        value={field.value}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        name={field.name}
+        ref={field.ref}
+        isInvalid={!!fieldState.error}
+        hint={fieldState.error?.message}
+      />
     ),
     []
   )
 
   const renderEmailField = useCallback(
-    ({ field }) => (
-      <FormItem>
-        <FormLabel>
-          Email
-          <span className="ml-1 text-red-500" aria-hidden="true">
-            *
-          </span>
-        </FormLabel>
-        <FormControl>
-          <Input placeholder="example@gmail.com" {...field} aria-required="true" />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
+    ({ field, fieldState }) => (
+      <Input
+        label="Email"
+        isRequired
+        placeholder="example@gmail.com"
+        value={field.value}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        name={field.name}
+        ref={field.ref}
+        isInvalid={!!fieldState.error}
+        hint={fieldState.error?.message}
+      />
     ),
     []
   )
 
   const renderTypeField = useCallback(
-    ({ field }) => (
-      <FormItem>
-        <FormLabel>Type</FormLabel>
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
-          <FormControl>
-            <SelectTrigger aria-describedby="type-description">
-              <SelectValue placeholder="Select a bookmark type" />
-            </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            {bookmarks.map((bookmark) => (
-              <SelectItem key={bookmark.slug} value={bookmark.title}>
-                {bookmark.title}
-              </SelectItem>
-            ))}
-          </SelectContent>
+    ({ field, fieldState }) => (
+      <div className="flex w-full flex-col items-start gap-1">
+        <Label id={typeLabelId}>Type</Label>
+        <Select
+          className="w-full"
+          aria-labelledby={typeLabelId}
+          selectedKey={field.value || null}
+          onSelectionChange={(key) => field.onChange(key ?? '')}
+          popoverClassName="bookmark-type-select-popover"
+          renderValue={({ defaultChildren, isPlaceholder }) =>
+            isPlaceholder ? <span className="text-text-tertiary">Select a bookmark type</span> : defaultChildren
+          }
+        >
+          {bookmarks.map((bookmark) => (
+            <SelectItem key={bookmark.slug} id={bookmark.title}>
+              {bookmark.title}
+            </SelectItem>
+          ))}
         </Select>
-        <FormDescription id="type-description">Optional but helps me categorize the bookmark.</FormDescription>
-        <FormMessage />
-      </FormItem>
+        <p className="text-caption-1-medium text-text-secondary pt-px">
+          Optional but helps me categorize the bookmark.
+        </p>
+        {fieldState.error && (
+          <p className="text-caption-1-medium text-text-error-primary pt-px">{fieldState.error.message}</p>
+        )}
+      </div>
     ),
-    [bookmarks]
+    [bookmarks, typeLabelId]
   )
 
   return (

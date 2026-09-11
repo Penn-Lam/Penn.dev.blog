@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Card, CardContent } from '@/components/ui/card'
 import {
   Carousel as CarouselBase,
   CarouselContent,
@@ -53,16 +52,16 @@ export function Carousel({ images = [] }) {
       images.map((imageItem, imageItemIndex) => (
         <CarouselItem key={`carousel_image_item-${imageItemIndex}`}>
           <div className="p-1">
-            <Card>
-              <CardContent className="flex aspect-square items-center justify-center p-0">
+            <div className="border-border-button-default bg-background-primary-default overflow-hidden rounded-xl border shadow-sm">
+              <div className="flex aspect-square items-center justify-center p-0">
                 <img
                   src={imageItem.url}
                   alt={imageItem.title}
                   loading="lazy"
                   className="aspect-square border-none object-cover"
                 />
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </CarouselItem>
       )),
@@ -75,10 +74,10 @@ export function Carousel({ images = [] }) {
     <>
       <CarouselBase setApi={setApi} opts={memoizedOpts} className="w-full">
         <CarouselContent>{memoizedCarouselItems}</CarouselContent>
-        <CarouselPrevious className="-left-2.5 bg-white @4xl/writing:-left-12" />
-        <CarouselNext className="-right-2.5 bg-white @4xl/writing:-right-12" />
+        <CarouselPrevious className="bg-background-primary-default -left-2.5 @4xl/writing:-left-12" />
+        <CarouselNext className="bg-background-primary-default -right-2.5 @4xl/writing:-right-12" />
       </CarouselBase>
-      <div className="py-2 text-center text-xs font-light text-gray-500">{currentCaption}</div>
+      <div className="text-caption-1-regular text-text-tertiary py-2 text-center">{currentCaption}</div>
     </>
   )
 }

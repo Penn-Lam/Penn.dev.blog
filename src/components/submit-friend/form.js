@@ -13,9 +13,9 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/components/base/buttons/button'
+import { Input } from '@/components/base/input/input'
+import { Form, FormField } from '@/components/ui/form'
 import { cn } from '@/lib/utils'
 
 const formSchema = z.object({
@@ -103,21 +103,19 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
             key={f.name}
             control={form.control}
             name={f.name}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {f.label}
-                  {f.required && (
-                    <span className="ml-1 text-red-500" aria-hidden="true">
-                      *
-                    </span>
-                  )}
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder={f.placeholder} {...field} aria-required={f.required || undefined} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+            render={({ field, fieldState }) => (
+              <Input
+                label={f.label}
+                isRequired={f.required}
+                placeholder={f.placeholder}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                name={field.name}
+                ref={field.ref}
+                isInvalid={!!fieldState.error}
+                hint={fieldState.error?.message}
+              />
             )}
           />
         ))}

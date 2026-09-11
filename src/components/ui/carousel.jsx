@@ -4,7 +4,6 @@ import useEmblaCarousel from 'embla-carousel-react'
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const CarouselContext = createContext(null)
@@ -149,15 +148,22 @@ const CarouselItem = memo(({ className, ...props }) => {
 })
 CarouselItem.displayName = 'CarouselItem'
 
-const CarouselPrevious = memo(({ className, variant = 'outline', size = 'icon', ...props }) => {
+const carouselArrowStyles = cn(
+  'absolute flex size-8 items-center justify-center rounded-full border shadow-xs',
+  'border-border-button-default bg-background-primary-default text-foreground-icon-primary',
+  'hover:bg-background-primary-hover active:bg-background-primary-active',
+  'focus-visible:ring-border-focus-ring transition-colors outline-none focus-visible:ring-2',
+  'disabled:pointer-events-none disabled:opacity-50'
+)
+
+const CarouselPrevious = memo(({ className, ...props }) => {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
-    <Button
-      variant={variant}
-      size={size}
+    <button
+      type="button"
       className={cn(
-        'absolute size-8 rounded-full',
+        carouselArrowStyles,
         orientation === 'horizontal'
           ? 'top-1/2 -left-12 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -172,20 +178,19 @@ const CarouselPrevious = memo(({ className, variant = 'outline', size = 'icon', 
       <span className="sr-only" data-oid="nq2wpf9">
         Previous slide
       </span>
-    </Button>
+    </button>
   )
 })
 CarouselPrevious.displayName = 'CarouselPrevious'
 
-const CarouselNext = memo(({ className, variant = 'outline', size = 'icon', ...props }) => {
+const CarouselNext = memo(({ className, ...props }) => {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
-    <Button
-      variant={variant}
-      size={size}
+    <button
+      type="button"
       className={cn(
-        'absolute size-8 rounded-full',
+        carouselArrowStyles,
         orientation === 'horizontal'
           ? 'top-1/2 -right-12 -translate-y-1/2'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -200,7 +205,7 @@ const CarouselNext = memo(({ className, variant = 'outline', size = 'icon', ...p
       <span className="sr-only" data-oid="y43t1ym">
         Next slide
       </span>
-    </Button>
+    </button>
   )
 })
 CarouselNext.displayName = 'CarouselNext'

@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * [INPUT]: 依赖 SubmitFriendForm 组件、ui/dialog、ui/button
+ * [INPUT]: 依赖 SubmitFriendForm 组件、ui/dialog、BoardUI Button 组件
  * [OUTPUT]: 对外提供 SubmitFriendDialog 组件
  * [POS]: components/submit-friend 的 Dialog 包装
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -10,8 +10,8 @@
 import { SendIcon } from 'lucide-react'
 import { useState } from 'react'
 
+import { Button } from '@/components/base/buttons/button'
 import { SubmitFriendForm } from '@/components/submit-friend/form'
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -27,8 +27,7 @@ export const SubmitFriendDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="xs" className="relative">
-          <SendIcon size={16} className="mr-2" />
+        <Button size="xs" leadingIcon={SendIcon} className="relative">
           Submit
         </Button>
       </DialogTrigger>

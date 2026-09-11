@@ -8,7 +8,6 @@ import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
 import { SunnyOverlay, SunnyToggle } from '@/components/sunny-mode'
 import { TimeGreeting } from '@/components/time-greeting'
-import { Button } from '@/components/ui/button'
 import { WritingList } from '@/components/writing-list'
 import { getAllPosts } from '@/lib/contentful'
 import { getItemsByYear, getSortedPosts } from '@/lib/utils'
@@ -43,11 +42,12 @@ export default async function Home() {
             Bridging GenAI × personal computing — let's connect and shape the future together.
           </p>
           <SunnyToggle />
-          <Button asChild variant="link" className="inline px-0">
-            <Link href="/writing">
-              <h2 className="mt-8 mb-4">Writing</h2>
-            </Link>
-          </Button>
+          <Link
+            href="/writing"
+            className="text-text-primary inline-flex underline-offset-4 transition-colors hover:underline"
+          >
+            <h2 className="mt-8 mb-4">Writing</h2>
+          </Link>
           <Suspense fallback={<ScreenLoadingSpinner />}>
             <WritingList items={items} header="Writing" />
           </Suspense>

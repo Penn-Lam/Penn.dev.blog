@@ -4,7 +4,7 @@ import { domAnimation, LazyMotion, m } from 'framer-motion'
 import { memo, useMemo, useState } from 'react'
 import { highlight } from 'sugar-high'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/base/buttons/button'
 
 export const CodeBlock = memo(({ title, code }) => {
   const [copied, setCopied] = useState(false)
@@ -18,16 +18,16 @@ export const CodeBlock = memo(({ title, code }) => {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-t-lg border border-gray-200 bg-gray-50 px-4 py-2">
+      <div className="border-border-button-default bg-background-secondary-default flex flex-wrap items-center justify-between gap-2 rounded-t-lg border px-4 py-2">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1">
-            <span className="size-3.5 rounded-full bg-gray-200" />
-            <span className="size-3.5 rounded-full bg-gray-200" />
-            <span className="size-3.5 rounded-full bg-gray-200" />
+            <span className="bg-background-tertiary-default size-3.5 rounded-full" />
+            <span className="bg-background-tertiary-default size-3.5 rounded-full" />
+            <span className="bg-background-tertiary-default size-3.5 rounded-full" />
           </span>
-          {title && <p className="m-0 text-sm">{title}</p>}
+          {title && <p className="text-body-regular m-0">{title}</p>}
         </div>
-        <Button variant="outline" size="xs" className="rounded-lg text-xs" disabled={copied} onClick={onCopy}>
+        <Button variant="secondary" size="xs" className="rounded-lg" disabled={copied} onClick={onCopy}>
           <LazyMotion features={domAnimation}>
             <m.span
               key={copied ? 'copied' : 'copy'}
@@ -84,7 +84,7 @@ export const CodeBlock = memo(({ title, code }) => {
         </Button>
       </div>
       <div className="overflow-x-auto">
-        <div className="flex size-full flex-col overflow-x-auto overflow-y-hidden rounded-b-lg border-x border-b border-gray-200">
+        <div className="border-border-button-default flex size-full flex-col overflow-x-auto overflow-y-hidden rounded-b-lg border-x border-b">
           <div className="horizontal-scroll-area">
             <pre>
               <code dangerouslySetInnerHTML={{ __html: codeHTML }} />

@@ -52,13 +52,13 @@ const DrawerContent = memo(({ className, children, ...props }) => {
       <DrawerOverlay />
       <DrawerPrimitive.Content
         className={cn(
-          'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-2xl border border-gray-200 bg-white shadow-xl',
+          'border-border-button-default bg-background-primary-default fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-2xl border shadow-xl',
           className
         )}
         {...props}
       >
         {/* 拖动手柄 - 视觉反馈 */}
-        <div className="mx-auto mt-3 mb-2 h-1.5 w-12 shrink-0 rounded-full bg-gray-200 transition-transform duration-200 hover:bg-gray-300" />
+        <div className="bg-background-tertiary-default hover:bg-background-tertiary-hover mx-auto mt-3 mb-2 h-1.5 w-12 shrink-0 rounded-full transition-transform duration-200" />
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
@@ -75,14 +75,12 @@ function DrawerFooter({ className, ...props }) {
 }
 
 const DrawerTitle = memo(({ className, ...props }) => {
-  return (
-    <DrawerPrimitive.Title className={cn('text-lg leading-none font-semibold tracking-tight', className)} {...props} />
-  )
+  return <DrawerPrimitive.Title className={cn('text-title-3-semibold', className)} {...props} />
 })
 DrawerTitle.displayName = 'DrawerTitle'
 
 const DrawerDescription = memo(({ className, ...props }) => {
-  return <DrawerPrimitive.Description className={cn('text-sm/snug text-gray-500', className)} {...props} />
+  return <DrawerPrimitive.Description className={cn('text-body-regular text-text-secondary', className)} {...props} />
 })
 DrawerDescription.displayName = 'DrawerDescription'
 

@@ -3,8 +3,8 @@
 import { SendIcon } from 'lucide-react'
 import { useState } from 'react'
 
+import { Button } from '@/components/base/buttons/button'
 import { SubmitBookmarkForm } from '@/components/submit-bookmark/form'
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -21,12 +21,18 @@ export const SubmitBookmarkDialog = ({ bookmarks, currentBookmark }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="xs" className="relative">
-          <SendIcon size={16} className="mr-2" />
+        <Button size="xs" leadingIcon={SendIcon} className="relative">
           Submit
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        onPointerDownOutside={(event) => {
+          // Keep the dialog open when interacting with the bookmark-type select popover (portaled outside the dialog tree)
+          if (event.target instanceof Element && event.target.closest('.bookmark-type-select-popover')) {
+            event.preventDefault()
+          }
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{SUBMIT_BOOKMARK_FORM_TITLE}</DialogTitle>
           <DialogDescription>{SUBMIT_BOOKMARK_FORM_DESCRIPTION}</DialogDescription>

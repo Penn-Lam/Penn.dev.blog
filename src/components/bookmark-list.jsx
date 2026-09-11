@@ -5,9 +5,9 @@ import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { getBookmarkItemsByPageIndex } from '@/app/actions'
+import { Button } from '@/components/base/buttons/button'
 import { BookmarkCard } from '@/components/bookmark-card'
 import { BookmarkTagFilter } from '@/components/bookmark-tag-filter'
-import { Button } from '@/components/ui/button'
 import { TWEETS_COLLECTION_IDS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
@@ -111,7 +111,7 @@ export const BookmarkList = ({ initialData, id, collectionSlug }) => {
             <>
               {isLoading ? (
                 <div
-                  className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent text-black"
+                  className="text-text-primary inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent"
                   role="status"
                   aria-label="loading"
                   data-oid="xdu1x5t"
@@ -122,14 +122,14 @@ export const BookmarkList = ({ initialData, id, collectionSlug }) => {
                 </div>
               ) : (
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   onClick={loadMore}
                   disabled={isLoading}
-                  className="w-full justify-center bg-white"
+                  trailingIcon={ArrowDownIcon}
+                  className="w-full"
                   data-oid="6:4ugol"
                 >
                   Load more
-                  <ArrowDownIcon size={16} data-oid="8a661-e" />
                 </Button>
               )}
             </>
