@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import './styles/theme.css';
+@import './styles/typography.css';
 @import '@fuma-comment/react/preset.css';
 
 @plugin '@tailwindcss/container-queries';
