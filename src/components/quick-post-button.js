@@ -4,6 +4,8 @@ import { Plus, Send, X } from 'lucide-react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+import { Button } from '@/components/base/buttons/button'
+import { Textarea } from '@/components/base/textarea/textarea'
 import { ClientOnly } from '@/components/client-only'
 
 // 创建全局对话框状态 Context
@@ -143,24 +145,21 @@ export function QuickPostButton() {
 
   if (!isOpen) {
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-      >
-        <Plus size={16} />
+      <Button size="small" leadingIcon={Plus} onClick={() => setIsOpen(true)}>
         New Musing
-      </button>
+      </Button>
     )
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
+      <div className="border-border-button-default bg-background-primary-default w-full max-w-lg rounded-xl border p-6 shadow-xl">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Create New Musing</h2>
+          <h2 className="text-title-3-semibold">Create New Musing</h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+            className="text-foreground-icon-tertiary hover:bg-background-secondary-default hover:text-foreground-icon-primary focus-visible:ring-border-focus-ring rounded-full p-1 transition-colors outline-none focus-visible:ring-2"
+            aria-label="Close"
           >
             <X size={20} />
           </button>
@@ -168,17 +167,17 @@ export function QuickPostButton() {
 
         <form onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <textarea
+            <Textarea
               value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Share your thoughts...&#10;&#10;💡 Remember to include the verification code at the end"
-              className="w-full resize-none rounded-lg border border-gray-300 p-3 text-sm focus:border-blue-500 focus:outline-none"
+              onChange={setContent}
+              isRequired
+              placeholder={'Share your thoughts...\n\n💡 Remember to include the verification code at the end'}
+              resize="none"
               rows={6}
-              required
             />
-            <div className="rounded-md border border-amber-200 bg-amber-50 p-3">
+            <div className="border-status-yellow-background bg-status-yellow-background/40 rounded-md border p-3">
               <div className="flex items-start">
-                <div className="text-xs text-amber-600">
+                <div className="text-status-yellow-text text-caption-1-regular">
                   <strong>📝 Publishing Note:</strong> This system uses GitHub Issues as a backend. Please include the
                   verification code at the end of your content. The code will be automatically removed and won't appear
                   in the final published content.
@@ -190,17 +189,17 @@ export function QuickPostButton() {
           <div className="mt-4">
             {/* Visibility selection */}
             <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700">Visibility</label>
+              <label className="text-body-medium text-text-secondary">Visibility</label>
               <div className="mt-2 flex gap-2">
                 {['Public', 'Private'].map((option) => (
                   <button
                     key={option}
                     type="button"
                     onClick={() => setVisibility(option)}
-                    className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                    className={`text-caption-1-medium rounded-full px-3 py-1 transition-colors ${
                       visibility === option
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        ? 'bg-accent-100 text-accent-800'
+                        : 'bg-background-secondary-default text-text-secondary hover:bg-background-secondary-hover'
                     }`}
                   >
                     {option}
@@ -211,17 +210,17 @@ export function QuickPostButton() {
 
             {/* Category tags selection */}
             <div>
-              <label className="text-sm font-medium text-gray-700">Category Tags</label>
+              <label className="text-body-medium text-text-secondary">Category Tags</label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {categoryOptions.map((tag) => (
                   <button
                     key={tag}
                     type="button"
                     onClick={() => toggleCategoryTag(tag)}
-                    className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                    className={`text-caption-1-medium rounded-full px-3 py-1 transition-colors ${
                       categoryTags.includes(tag)
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        ? 'bg-accent-100 text-accent-800'
+                        : 'bg-background-secondary-default text-text-secondary hover:bg-background-secondary-hover'
                     }`}
                   >
                     {tag}
@@ -232,21 +231,12 @@ export function QuickPostButton() {
           </div>
 
           <div className="mt-6 flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
+            <Button variant="secondary" size="small" onClick={() => setIsOpen(false)}>
               Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting || !content.trim()}
-              className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
-            >
-              <Send size={16} />
+            </Button>
+            <Button type="submit" size="small" leadingIcon={Send} disabled={isSubmitting || !content.trim()}>
               {isSubmitting ? 'Publishing...' : 'Publish'}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

@@ -1,6 +1,8 @@
 import { Link2Icon, Tag } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
+import { Chip } from '@/components/base/badges/chip'
+
 const TweetCard = dynamic(() => import('@/components/tweet-card/tweet-card').then((mod) => mod.TweetCard))
 import { TWEETS_COLLECTION_IDS } from '@/lib/constants'
 
@@ -53,7 +55,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
   return (
     <a
       key={bookmark._id}
-      className="thumbnail-shadow flex aspect-auto min-w-0 cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 transition-colors duration-300 hover:bg-gray-100"
+      className="thumbnail-shadow bg-background-primary-default hover:bg-background-secondary-default flex aspect-auto min-w-0 cursor-pointer flex-col gap-4 overflow-hidden rounded-xl p-4 transition-colors duration-300"
       href={`${bookmark.link}?ref=pennlam.com`}
       target="_blank"
       rel="noopener noreferrer"
@@ -79,27 +81,29 @@ export const BookmarkCard = ({ bookmark, order }) => {
       </span>
       <div className="flex min-w-0 flex-col gap-1">
         {/* 标题：使用 line-clamp 防止溢出 */}
-        <h2 className="line-clamp-4 min-w-0 text-lg leading-snug">{bookmark.title}</h2>
+        <h2 className="text-title-3-semibold line-clamp-4 min-w-0">{bookmark.title}</h2>
         {/* 域名：截断处理 */}
-        <span className="line-clamp-1 inline-flex min-w-0 items-center gap-1 text-sm text-gray-500">
+        <span className="text-body-regular text-text-secondary line-clamp-1 inline-flex min-w-0 items-center gap-1">
           <Link2Icon size={16} aria-hidden="true" />
           <span className="min-w-0 truncate">{bookmark.domain}</span>
         </span>
         {/* 摘要：截断处理 */}
-        <span className="line-clamp-6 min-w-0 text-sm">{bookmark.excerpt || bookmark.note}</span>
+        <span className="text-body-regular line-clamp-6 min-w-0">{bookmark.excerpt || bookmark.note}</span>
 
         {/* Tags - 触摸目标最小尺寸 44x44px */}
         {bookmark.tags && bookmark.tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1.5">
             {bookmark.tags.map((tag) => (
-              <span
+              <Chip
                 key={tag}
-                className="inline-flex items-center gap-1 rounded-full bg-gray-50 px-2.5 py-1.5 text-xs font-medium text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900"
+                variant="caption"
+                color="soft"
                 aria-label={`Tag: ${tag}`}
+                className="hover:bg-background-secondary-hover gap-1 rounded-full px-2.5"
               >
-                <Tag size={10} className="text-gray-400" aria-hidden="true" />
+                <Tag size={10} className="text-foreground-icon-tertiary" aria-hidden="true" />
                 {tag}
-              </span>
+              </Chip>
             ))}
           </div>
         )}

@@ -54,14 +54,14 @@ export default async function MusingsPage({ searchParams }) {
             <PageTitle title="Musings" className="lg:hidden" />
             <div className="mb-8 flex items-center justify-between">
               <div>
-                <p className="text-gray-500">Thoughts and reflections, powered by GitHub Issues</p>
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="text-text-secondary">Thoughts and reflections, powered by GitHub Issues</p>
+                <p className="text-caption-1-regular text-text-tertiary mt-1">
                   Learn more:{' '}
                   <a
                     href="https://github.com/Penn-Lam/git-thoughts"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-500 transition-colors hover:text-gray-700"
+                    className="text-text-secondary hover:text-text-primary transition-colors"
                   >
                     git-thoughts
                   </a>
@@ -69,9 +69,9 @@ export default async function MusingsPage({ searchParams }) {
               </div>
               <QuickPostButton />
             </div>
-            <div className="rounded-2xl border border-gray-100 bg-white py-16 text-center">
-              <p className="text-gray-400">Unable to load musings</p>
-              <p className="mt-1 text-sm text-gray-300">Please try again later</p>
+            <div className="border-separator-border bg-background-primary-default rounded-2xl border py-16 text-center">
+              <p className="text-text-tertiary">Unable to load musings</p>
+              <p className="text-body-regular text-text-placeholder mt-1">Please try again later</p>
             </div>
           </div>
         </div>
@@ -88,14 +88,14 @@ export default async function MusingsPage({ searchParams }) {
           <PageTitle title="Musings" className="lg:hidden" />
           <div className="mb-8 flex items-center justify-between">
             <div>
-              <p className="text-gray-500">Thoughts and reflections, powered by GitHub Issues</p>
-              <p className="mt-1 text-xs text-gray-400">
+              <p className="text-text-secondary">Thoughts and reflections, powered by GitHub Issues</p>
+              <p className="text-caption-1-regular text-text-tertiary mt-1">
                 Learn more:{' '}
                 <a
                   href="https://github.com/Penn-Lam/git-thoughts"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 transition-colors hover:text-gray-700"
+                  className="text-text-secondary hover:text-text-primary transition-colors"
                 >
                   git-thoughts
                 </a>

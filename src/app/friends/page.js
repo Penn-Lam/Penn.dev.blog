@@ -25,7 +25,7 @@ export default function FriendsPage() {
             <PageTitle title="Friends" className="mb-0" />
             <SubmitFriendDialog />
           </div>
-          <p className="mb-10 leading-relaxed text-gray-600">
+          <p className="text-text-secondary mb-10 leading-relaxed">
             Write code and tinker with fun things in our own corners — then meet here.
           </p>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">

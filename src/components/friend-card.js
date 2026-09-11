@@ -67,7 +67,7 @@ function GithubHeatmap({ github }) {
         {data.monthMarks.map(({ month, weekIndex }) => (
           <div
             key={`${month}-${weekIndex}`}
-            className="absolute right-0 font-mono text-[6px] leading-none text-gray-400"
+            className="text-text-tertiary absolute right-0 font-mono text-[6px] leading-none"
             style={{ top: `${(weekIndex / numWeeks) * 100}%` }}
           >
             {MONTHS[month]}
@@ -137,7 +137,7 @@ export function FriendCard({ friend }) {
           <div className="flex flex-1 flex-col overflow-hidden">
             <div className="mb-4">
               <Label>hello, my name is</Label>
-              <div className="truncate text-lg leading-tight font-extrabold tracking-tight text-gray-900 uppercase sm:text-2xl">
+              <div className="text-title-3-bold text-text-primary truncate leading-tight tracking-tight uppercase sm:text-2xl">
                 {name}
               </div>
             </div>
@@ -145,7 +145,7 @@ export function FriendCard({ friend }) {
             <div className="mb-3">
               <Label>signature</Label>
               <div
-                className="mt-4 -rotate-3 text-xl text-gray-800 sm:text-2xl"
+                className="text-text-primary mt-4 -rotate-3 text-xl sm:text-2xl"
                 style={{ fontFamily: "'Brittany Signature', cursive" }}
               >
                 {signature || name}
@@ -164,7 +164,7 @@ export function FriendCard({ friend }) {
                   loading="lazy"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gray-100 text-lg font-bold text-gray-400">
+                <div className="bg-background-secondary-default text-title-3-bold text-text-tertiary flex h-full w-full items-center justify-center">
                   {name.charAt(0).toUpperCase()}
                 </div>
               )}

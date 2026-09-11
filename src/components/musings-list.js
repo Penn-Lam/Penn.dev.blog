@@ -39,10 +39,10 @@ function MusingCard({ musing }) {
   }, [expanded])
 
   return (
-    <article className="group mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 transition-all duration-300 hover:border-gray-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+    <article className="border-separator-border bg-background-primary-default hover:border-border-button-hover group hover:shadow-card mb-4 break-inside-avoid overflow-hidden rounded-2xl border p-5 transition-all duration-300">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-xs text-gray-400">
+        <div className="text-caption-1-regular text-text-tertiary flex items-center gap-2">
           <Clock size={12} />
           <time dateTime={musing.created_at}>{formattedDate}</time>
         </div>
@@ -50,7 +50,7 @@ function MusingCard({ musing }) {
           href={musing.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-gray-300 transition-all duration-200 hover:bg-gray-100 hover:text-gray-600"
+          className="bg-background-primary-default text-text-placeholder hover:bg-background-secondary-default hover:text-text-secondary flex h-7 w-7 items-center justify-center rounded-lg transition-all duration-200"
         >
           <ExternalLink size={12} />
         </Link>
@@ -58,7 +58,7 @@ function MusingCard({ musing }) {
 
       {/* Content */}
       <div
-        className="prose prose-gray prose-sm relative max-w-none leading-relaxed text-gray-600"
+        className="text-text-secondary relative max-w-none leading-relaxed"
         style={!expanded ? { maxHeight: 400, overflow: 'hidden' } : {}}
         ref={contentRef}
       >
@@ -66,14 +66,14 @@ function MusingCard({ musing }) {
           {musing.body?.replace(/\n/g, '  \n').trim() || ''}
         </ReactMarkdown>
         {!expanded && showExpand && (
-          <div className="pointer-events-none absolute bottom-0 left-0 h-20 w-full bg-gradient-to-t from-white to-transparent" />
+          <div className="from-background-primary-default pointer-events-none absolute bottom-0 left-0 h-20 w-full bg-gradient-to-t to-transparent" />
         )}
       </div>
 
       {/* Expand button */}
       {showExpand && (
         <button
-          className="mt-4 self-start rounded-lg border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-500 transition-all duration-200 hover:border-gray-300 hover:text-gray-700 hover:shadow-sm"
+          className="border-border-button-default bg-background-primary-default text-caption-1-medium text-text-secondary hover:border-border-button-hover hover:text-text-primary mt-4 self-start rounded-lg border px-3 py-1 transition-all duration-200 hover:shadow-sm"
           onClick={() => setExpanded((v) => !v)}
         >
           {expanded ? '收起' : '展开'}
@@ -86,7 +86,7 @@ function MusingCard({ musing }) {
           {musing.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-medium text-gray-500"
+              className="text-caption-2-medium text-text-tertiary inline-flex items-center rounded-md px-2 py-0.5"
             >
               {tag}
             </span>
@@ -119,8 +119,8 @@ export function MusingsList({ musings, selectedTag }) {
 
       <div className="mt-6">
         {filteredMusings.length === 0 ? (
-          <div className="rounded-2xl border border-gray-100 bg-white py-16 text-center">
-            <p className="text-gray-400">No musings found</p>
+          <div className="border-separator-border bg-background-primary-default rounded-2xl border py-16 text-center">
+            <p className="text-text-tertiary">No musings found</p>
           </div>
         ) : (
           <div className="columns-1 gap-4 space-y-4 md:columns-2">
