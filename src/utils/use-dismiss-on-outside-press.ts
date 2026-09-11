@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { useEffect, useRef } from "react";
-import type { RefObject } from "react";
+import { useEffect, useRef } from 'react'
+import type { RefObject } from 'react'
 
 /**
  * React Aria's `Popover` couples "non-modal" with "not dismissable on
@@ -14,20 +14,20 @@ import type { RefObject } from "react";
 export function useDismissOnOutsidePress(
   isOpen: boolean,
   onDismiss: () => void,
-  refs: RefObject<HTMLElement | null>[],
+  refs: RefObject<HTMLElement | null>[]
 ) {
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return
 
     const handlePointerDown = (event: PointerEvent) => {
-      const target = event.target as Node;
-      if (refs.some((ref) => ref.current?.contains(target))) return;
-      onDismiss();
-    };
+      const target = event.target as Node
+      if (refs.some((ref) => ref.current?.contains(target))) return
+      onDismiss()
+    }
 
-    document.addEventListener("pointerdown", handlePointerDown, true);
-    return () => document.removeEventListener("pointerdown", handlePointerDown, true);
-  }, [isOpen, onDismiss, refs]);
+    document.addEventListener('pointerdown', handlePointerDown, true)
+    return () => document.removeEventListener('pointerdown', handlePointerDown, true)
+  }, [isOpen, onDismiss, refs])
 }
 
 /**
@@ -43,34 +43,31 @@ export function useDismissOnOutsidePress(
  *   const allowOpenChange = useTriggerToggle(isOpen, triggerRef);
  *   <AriaSelect onOpenChange={(o) => allowOpenChange(o) && setIsOpen(o)} …
  */
-export function useTriggerToggle(
-  isOpen: boolean,
-  triggerRef: RefObject<HTMLElement | null>,
-) {
-  const suppressReopenRef = useRef(false);
+export function useTriggerToggle(isOpen: boolean, triggerRef: RefObject<HTMLElement | null>) {
+  const suppressReopenRef = useRef(false)
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (!triggerRef.current?.contains(event.target as Node)) return;
-      suppressReopenRef.current = true;
+      if (!triggerRef.current?.contains(event.target as Node)) return
+      suppressReopenRef.current = true
       // Safety valve: only the very next open within this click may be
       // swallowed; never leave a stale suppression behind.
       setTimeout(() => {
-        suppressReopenRef.current = false;
-      }, 400);
-    };
+        suppressReopenRef.current = false
+      }, 400)
+    }
 
-    document.addEventListener("pointerdown", handlePointerDown, true);
-    return () => document.removeEventListener("pointerdown", handlePointerDown, true);
-  }, [isOpen, triggerRef]);
+    document.addEventListener('pointerdown', handlePointerDown, true)
+    return () => document.removeEventListener('pointerdown', handlePointerDown, true)
+  }, [isOpen, triggerRef])
 
   return (next: boolean) => {
     if (next && suppressReopenRef.current) {
-      suppressReopenRef.current = false;
-      return false;
+      suppressReopenRef.current = false
+      return false
     }
-    return true;
-  };
+    return true
+  }
 }

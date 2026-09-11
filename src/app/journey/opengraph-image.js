@@ -24,28 +24,26 @@ export default async function Image() {
   const { title, description, ogImageTitle, ogImageSubtitle } = seo
 
   return new ImageResponse(
-    (
-      <OpenGraphImage
-        title={ogImageTitle || title}
-        description={ogImageSubtitle || description}
-        icon={
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="64"
-            height="64"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polygon points="3 11 22 2 13 21 11 13 3 11" />
-          </svg>
-        }
-        url="journey"
-      />
-    ),
+    <OpenGraphImage
+      title={ogImageTitle || title}
+      description={ogImageSubtitle || description}
+      icon={
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="64"
+          height="64"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polygon points="3 11 22 2 13 21 11 13 3 11" />
+        </svg>
+      }
+      url="journey"
+    />,
     {
       ...size,
       fonts: [

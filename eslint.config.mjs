@@ -86,6 +86,9 @@ const patchedConfig = [
   }
 ]
 
-const config = [...patchedConfig, { ignores: ['.next/*'] }]
+const config = [
+  ...patchedConfig,
+  { ignores: ['.next/*', 'src/components/base/**', 'src/components/application/**', 'src/components/foundations/**'] }
+]
 
 export default config

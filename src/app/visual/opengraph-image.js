@@ -10,56 +10,54 @@ export const contentType = 'image/png'
 
 export default async function Image() {
   return new ImageResponse(
-    (
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000',
+        backgroundImage:
+          'radial-gradient(circle at 25px 25px, #333 2%, transparent 0%), radial-gradient(circle at 75px 75px, #333 2%, transparent 0%)',
+        backgroundSize: '100px 100px'
+      }}
+    >
       <div
         style={{
-          height: '100%',
-          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#000',
-          backgroundImage:
-            'radial-gradient(circle at 25px 25px, #333 2%, transparent 0%), radial-gradient(circle at 75px 75px, #333 2%, transparent 0%)',
-          backgroundSize: '100px 100px'
+          color: 'white',
+          textAlign: 'center'
         }}
       >
-        <div
+        <h1
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            textAlign: 'center'
+            fontSize: '72px',
+            fontWeight: 'bold',
+            margin: '0 0 24px 0',
+            background: 'linear-gradient(45deg, #ffffff, #888888)',
+            backgroundClip: 'text',
+            color: 'transparent'
           }}
         >
-          <h1
-            style={{
-              fontSize: '72px',
-              fontWeight: 'bold',
-              margin: '0 0 24px 0',
-              background: 'linear-gradient(45deg, #ffffff, #888888)',
-              backgroundClip: 'text',
-              color: 'transparent'
-            }}
-          >
-            Visual Explorer
-          </h1>
-          <p
-            style={{
-              fontSize: '32px',
-              margin: '0',
-              color: '#cccccc',
-              maxWidth: '800px'
-            }}
-          >
-            Photography & AI Generated Art Collection
-          </p>
-        </div>
+          Visual Explorer
+        </h1>
+        <p
+          style={{
+            fontSize: '32px',
+            margin: '0',
+            color: '#cccccc',
+            maxWidth: '800px'
+          }}
+        >
+          Photography & AI Generated Art Collection
+        </p>
       </div>
-    ),
+    </div>,
     {
       ...size
     }
