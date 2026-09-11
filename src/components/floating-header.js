@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Balancer from 'react-wrap-balancer'
 
-// eslint-disable-next-line import/no-unresolved -- BoardUI sources are .tsx; the eslint resolver only maps .js/.jsx
 import { ButtonLink } from '@/components/base/buttons/button'
 import { LoadingSpinner } from '@/components/loading-spinner'
 

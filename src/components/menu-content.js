@@ -7,7 +7,6 @@
 
 import Link from 'next/link'
 
-// eslint-disable-next-line import/no-unresolved -- BoardUI sources are .tsx; the eslint resolver only maps .js/.jsx
 import { Divider } from '@/components/base/divider/divider'
 import { NavigationLink } from '@/components/navigation-link'
 import { VinylPlayer } from '@/components/vinyl-player'
