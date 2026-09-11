@@ -24,8 +24,8 @@ import { cn, dateWithDayAndMonthFormatter, dateWithMonthAndYearFormatter, viewCo
 const EmptyState = memo(function EmptyState() {
   return (
     <div className="py-8 text-center" role="status">
-      <p className="text-gray-500">No writings found.</p>
-      <p className="mt-2 text-sm text-gray-400">Check back later for new content.</p>
+      <p className="text-text-secondary">No writings found.</p>
+      <p className="text-body-regular text-text-tertiary mt-2">Check back later for new content.</p>
     </div>
   )
 })
@@ -33,15 +33,11 @@ const EmptyState = memo(function EmptyState() {
 // 错误状态组件 - 使用 memo
 const ErrorState = memo(function ErrorState({ error, onRetry }) {
   return (
-    <div className="mb-4 rounded-md bg-red-50 p-4 text-red-600" role="alert">
-      <p className="font-medium">Failed to load writings</p>
-      <p className="mt-1 text-sm">{error}</p>
+    <div className="bg-background-tertiary-error text-text-error-primary mb-4 rounded-md p-4" role="alert">
+      <p className="text-body-medium">Failed to load writings</p>
+      <p className="text-body-regular mt-1">{error}</p>
       {onRetry && (
-        <button
-          onClick={onRetry}
-          className="mt-2 text-sm underline hover:text-red-800"
-          aria-label="Retry loading writings"
-        >
+        <button onClick={onRetry} className="text-body-regular mt-2 underline" aria-label="Retry loading writings">
           Try again
         </button>
       )}
@@ -54,12 +50,12 @@ const LoadingState = memo(function LoadingState() {
   return (
     <div className="animate-pulse space-y-4">
       {[1, 2, 3].map((i) => (
-        <div key={i} className="grid grid-cols-6 gap-2 border-t border-gray-200 py-4">
-          <div className="col-span-1 hidden h-4 w-12 rounded bg-gray-200 md:block" />
+        <div key={i} className="border-separator-border grid grid-cols-6 gap-2 border-t py-4">
+          <div className="bg-background-tertiary-default col-span-1 hidden h-4 w-12 rounded md:block" />
           <div className="col-span-5 grid grid-cols-4 gap-2 md:grid-cols-8">
-            <div className="col-span-1 h-4 w-16 rounded bg-gray-200" />
-            <div className="col-span-2 h-4 w-3/4 rounded bg-gray-200 md:col-span-6" />
-            <div className="col-span-1 h-4 w-12 rounded bg-gray-200" />
+            <div className="bg-background-tertiary-default col-span-1 h-4 w-16 rounded" />
+            <div className="bg-background-tertiary-default col-span-2 h-4 w-3/4 rounded md:col-span-6" />
+            <div className="bg-background-tertiary-default col-span-1 h-4 w-12 rounded" />
           </div>
         </div>
       ))}
@@ -70,7 +66,7 @@ const LoadingState = memo(function LoadingState() {
 // 视图计数组件 - 使用 memo + CSS 动画替代 Framer Motion
 const ViewCount = memo(function ViewCount({ count, isLoading }) {
   if (isLoading) {
-    return <span className="flex animate-pulse justify-end text-gray-400 tabular-nums">...</span>
+    return <span className="text-text-tertiary flex animate-pulse justify-end tabular-nums">...</span>
   }
   if (count) {
     return (
@@ -94,18 +90,18 @@ const WritingItem = memo(function WritingItem({ item, year, isFirst, viewCount, 
     <>
       <span
         className={cn(
-          'pointer-events-none col-span-1 hidden items-center tabular-nums transition-colors duration-300 group-hover/list:text-gray-900 md:grid',
-          isFirst && 'border-t border-gray-200'
+          'group-hover/list:text-text-primary pointer-events-none col-span-1 hidden items-center tabular-nums transition-colors duration-300 md:grid',
+          isFirst && 'border-separator-border border-t'
         )}
       >
         {isFirst ? year : ''}
       </span>
       <Link
         href={`/writing/${slug}`}
-        className="col-span-6 group-hover/list-item:text-gray-900 md:col-span-5"
+        className="group-hover/list-item:text-text-primary col-span-6 md:col-span-5"
         aria-label={`Read "${title}" published on ${dateWithMonthAndYear}`}
       >
-        <span className="grid grid-cols-4 items-center gap-2 border-t border-gray-200 py-4 md:grid-cols-8">
+        <span className="border-separator-border grid grid-cols-4 items-center gap-2 border-t py-4 md:grid-cols-8">
           <span className="col-span-1 text-left tabular-nums">
             <time dateTime={date} className="hidden md:block">
               {dateWithDayAndMonth}
@@ -129,7 +125,10 @@ const YearGroup = memo(function YearGroup({ year, items, viewDataMap, isLoading 
   return (
     <ul className="group/list list-none" key={year}>
       {items.map((item, index) => (
-        <li key={item.slug} className="group/list-item grid grid-cols-6 p-0 group-hover/list-wrapper:text-gray-300">
+        <li
+          key={item.slug}
+          className="group/list-item group-hover/list-wrapper:text-text-placeholder grid grid-cols-6 p-0"
+        >
           <WritingItem
             item={item}
             year={year}
@@ -146,7 +145,7 @@ const YearGroup = memo(function YearGroup({ year, items, viewDataMap, isLoading 
 // 表头组件
 const ListHeader = memo(function ListHeader() {
   return (
-    <div className="grid grid-cols-6 py-2 font-medium text-gray-500">
+    <div className="text-body-medium text-text-secondary grid grid-cols-6 py-2">
       <span className="col-span-1 hidden text-left md:grid">Year</span>
       <span className="col-span-6 md:col-span-5">
         <span className="grid grid-cols-4 items-center md:grid-cols-8">
@@ -183,7 +182,7 @@ export const WritingList = memo(function WritingList({ items, header = 'Writing'
   if (isEmpty && !isLoading) {
     return (
       <LazyMotion features={domAnimation}>
-        <div className="text-sm" aria-label={`${header} list`}>
+        <div className="text-body-regular" aria-label={`${header} list`}>
           <ListHeader />
           <EmptyState />
         </div>
@@ -194,7 +193,7 @@ export const WritingList = memo(function WritingList({ items, header = 'Writing'
   // 主渲染
   return (
     <LazyMotion features={domAnimation}>
-      <div className="text-sm" aria-label={`${header} list`}>
+      <div className="text-body-regular" aria-label={`${header} list`}>
         {error && <ErrorState error={error} onRetry={refetch} />}
         <ListHeader />
         {isLoading ? <LoadingState /> : <div className="group/list-wrapper">{renderedGroups}</div>}

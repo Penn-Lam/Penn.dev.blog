@@ -16,9 +16,9 @@ export const WritingViews = ({ slug }) => {
     () => (
       <LazyMotion features={domAnimation}>
         {error ? (
-          <m.span key={`${slug}-views-error`} className="text-red-500" title={error} />
+          <m.span key={`${slug}-views-error`} className="text-text-error-primary" title={error} />
         ) : isLoading ? (
-          <m.span key={`${slug}-views-loading`} className="animate-pulse text-gray-400">
+          <m.span key={`${slug}-views-loading`} className="text-text-tertiary animate-pulse">
             ...
           </m.span>
         ) : !view_count ? (
@@ -26,7 +26,7 @@ export const WritingViews = ({ slug }) => {
         ) : (
           <m.div
             key={`${slug}-views-loaded`}
-            className="flex items-center text-sm"
+            className="text-body-regular flex items-center"
             title={`${formattedViewCount} ${formattedViewCount === 1 ? 'view' : 'views'}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

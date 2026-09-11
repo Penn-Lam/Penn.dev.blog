@@ -12,7 +12,9 @@ export function Iframe({ embedUrl, title, className, ...rest }) {
           className={cn('w-full rounded-sm border-0 border-none shadow-lg', className)}
           {...rest}
         />
-        <figcaption className="mt-2 text-center text-xs font-light break-words text-gray-500">{title}</figcaption>
+        <figcaption className="text-caption-1-regular text-text-tertiary mt-2 text-center break-words">
+          {title}
+        </figcaption>
       </figure>
     </ShowInView>
   )

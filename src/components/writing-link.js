@@ -15,18 +15,22 @@ export const WritingLink = ({ post, viewCount, isMobile, isActive, isLoading }) 
         href={`/writing/${post.slug}`}
         className={cn(
           'flex flex-col gap-1 transition-colors duration-300',
-          !isMobile && isActive ? 'bg-black text-white' : 'hover:bg-gray-200',
-          isMobile ? 'border-b px-4 py-3 text-sm hover:bg-gray-100' : 'rounded-lg p-2'
+          !isMobile && isActive
+            ? 'bg-text-primary text-background-primary-default'
+            : 'hover:bg-background-secondary-default',
+          isMobile
+            ? 'border-separator-border hover:bg-background-secondary-default text-body-regular border-b px-4 py-3'
+            : 'rounded-lg p-2'
         )}
       >
-        <span className="font-medium">{post.title}</span>
-        <span className={cn('transition-colors duration-300', isActive ? 'text-slate-400' : 'text-slate-500')}>
+        <span className="text-body-medium">{post.title}</span>
+        <span className={cn('transition-colors duration-300', isActive ? 'text-text-tertiary' : 'text-text-secondary')}>
           <time dateTime={date}>{formattedDate}</time>{' '}
           <span>
             {isLoading ? (
               <m.span
                 key={`${post.slug}-views-loading`}
-                className="animate-pulse text-gray-400"
+                className="text-text-tertiary animate-pulse"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

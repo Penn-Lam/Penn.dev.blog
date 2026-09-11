@@ -102,9 +102,9 @@ export function TimeGreeting({ className }) {
     <div className={cn('space-y-1', className)}>
       <div className="flex items-center gap-2">
         <span className="text-lg">{timeData.icon}</span>
-        <span className="text-sm font-medium text-gray-700">{timeData.greeting}</span>
+        <span className="text-body-medium text-text-secondary">{timeData.greeting}</span>
       </div>
-      <p className="text-xs text-gray-500 italic">"{quote}"</p>
+      <p className="text-caption-1-regular text-text-tertiary italic">"{quote}"</p>
     </div>
   )
 }

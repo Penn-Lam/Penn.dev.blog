@@ -63,14 +63,14 @@ export function SunnyToggle() {
         aria-label={active ? '关闭阳光模式' : '开启阳光模式'}
         onClick={toggle}
         className="relative h-[26px] w-[46px] shrink-0 cursor-pointer rounded-full transition-colors duration-300"
-        style={{ backgroundColor: active ? '#f59e0b' : '#e5e7eb' }}
+        style={{ backgroundColor: active ? '#f59e0b' : 'var(--color-background-tertiary-default)' }}
       >
         <span
-          className="absolute top-[3px] left-[3px] h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-300"
+          className="bg-background-primary-default absolute top-[3px] left-[3px] h-5 w-5 rounded-full shadow-sm transition-transform duration-300"
           style={{ transform: active ? 'translateX(20px)' : 'translateX(0)' }}
         />
       </button>
-      <span className="text-[13px] text-gray-400 italic">
+      <span className="text-body-2-regular text-text-tertiary italic">
         {active ? 'the sun is peeking through ☀' : '← psst… try flipping this'}
       </span>
     </div>
@@ -140,12 +140,12 @@ export function SunnyOverlay() {
         <div className="relative w-full">
           <div className="flex flex-col items-end" style={{ gap: 60 }}>
             {Array.from({ length: SHUTTER_COUNT }, (_, i) => (
-              <div key={i} className="w-full" style={{ height: 40, backgroundColor: '#1a1917' }} />
+              <div key={i} className="w-full" style={{ height: 40, backgroundColor: 'var(--color-text-primary)' }} />
             ))}
           </div>
           <div className="absolute inset-0 flex justify-around">
-            <div style={{ width: 5, height: '100%', backgroundColor: '#1a1917' }} />
-            <div style={{ width: 5, height: '100%', backgroundColor: '#1a1917' }} />
+            <div style={{ width: 5, height: '100%', backgroundColor: 'var(--color-text-primary)' }} />
+            <div style={{ width: 5, height: '100%', backgroundColor: 'var(--color-text-primary)' }} />
           </div>
         </div>
       </div>

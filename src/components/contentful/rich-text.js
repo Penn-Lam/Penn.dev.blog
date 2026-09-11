@@ -16,7 +16,7 @@ function options(links) {
 
   return {
     renderMark: {
-      [MARKS.BOLD]: (text) => <span className="font-semibold text-black">{text}</span>,
+      [MARKS.BOLD]: (text) => <span className="text-text-primary font-semibold">{text}</span>,
       [MARKS.ITALIC]: (text) => <span className="italic">{text}</span>,
       [MARKS.CODE]: (text) => <code className="inline-code">{text}</code>
     },
@@ -59,7 +59,7 @@ function options(links) {
       ),
       [BLOCKS.LIST_ITEM]: (_, children) => <li>{children}</li>,
       [BLOCKS.QUOTE]: (_, children) => (
-        <blockquote className="mb-4 rounded-r-lg border-l-2 border-gray-200 px-4 font-medium text-gray-500">
+        <blockquote className="border-separator-border text-text-secondary mb-4 rounded-r-lg border-l-2 px-4 font-medium">
           {children}
         </blockquote>
       ),
@@ -81,7 +81,7 @@ function options(links) {
               nopin="nopin"
             />
             {asset.description && (
-              <figcaption className="text-center text-xs font-light break-all text-gray-500">
+              <figcaption className="text-caption-1-regular text-text-tertiary text-center break-all">
                 {asset.description}
               </figcaption>
             )}
@@ -110,7 +110,7 @@ function options(links) {
                       params="fs=0;controls=0&mute=1"
                       className="aspect-video"
                     />
-                    {title && <div className="py-2 text-center text-xs font-light text-gray-500">{title}</div>}
+                    {title && <div className="text-caption-1-regular text-text-tertiary py-2 text-center">{title}</div>}
                   </ShowInView>
                 )
               }

@@ -30,9 +30,9 @@ export const WritingListLayout = ({ list, isMobile }) => {
   }, [list, viewData, pathname, isMobile, isLoading])
 
   return (
-    <div className={cn(!isMobile && 'flex flex-col gap-1 text-sm')}>
+    <div className={cn(!isMobile && 'text-body-regular flex flex-col gap-1')}>
       {error && (
-        <div className="mb-4 rounded-md bg-red-50 p-4 text-red-500">
+        <div className="bg-background-tertiary-error text-text-error-primary mb-4 rounded-md p-4">
           <p>Error loading view counts: {error}</p>
         </div>
       )}

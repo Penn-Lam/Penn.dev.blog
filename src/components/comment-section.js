@@ -5,7 +5,7 @@ import { Comments } from '@fuma-comment/react'
 export function CommentSection({ page, className }) {
   return (
     <section className={className}>
-      <h2 className="text-lg font-medium text-gray-900">Comments</h2>
+      <h2 className="text-title-3-medium text-text-primary">Comments</h2>
       <div className="mt-6">
         <Comments
           page={page}

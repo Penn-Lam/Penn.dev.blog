@@ -139,7 +139,7 @@ export const TitleEntrance = memo(({ children, className, showBorder = false }) 
       {children}
       {showBorder && (
         <motion.div
-          className="absolute bottom-0 left-0 h-0.5 w-full origin-left bg-gray-900"
+          className="bg-text-primary absolute bottom-0 left-0 h-0.5 w-full origin-left"
           variants={borderVariants}
         />
       )}

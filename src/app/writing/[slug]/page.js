@@ -74,7 +74,7 @@ export default async function WritingSlug(props) {
 
   return (
     <>
-      <ScrollArea className="writing-content bg-white" useScrollAreaId>
+      <ScrollArea className="writing-content bg-background-primary-default" useScrollAreaId>
         <FloatingHeader scrollTitle={title} goBackLink="/writing">
           <WritingViews slug={slug} />
         </FloatingHeader>
@@ -83,7 +83,7 @@ export default async function WritingSlug(props) {
             <PageTitle
               title={title}
               subtitle={
-                <time dateTime={postDate} className="text-gray-400">
+                <time dateTime={postDate} className="text-text-tertiary">
                   {dateString}
                 </time>
               }
@@ -92,7 +92,7 @@ export default async function WritingSlug(props) {
             <RichText content={content} />
           </article>
           <ClientOnly>
-            <CommentSection page={`writing:${slug}`} className="mt-12 border-t border-gray-100 pt-8" />
+            <CommentSection page={`writing:${slug}`} className="border-separator-border mt-12 border-t pt-8" />
           </ClientOnly>
         </div>
       </ScrollArea>

@@ -17,8 +17,10 @@ export function TagFilter({ tags, selectedTag }) {
       <div className="flex flex-wrap gap-2">
         <Link
           href="/musings"
-          className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
-            !selectedTag ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+          className={`text-body-medium rounded-lg px-3 py-1.5 transition-all duration-200 ${
+            !selectedTag
+              ? 'bg-text-primary text-background-primary-default'
+              : 'bg-background-secondary-default text-text-secondary hover:bg-background-secondary-hover hover:text-text-primary'
           }`}
         >
           All
@@ -27,10 +29,10 @@ export function TagFilter({ tags, selectedTag }) {
           <Link
             key={tag}
             href={`/musings?tag=${encodeURIComponent(tag)}`}
-            className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
+            className={`text-body-medium rounded-lg px-3 py-1.5 transition-all duration-200 ${
               selectedTag === tag
-                ? 'bg-gray-900 text-white'
-                : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                ? 'bg-text-primary text-background-primary-default'
+                : 'bg-background-secondary-default text-text-secondary hover:bg-background-secondary-hover hover:text-text-primary'
             }`}
           >
             {tag}
