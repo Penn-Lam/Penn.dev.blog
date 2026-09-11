@@ -56,12 +56,12 @@ const patchedConfig = [
       },
       'import/resolver': {
         node: {
-          extensions: ['.js', '.jsx'],
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
           paths: ['src']
         },
         alias: {
           map: [['@', './src']],
-          extensions: ['.js', '.jsx']
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
         }
       }
     },

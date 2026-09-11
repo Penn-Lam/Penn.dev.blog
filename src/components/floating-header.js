@@ -7,8 +7,9 @@ import { usePathname } from 'next/navigation'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Balancer from 'react-wrap-balancer'
 
+// eslint-disable-next-line import/no-unresolved -- BoardUI sources are .tsx; the eslint resolver only maps .js/.jsx
+import { ButtonLink } from '@/components/base/buttons/button'
 import { LoadingSpinner } from '@/components/loading-spinner'
-import { Button } from '@/components/ui/button'
 
 const MobileDrawer = dynamic(() => import('@/components/mobile-drawer').then((mod) => mod.MobileDrawer))
 const SubmitBookmarkDrawer = dynamic(
@@ -21,7 +22,7 @@ const SubmitBookmarkDrawer = dynamic(
 import { MOBILE_SCROLL_THRESHOLD, SCROLL_AREA_ID } from '@/lib/constants'
 
 /**
- * [INPUT]: 依赖 @/lib/constants 的滚动阈值配置
+ * [INPUT]: 依赖 @/lib/constants 的滚动阈值配置、@/components/base/buttons/button 的 ButtonLink
  * [OUTPUT]: 对外提供 FloatingHeader 组件，移动端浮动标题
  * [POS]: components/ 导航系统的一部分
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -90,7 +91,7 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
   // 标题渲染 - 使用 CSS will-change 提示 GPU
   const titleElement = scrollTitle ? (
     <span
-      className="will-change-transform-opacity line-clamp-2 font-semibold tracking-tight"
+      className="will-change-transform-opacity text-body-semibold line-clamp-2"
       style={{
         transform: `translateY(${transformRef.current.translateY}%)`,
         opacity: transformRef.current.opacity
@@ -101,16 +102,18 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
   ) : null
 
   return (
-    <header className="sticky inset-x-0 top-0 z-10 mx-auto flex h-12 w-full shrink-0 items-center overflow-hidden border-b bg-white text-sm font-medium lg:hidden">
+    <header className="border-separator-border bg-background-primary-default text-body-medium sticky inset-x-0 top-0 z-10 mx-auto flex h-12 w-full shrink-0 items-center overflow-hidden border-b lg:hidden">
       <div className="flex size-full items-center px-3">
         <div className="flex w-full items-center justify-between gap-2">
           <div className="flex flex-1 items-center gap-1">
             {goBackLink ? (
-              <Button variant="ghost" size="icon" className="shrink-0" asChild>
-                <Link href={goBackLink} title="Go back">
-                  <ArrowLeftIcon size={16} />
-                </Link>
-              </Button>
+              <Link
+                href={goBackLink}
+                title="Go back"
+                className="text-foreground-icon-primary hover:bg-background-primary-hover focus-visible:ring-border-focus-ring inline-flex size-9 shrink-0 items-center justify-center rounded-md transition-colors outline-none focus-visible:ring-2"
+              >
+                <ArrowLeftIcon size={16} />
+              </Link>
             ) : (
               <MobileDrawer />
             )}
@@ -119,22 +122,22 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
               {/* Balancer 仅在 title 存在时渲染 */}
               {title && (
                 <Balancer ratio={0.35}>
-                  <span className="line-clamp-2 font-semibold tracking-tight">{title}</span>
+                  <span className="text-body-semibold line-clamp-2">{title}</span>
                 </Balancer>
               )}
               <div className="flex items-center gap-2">
                 {(isWritingIndexPage || isBookmarksIndexPage) && (
-                  <Button variant="outline" size="xs" asChild>
-                    <a
-                      href={isWritingIndexPage ? '/writing.xml' : '/bookmarks.xml'}
-                      title="RSS feed"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <RadioIcon size={16} className="mr-2" />
-                      RSS feed
-                    </a>
-                  </Button>
+                  <ButtonLink
+                    href={isWritingIndexPage ? '/writing.xml' : '/bookmarks.xml'}
+                    title="RSS feed"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    size="xs"
+                    leadingIcon={RadioIcon}
+                  >
+                    RSS feed
+                  </ButtonLink>
                 )}
                 {isBookmarkPath && <SubmitBookmarkDrawer bookmarks={bookmarks} currentBookmark={currentBookmark} />}
               </div>

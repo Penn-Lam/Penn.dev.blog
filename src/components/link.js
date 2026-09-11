@@ -39,7 +39,7 @@ export const Link = ({ href = '#', children, ...rest }) => {
         {children}
         {/* 视觉指示器 - 使用 CSS 伪元素 */}
         <span
-          className="after:ml-0.5 after:align-super after:text-xs after:text-gray-400 after:content-['_↗']"
+          className="after:text-text-tertiary after:ml-0.5 after:align-super after:text-xs after:content-['_↗']"
           aria-hidden="true"
         />
       </a>
