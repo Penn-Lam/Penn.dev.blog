@@ -30,8 +30,8 @@ export const VinylPlayer = memo(() => {
       <button
         onClick={toggleOpen}
         className={cn(
-          'flex w-full items-center justify-between rounded-lg p-2 font-medium',
-          isOpen ? 'bg-black text-white' : 'hover:bg-gray-200'
+          'text-body-medium flex w-full items-center justify-between rounded-lg p-2',
+          isOpen ? 'bg-text-primary text-background-primary-default' : 'hover:bg-background-secondary-default'
         )}
       >
         <span className="flex items-center gap-2">
@@ -40,8 +40,8 @@ export const VinylPlayer = memo(() => {
         </span>
         <span
           className={cn(
-            'hidden size-5 place-content-center rounded-sm border border-gray-200 bg-gray-100 text-xs font-medium text-gray-500 lg:grid',
-            isOpen && 'border-gray-600 bg-gray-700 text-gray-200'
+            'border-border-button-default bg-background-secondary-default text-caption-1-medium text-text-secondary hidden size-5 place-content-center rounded-sm border lg:grid',
+            isOpen && 'border-border-button-active bg-background-tertiary-default text-text-primary'
           )}
           title="Shortcut key: 9"
         >
@@ -50,18 +50,26 @@ export const VinylPlayer = memo(() => {
       </button>
       {isOpen && isReady && (
         <div className="flex items-center justify-center gap-2 pt-3">
-          <button onClick={prev} className="text-gray-400 transition-colors hover:text-gray-600" aria-label="上一首">
+          <button
+            onClick={prev}
+            className="text-foreground-icon-tertiary hover:text-foreground-icon-primary transition-colors"
+            aria-label="上一首"
+          >
             <SkipBack size={12} />
           </button>
-          <span className="group/name relative w-24 overflow-visible text-center text-[10px] text-gray-500">
+          <span className="text-caption-2-regular text-text-secondary group/name relative w-24 overflow-visible text-center">
             <span className="block truncate">{currentTrack?.name || '...'}</span>
             {currentTrack?.name && (
-              <span className="pointer-events-none absolute top-full left-1/2 z-50 mt-1.5 hidden -translate-x-1/2 rounded bg-gray-800 px-2 py-1 text-[10px] whitespace-nowrap text-white shadow-md group-hover/name:block">
+              <span className="bg-text-primary text-caption-2-regular text-background-primary-default pointer-events-none absolute top-full left-1/2 z-50 mt-1.5 hidden -translate-x-1/2 rounded px-2 py-1 whitespace-nowrap shadow-md group-hover/name:block">
                 {currentTrack.name}
               </span>
             )}
           </span>
-          <button onClick={next} className="text-gray-400 transition-colors hover:text-gray-600" aria-label="下一首">
+          <button
+            onClick={next}
+            className="text-foreground-icon-tertiary hover:text-foreground-icon-primary transition-colors"
+            aria-label="下一首"
+          >
             <SkipForward size={12} />
           </button>
         </div>
@@ -74,11 +82,7 @@ export const VinylPlayer = memo(() => {
       >
         <div className="overflow-hidden">
           <div className="flex justify-center pt-2 pb-2">
-            <VinylRecord
-              isPlaying={isPlaying}
-              coverUrl={currentTrack?.cover}
-              onClick={isReady ? toggle : undefined}
-            />
+            <VinylRecord isPlaying={isPlaying} coverUrl={currentTrack?.cover} onClick={isReady ? toggle : undefined} />
           </div>
         </div>
       </div>

@@ -51,12 +51,12 @@ export default function SignInPage() {
 
   return (
     <div className="mx-auto flex min-h-[60vh] w-full max-w-md flex-col justify-center px-6 py-16">
-      <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-        <h1 className="text-2xl font-semibold text-gray-900">{error ? 'Unable to sign in' : 'Signing you in…'}</h1>
-        <p className="mt-2 text-sm text-gray-500">
+      <div className="border-border-button-default bg-background-primary-default rounded-3xl border p-8 text-center shadow-sm">
+        <h1 className="text-title-1-semibold text-text-primary">{error ? 'Unable to sign in' : 'Signing you in…'}</h1>
+        <p className="text-body-regular text-text-secondary mt-2">
           {error ? 'Review your auth configuration and try again.' : 'Redirecting to GitHub to continue.'}
         </p>
-        {error ? <p className="mt-4 text-sm text-red-500">{error}</p> : null}
+        {error ? <p className="text-body-regular text-text-error-primary mt-4">{error}</p> : null}
       </div>
     </div>
   )
