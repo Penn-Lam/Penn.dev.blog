@@ -11,8 +11,8 @@ const DynamicIframe = dynamic(() => import('@/components/contentful/iframe').the
 import { dasherize } from '@/lib/utils'
 
 function options(links) {
-  const findAsset = (id) => links?.assets.block.find((item) => item.sys.id === id)
-  const findInlineEntry = (id) => links?.entries.inline.find((item) => item.sys.id === id)
+  const findAsset = (id) => links?.assets?.block?.find((item) => item.sys.id === id)
+  const findInlineEntry = (id) => links?.entries?.inline?.find((item) => item.sys.id === id)
 
   return {
     renderMark: {
