@@ -627,7 +627,7 @@
   @apply border-b border-gray-200 bg-gray-50 px-3 py-2 text-left font-semibold text-gray-700;
 }
 .prose tbody td {
-  @apply border-b border-gray-100 px-3 py-2;
+  @apply border-separator-border border-b px-3 py-2;
 }
 .prose tr:last-child td {
   @apply border-b-0;
@@ -636,5 +636,27 @@
   @apply transition-colors;
 }
 .prose tbody tr:hover {
-  @apply border-l-4 border-blue-400 bg-blue-50/40 shadow-md;
+  @apply border-accent-400 bg-accent-50/40 border-l-4 shadow-md;
+}
+
+/* ---------------------------------------------------------------------------
+ * fuma-comment → BoardUI tokens.
+ * fuma-comment ships its palette as --color-fc-* custom properties on :root
+ * (see @fuma-comment/react/preset.css); remap them onto the BoardUI semantic
+ * tokens so the comment UI rides the same accent and neutral system.
+ * ------------------------------------------------------------------------- */
+:root {
+  --color-fc-background: var(--color-background-full);
+  --color-fc-foreground: var(--color-text-primary);
+  --color-fc-muted: var(--color-background-secondary-default);
+  --color-fc-muted-foreground: var(--color-text-secondary);
+  --color-fc-popover: var(--color-background-primary-default);
+  --color-fc-popover-foreground: var(--color-text-primary);
+  --color-fc-card: var(--color-background-secondary-default);
+  --color-fc-border: var(--color-border-button-default);
+  --color-fc-primary: var(--color-accent-600);
+  --color-fc-primary-foreground: var(--color-text-white);
+  --color-fc-accent: var(--color-background-secondary-hover);
+  --color-fc-accent-foreground: var(--color-text-primary);
+  --color-fc-ring: var(--color-border-focus-ring);
 }
