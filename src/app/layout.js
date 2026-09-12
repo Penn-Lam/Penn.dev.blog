@@ -1,3 +1,9 @@
+/**
+ * [INPUT]: 依赖 @/globals.css、BoardUI 语义 token、SiteSidebar、shared-metadata、Contentful preload
+ * [OUTPUT]: 对外提供 RootLayout、metadata、viewport；注入全站侧栏与主题
+ * [POS]: App Router 根布局，所有路由的 HTML 壳
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
 import '@/globals.css'
 
 import { Analytics } from '@vercel/analytics/next'
@@ -134,7 +140,8 @@ export const metadata = {
   },
   other: {
     pinterest: 'nopin'
-  }
+  },
+  icons: sharedMetadata.icons
 }
 
 export const viewport = {
