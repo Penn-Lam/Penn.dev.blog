@@ -82,16 +82,20 @@ export const SiteSidebar = () => {
         items={items}
         selected={selected}
         header={(collapsed) => <SidebarIdentity collapsed={collapsed} />}
-        footer={(collapsed) => (collapsed ? null : <VinylPlayer />)}
+        footer={(collapsed) =>
+          collapsed ? null : (
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
+                <span className="text-caption-1-medium text-text-secondary px-1">Online</span>
+                {Object.values(PROFILES).map((profile) => (
+                  <NavigationLink key={profile.url} href={profile.url} label={profile.title} icon={profile.icon} />
+                ))}
+              </div>
+              <VinylPlayer />
+            </div>
+          )
+        }
       />
-      <div className="flex flex-col gap-2 px-2 pb-2">
-        <span className="text-caption-1-medium text-text-secondary px-1">Online</span>
-        <div className="flex flex-col gap-1">
-          {Object.values(PROFILES).map((profile) => (
-            <NavigationLink key={profile.url} href={profile.url} label={profile.title} icon={profile.icon} />
-          ))}
-        </div>
-      </div>
     </div>
   )
 }
