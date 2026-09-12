@@ -146,7 +146,7 @@ export function Sidebar({
   return (
     <aside
       className={cx(
-        "flex shrink-0 flex-col justify-between overflow-hidden",
+        "flex h-full shrink-0 flex-col overflow-hidden",
         "rounded-3xl border border-border-button-white bg-background-secondary-default shadow-sidebar",
         "transition-[width] duration-300 ease-in-out",
         // Collapsed rail keeps the 60px spec: 1px border + 11px padding on each
