@@ -53,39 +53,40 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
 
   const memoizedScrollArea = useMemo(
     () => (
-      <ScrollArea
+      <div
         className={cn(
-          'lg:border-border-button-white lg:bg-background-secondary-default lg:shadow-sidebar hidden lg:m-3 lg:flex lg:h-[calc(100vh-1.5rem)] lg:flex-col lg:rounded-3xl lg:border',
-          'transition-[margin] duration-300 ease-in-out',
+          'hidden shrink-0 flex-col p-3 transition-[margin] duration-300 ease-in-out lg:flex lg:h-screen',
           collapsed && 'lg:-ml-[200px]',
           isInner ? 'lg:w-80 xl:w-96' : 'lg:w-60 xl:w-72'
         )}
       >
-        {title && (
-          <div className="border-separator-border bg-background-secondary-default sticky top-0 z-10 border-b px-4 py-3">
-            <div className="flex items-center justify-between">
-              <span className="text-body-semibold">{title}</span>
-              <div className="flex items-center gap-2">
-                {(isWritingPath || isBookmarksPath) && (
-                  <ButtonLink
-                    href={isWritingPath ? '/writing.xml' : '/bookmarks.xml'}
-                    title="RSS feed"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="secondary"
-                    size="xs"
-                    leadingIcon={RadioIcon}
-                  >
-                    RSS feed
-                  </ButtonLink>
-                )}
-                {isBookmarksPath && <SubmitBookmarkDialog bookmarks={bookmarks} currentBookmark={currentBookmark} />}
+        <ScrollArea className="lg:border-border-button-white lg:bg-background-secondary-default lg:shadow-sidebar flex-1 [scrollbar-width:none] lg:max-h-none lg:min-h-0 lg:rounded-3xl lg:border">
+          {title && (
+            <div className="border-separator-border bg-background-secondary-default sticky top-0 z-10 border-b px-4 py-3">
+              <div className="flex items-center justify-between">
+                <span className="text-body-semibold">{title}</span>
+                <div className="flex items-center gap-2">
+                  {(isWritingPath || isBookmarksPath) && (
+                    <ButtonLink
+                      href={isWritingPath ? '/writing.xml' : '/bookmarks.xml'}
+                      title="RSS feed"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                      size="xs"
+                      leadingIcon={RadioIcon}
+                    >
+                      RSS feed
+                    </ButtonLink>
+                  )}
+                  {isBookmarksPath && <SubmitBookmarkDialog bookmarks={bookmarks} currentBookmark={currentBookmark} />}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <div className="bg-background-secondary-default flex flex-1 flex-col p-3">{children}</div>
-      </ScrollArea>
+          )}
+          <div className="bg-background-secondary-default flex flex-1 flex-col p-3">{children}</div>
+        </ScrollArea>
+      </div>
     ),
     [isInner, title, isWritingPath, isBookmarksPath, bookmarks, currentBookmark, children, collapsed]
   )
