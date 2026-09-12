@@ -7,7 +7,6 @@ import { PenflowSignature } from '@/components/penflow-signature'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
 import { SunnyOverlay, SunnyToggle } from '@/components/sunny-mode'
-import { TimeGreeting } from '@/components/time-greeting'
 import { WritingList } from '@/components/writing-list'
 import { getAllPosts } from '@/lib/contentful'
 import { getItemsByYear, getSortedPosts } from '@/lib/utils'
@@ -29,7 +28,6 @@ export default async function Home() {
       <div className="content-wrapper">
         <div className="content">
           <PageTitle title="Home" className="lg:hidden" />
-          <TimeGreeting className="mb-6" />
           <p>
             Hi, I'm Penn Lam（林芃芃） 👋
             <br />
