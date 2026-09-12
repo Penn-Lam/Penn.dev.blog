@@ -176,7 +176,7 @@ export function Sidebar({
           <div
             className={cx(
               "-m-2 min-w-0 overflow-hidden p-2 transition-[max-width,opacity,transform] duration-300 ease-in-out",
-              collapsed ? "max-w-none scale-95 opacity-100" : "max-w-[206px] scale-100 opacity-100",
+              collapsed ? "max-w-12" : "max-w-[206px]",
             )}
           >
             {header?.(collapsed)}

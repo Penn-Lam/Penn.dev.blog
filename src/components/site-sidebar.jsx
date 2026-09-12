@@ -9,7 +9,6 @@ import { useDialogState } from '@/components/quick-post-button'
 import { VinylPlayer } from '@/components/vinyl-player'
 import { useKeyPress } from '@/hooks/useKeyPress'
 import { LINKS, PROFILES } from '@/lib/constants'
-import { cn } from '@/lib/utils'
 
 /**
  * [INPUT]: 依赖 BoardUI Sidebar、NavigationLink、VinylPlayer、LINKS/PROFILES 常量
@@ -31,7 +30,7 @@ const keyCodePathnameMapping = {
 
 function SidebarIdentity({ collapsed }) {
   return (
-    <div className={cn('flex items-center gap-2', collapsed && 'gap-0')}>
+    <div className="flex items-center gap-2">
       <img
         src="/assets/me.avif"
         alt="Penn"
