@@ -7,9 +7,9 @@
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
-import { DiscIcon, SkipBack, SkipForward } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
 
+import { DiscIcon, SkipBackIcon, SkipForwardIcon } from '@/components/icons'
 import { useKeyPress } from '@/hooks/useKeyPress'
 import { cn } from '@/lib/utils'
 
@@ -46,7 +46,7 @@ export const VinylPlayer = memo(() => {
             className="text-foreground-icon-tertiary hover:text-foreground-icon-primary transition-colors"
             aria-label="上一首"
           >
-            <SkipBack size={12} />
+            <SkipBackIcon size={12} />
           </button>
           <span className="text-caption-2-regular text-text-secondary group/name relative w-24 overflow-visible text-center">
             <span className="block truncate">{currentTrack?.name || '...'}</span>
@@ -61,7 +61,7 @@ export const VinylPlayer = memo(() => {
             className="text-foreground-icon-tertiary hover:text-foreground-icon-primary transition-colors"
             aria-label="下一首"
           >
-            <SkipForward size={12} />
+            <SkipForwardIcon size={12} />
           </button>
         </div>
       )}

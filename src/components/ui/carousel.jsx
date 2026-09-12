@@ -1,9 +1,9 @@
 'use client'
 
 import useEmblaCarousel from 'embla-carousel-react'
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
+import { ArrowLeft01Icon, ArrowRight01Icon } from '@/components/icons'
 import { cn } from '@/lib/utils'
 
 const CarouselContext = createContext(null)
@@ -174,7 +174,7 @@ const CarouselPrevious = memo(({ className, ...props }) => {
       {...props}
       data-oid="9l1ym01"
     >
-      <ArrowLeftIcon className="size-4" data-oid="mvx40ks" />
+      <ArrowLeft01Icon className="size-4" data-oid="mvx40ks" />
       <span className="sr-only" data-oid="nq2wpf9">
         Previous slide
       </span>
@@ -201,7 +201,7 @@ const CarouselNext = memo(({ className, ...props }) => {
       {...props}
       data-oid="_nc_awv"
     >
-      <ArrowRightIcon size={16} className="shrink-0" data-oid="d6hzv_r" />
+      <ArrowRight01Icon size={16} className="shrink-0" data-oid="d6hzv_r" />
       <span className="sr-only" data-oid="y43t1ym">
         Next slide
       </span>

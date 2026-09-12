@@ -1,9 +1,10 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronLeftIcon, ChevronRightIcon, XIcon } from 'lucide-react'
 import { CldImage, getCldVideoUrl } from 'next-cloudinary'
 import { useCallback, useEffect } from 'react'
+
+import { ArrowLeft01Icon, ArrowRight01Icon, Cancel01Icon } from '@/components/icons'
 
 export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate }) {
   const navigatePrevious = useCallback(() => {
@@ -68,7 +69,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
           onClick={onClose}
           className="bg-background-primary-default/90 text-text-primary hover:bg-background-primary-default absolute top-4 right-4 z-10 rounded-full p-2 shadow-lg transition-colors"
         >
-          <XIcon className="h-6 w-6" />
+          <Cancel01Icon className="h-6 w-6" />
         </button>
 
         {/* Navigation Buttons */}
@@ -81,7 +82,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
               }}
               className="bg-background-primary-default/90 text-text-primary hover:bg-background-primary-default absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-full p-2 shadow-lg transition-colors"
             >
-              <ChevronLeftIcon className="h-6 w-6" />
+              <ArrowLeft01Icon className="h-6 w-6" />
             </button>
             <button
               onClick={(e) => {
@@ -90,7 +91,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
               }}
               className="bg-background-primary-default/90 text-text-primary hover:bg-background-primary-default absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full p-2 shadow-lg transition-colors"
             >
-              <ChevronRightIcon className="h-6 w-6" />
+              <ArrowRight01Icon className="h-6 w-6" />
             </button>
           </>
         )}

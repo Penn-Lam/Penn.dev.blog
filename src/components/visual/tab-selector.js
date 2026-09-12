@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { CameraIcon, GridIcon, ImageIcon, SparklesIcon, VideoIcon } from 'lucide-react'
+
+import { Camera01Icon, GridIcon, Image01Icon, SparklesIcon, Video01Icon } from '@/components/icons'
 
 export function TabSelector({ mediaType, sourceType, showAll, onFilterChange }) {
   // 合并标签系统，提供更简洁的选项
@@ -15,7 +16,7 @@ export function TabSelector({ mediaType, sourceType, showAll, onFilterChange }) 
     {
       value: 'photography-image',
       label: 'Photography',
-      icon: CameraIcon,
+      icon: Camera01Icon,
       mediaType: 'image',
       sourceType: 'photography'
     },
@@ -29,14 +30,14 @@ export function TabSelector({ mediaType, sourceType, showAll, onFilterChange }) 
     {
       value: 'photography-video',
       label: 'Video',
-      icon: VideoIcon,
+      icon: Video01Icon,
       mediaType: 'video',
       sourceType: 'photography'
     },
     {
       value: 'aigc-video',
       label: 'AI Video',
-      icon: ImageIcon,
+      icon: Image01Icon,
       mediaType: 'video',
       sourceType: 'aigc'
     }

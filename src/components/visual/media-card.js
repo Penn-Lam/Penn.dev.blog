@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { EyeIcon, HeartIcon, PlayIcon, ShareIcon } from 'lucide-react'
 import { CldImage } from 'next-cloudinary'
+
+import { EyeIcon, HeartIcon, PlayIcon, Share01Icon } from '@/components/icons'
 
 export function MediaCard({ item, isHovered, onClick }) {
   const isVideo = item.mediaType === 'video'
@@ -117,7 +118,7 @@ export function MediaCard({ item, isHovered, onClick }) {
             <HeartIcon className="h-4 w-4" />
           </button>
           <button className="bg-background-primary-default/90 text-text-secondary hover:bg-background-primary-default rounded-full p-2 backdrop-blur-sm transition-all hover:scale-110">
-            <ShareIcon className="h-4 w-4" />
+            <Share01Icon className="h-4 w-4" />
           </button>
           <button className="bg-background-primary-default/90 text-text-secondary hover:bg-background-primary-default rounded-full p-2 backdrop-blur-sm transition-all hover:scale-110">
             <EyeIcon className="h-4 w-4" />

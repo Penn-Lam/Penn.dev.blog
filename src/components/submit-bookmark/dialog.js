@@ -1,9 +1,9 @@
 'use client'
 
-import { SendIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Button } from '@/components/base/buttons/button'
+import { SendIcon } from '@/components/icons'
 import { SubmitBookmarkForm } from '@/components/submit-bookmark/form'
 import {
   Dialog,

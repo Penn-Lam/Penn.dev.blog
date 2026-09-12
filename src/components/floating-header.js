@@ -1,6 +1,5 @@
 'use client'
 
-import { ArrowLeftIcon, RadioIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -8,6 +7,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Balancer from 'react-wrap-balancer'
 
 import { ButtonLink } from '@/components/base/buttons/button'
+import { ArrowLeft01Icon, RssIcon } from '@/components/icons'
 import { LoadingSpinner } from '@/components/loading-spinner'
 
 const MobileDrawer = dynamic(() => import('@/components/mobile-drawer').then((mod) => mod.MobileDrawer))
@@ -111,7 +111,7 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
                 title="Go back"
                 className="text-foreground-icon-primary hover:bg-background-primary-hover focus-visible:ring-border-focus-ring inline-flex size-9 shrink-0 items-center justify-center rounded-md transition-colors outline-none focus-visible:ring-2"
               >
-                <ArrowLeftIcon size={16} />
+                <ArrowLeft01Icon size={16} />
               </Link>
             ) : (
               <MobileDrawer />
@@ -133,7 +133,7 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
                     rel="noopener noreferrer"
                     variant="secondary"
                     size="xs"
-                    leadingIcon={RadioIcon}
+                    leadingIcon={RssIcon}
                   >
                     RSS feed
                   </ButtonLink>

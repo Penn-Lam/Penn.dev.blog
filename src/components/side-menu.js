@@ -1,11 +1,11 @@
 'use client'
 
-import { RadioIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { usePathname, useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 
 import { ButtonLink } from '@/components/base/buttons/button'
+import { RssIcon } from '@/components/icons'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { useDialogState } from '@/components/quick-post-button'
 import { ScrollArea } from '@/components/scroll-area'
@@ -74,7 +74,7 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
                       rel="noopener noreferrer"
                       variant="secondary"
                       size="xs"
-                      leadingIcon={RadioIcon}
+                      leadingIcon={RssIcon}
                     >
                       RSS feed
                     </ButtonLink>

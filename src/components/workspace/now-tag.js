@@ -1,6 +1,6 @@
 'use client'
 
-import { ClockIcon } from 'lucide-react'
+import { Clock01Icon } from '@/components/icons'
 
 export function NowTag({ projects }) {
   const formatDate = (dateString) => {
@@ -17,7 +17,7 @@ export function NowTag({ projects }) {
       <div className="relative z-10">
         <div className="mb-4 flex items-center gap-3">
           <div className="bg-accent-100 flex h-8 w-8 items-center justify-center rounded-full">
-            <ClockIcon className="text-accent-600 h-4 w-4" />
+            <Clock01Icon className="text-accent-600 h-4 w-4" />
           </div>
           <span className="text-body-medium text-accent-600 tracking-wide uppercase">Currently Working On</span>
         </div>

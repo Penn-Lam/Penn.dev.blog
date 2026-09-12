@@ -1,5 +1,4 @@
-import { CommandIcon } from 'lucide-react'
-
+import { CommandIcon } from '@/components/icons'
 import { MenuContent } from '@/components/menu-content'
 import {
   Drawer,

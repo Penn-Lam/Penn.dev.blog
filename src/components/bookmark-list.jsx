@@ -1,6 +1,5 @@
 'use client'
 
-import { ArrowDownIcon } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -8,6 +7,7 @@ import { getBookmarkItemsByPageIndex } from '@/app/actions'
 import { Button } from '@/components/base/buttons/button'
 import { BookmarkCard } from '@/components/bookmark-card'
 import { BookmarkTagFilter } from '@/components/bookmark-tag-filter'
+import { ArrowDown01Icon } from '@/components/icons'
 import { TWEETS_COLLECTION_IDS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
@@ -125,7 +125,7 @@ export const BookmarkList = ({ initialData, id, collectionSlug }) => {
                   variant="secondary"
                   onClick={loadMore}
                   disabled={isLoading}
-                  trailingIcon={ArrowDownIcon}
+                  trailingIcon={ArrowDown01Icon}
                   className="w-full"
                   data-oid="6:4ugol"
                 >

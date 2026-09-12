@@ -7,10 +7,10 @@
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
-import { SendIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { Button } from '@/components/base/buttons/button'
+import { SendIcon } from '@/components/icons'
 import { SubmitFriendForm } from '@/components/submit-friend/form'
 import {
   Dialog,

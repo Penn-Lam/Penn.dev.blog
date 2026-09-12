@@ -1,7 +1,7 @@
-import { Link2Icon, Tag } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
 import { Chip } from '@/components/base/badges/chip'
+import { Link02Icon, Tag01Icon } from '@/components/icons'
 
 const TweetCard = dynamic(() => import('@/components/tweet-card/tweet-card').then((mod) => mod.TweetCard))
 import { TWEETS_COLLECTION_IDS } from '@/lib/constants'
@@ -84,7 +84,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
         <h2 className="text-title-3-semibold line-clamp-4 min-w-0">{bookmark.title}</h2>
         {/* 域名：截断处理 */}
         <span className="text-body-regular text-text-secondary line-clamp-1 inline-flex min-w-0 items-center gap-1">
-          <Link2Icon size={16} aria-hidden="true" />
+          <Link02Icon size={16} aria-hidden="true" />
           <span className="min-w-0 truncate">{bookmark.domain}</span>
         </span>
         {/* 摘要：截断处理 */}
@@ -101,7 +101,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
                 aria-label={`Tag: ${tag}`}
                 className="hover:bg-background-secondary-hover gap-1 rounded-full px-2.5"
               >
-                <Tag size={10} className="text-foreground-icon-tertiary" aria-hidden="true" />
+                <Tag01Icon size={10} className="text-foreground-icon-tertiary" aria-hidden="true" />
                 {tag}
               </Chip>
             ))}

@@ -1,13 +1,13 @@
 'use client'
 
-import { ExternalLinkIcon } from 'lucide-react'
-
 /**
- * [INPUT]: 依赖 lucide-react 的 ExternalLinkIcon 组件
+ * [INPUT]: 依赖 HugeIcons 图标的 ArrowUpRight01Icon 组件
  * [OUTPUT]: 对外提供 ProjectCard 组件，展示项目卡片
  * [POS]: components/workspace/ 的项目展示组件
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
+
+import { ArrowUpRight01Icon } from '@/components/icons'
 
 const STATUS_CONFIG = {
   Live: {
@@ -42,7 +42,7 @@ export function ProjectCard({ title, tagline, status, stack, link, startDate }) 
             rel="noopener noreferrer"
             className="bg-background-secondary-default text-text-placeholder hover:bg-background-tertiary-default hover:text-text-secondary flex h-8 w-8 items-center justify-center rounded-xl transition-all duration-300"
           >
-            <ExternalLinkIcon className="h-4 w-4" />
+            <ArrowUpRight01Icon className="h-4 w-4" />
           </a>
         )}
       </div>

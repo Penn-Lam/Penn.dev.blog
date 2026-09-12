@@ -1,12 +1,12 @@
 'use client'
 
-import { Plus, Send, X } from 'lucide-react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/base/buttons/button'
 import { Textarea } from '@/components/base/textarea/textarea'
 import { ClientOnly } from '@/components/client-only'
+import { Cancel01Icon, PlusSignIcon, SendIcon } from '@/components/icons'
 
 // 创建全局对话框状态 Context
 const DialogStateContext = createContext({
@@ -145,7 +145,7 @@ export function QuickPostButton() {
 
   if (!isOpen) {
     return (
-      <Button size="small" leadingIcon={Plus} onClick={() => setIsOpen(true)}>
+      <Button size="small" leadingIcon={PlusSignIcon} onClick={() => setIsOpen(true)}>
         New Musing
       </Button>
     )
@@ -161,7 +161,7 @@ export function QuickPostButton() {
             className="text-foreground-icon-tertiary hover:bg-background-secondary-default hover:text-foreground-icon-primary focus-visible:ring-border-focus-ring rounded-full p-1 transition-colors outline-none focus-visible:ring-2"
             aria-label="Close"
           >
-            <X size={20} />
+            <Cancel01Icon size={20} />
           </button>
         </div>
 
@@ -234,7 +234,7 @@ export function QuickPostButton() {
             <Button variant="secondary" size="small" onClick={() => setIsOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" size="small" leadingIcon={Send} disabled={isSubmitting || !content.trim()}>
+            <Button type="submit" size="small" leadingIcon={SendIcon} disabled={isSubmitting || !content.trim()}>
               {isSubmitting ? 'Publishing...' : 'Publish'}
             </Button>
           </div>

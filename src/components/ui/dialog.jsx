@@ -1,9 +1,9 @@
 'use client'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { XIcon } from 'lucide-react'
 import { memo } from 'react'
 
+import { Cancel01Icon } from '@/components/icons'
 import { cn } from '@/lib/utils'
 
 /**
@@ -83,7 +83,7 @@ const DialogContent = memo(({ className, children, ...props }) => {
             '[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4'
           )}
         >
-          <XIcon />
+          <Cancel01Icon />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>

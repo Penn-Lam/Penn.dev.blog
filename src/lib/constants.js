@@ -1,16 +1,16 @@
 import {
   ArmchairIcon,
-  BookmarkIcon,
+  Bookmark01Icon,
   GithubIcon,
   HandIcon,
-  ImageIcon,
+  Image01Icon,
   LinkedinIcon,
   LinkIcon,
+  MagicWandIcon,
   NavigationIcon,
-  PencilLineIcon,
-  SparklesIcon,
-  Wand2Icon
-} from 'lucide-react'
+  PencilEdit01Icon,
+  SparklesIcon
+} from '@/components/icons'
 
 export const PROFILES = {
   twitter: {
@@ -111,7 +111,7 @@ export const LINKS = [
   {
     href: '/writing',
     label: 'Writing',
-    icon: <PencilLineIcon size={16} />
+    icon: <PencilEdit01Icon size={16} />
   },
   {
     href: '/journey',
@@ -121,7 +121,7 @@ export const LINKS = [
   {
     href: '/stack',
     label: 'Stack',
-    icon: <Wand2Icon size={16} />
+    icon: <MagicWandIcon size={16} />
   },
   {
     href: '/workspace',
@@ -131,12 +131,12 @@ export const LINKS = [
   {
     href: '/visual',
     label: 'Visual',
-    icon: <ImageIcon size={16} />
+    icon: <Image01Icon size={16} />
   },
   {
     href: '/bookmarks',
     label: 'Bookmarks',
-    icon: <BookmarkIcon size={16} />
+    icon: <Bookmark01Icon size={16} />
   },
   {
     href: '/friends',

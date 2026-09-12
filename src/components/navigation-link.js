@@ -1,10 +1,10 @@
 'use client'
 
-import { ArrowUpRightIcon, AtSignIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cloneElement, isValidElement, memo } from 'react'
 
+import { ArrowUpRight01Icon, AtSignIcon } from '@/components/icons'
 import { cn } from '@/lib/utils'
 
 /**
@@ -42,7 +42,7 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
           <RowIcon icon={icon} />
           <span className="text-body-medium text-text-secondary">{label}</span>
         </span>
-        <ArrowUpRightIcon size={16} className="text-foreground-icon-tertiary shrink-0" aria-hidden />
+        <ArrowUpRight01Icon size={16} className="text-foreground-icon-tertiary shrink-0" aria-hidden />
       </a>
     )
   }

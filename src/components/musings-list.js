@@ -1,16 +1,17 @@
 'use client'
 
-import { Clock, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
 import remarkGfm from 'remark-gfm'
 
+import { ArrowUpRight01Icon, Clock01Icon } from '@/components/icons'
+
 import { TagFilter } from './tag-filter'
 
 /**
- * [INPUT]: 依赖 lucide-react, next/link, react-markdown 等
+ * [INPUT]: 依赖 HugeIcons 图标, next/link, react-markdown 等
  * [OUTPUT]: 对外提供 MusingsList 和 MusingCard 组件
  * [POS]: components/ 的随想列表组件
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -43,7 +44,7 @@ function MusingCard({ musing }) {
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="text-caption-1-regular text-text-tertiary flex items-center gap-2">
-          <Clock size={12} />
+          <Clock01Icon size={12} />
           <time dateTime={musing.created_at}>{formattedDate}</time>
         </div>
         <Link
@@ -52,7 +53,7 @@ function MusingCard({ musing }) {
           rel="noopener noreferrer"
           className="bg-background-primary-default text-text-placeholder hover:bg-background-secondary-default hover:text-text-secondary flex h-7 w-7 items-center justify-center rounded-lg transition-all duration-200"
         >
-          <ExternalLink size={12} />
+          <ArrowUpRight01Icon size={12} />
         </Link>
       </div>
 

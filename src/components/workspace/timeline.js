@@ -1,8 +1,9 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 import { useState } from 'react'
+
+import { ArrowDown01Icon, ArrowUp01Icon } from '@/components/icons'
 
 export function Timeline({ entries }) {
   const [expandedItems, setExpandedItems] = useState(new Set())
@@ -90,7 +91,7 @@ export function Timeline({ entries }) {
                       onClick={() => toggleExpanded(index)}
                       className="text-text-placeholder hover:bg-background-secondary-default hover:text-text-secondary ml-2 flex h-6 w-6 items-center justify-center rounded-full"
                     >
-                      {isExpanded ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
+                      {isExpanded ? <ArrowUp01Icon className="h-4 w-4" /> : <ArrowDown01Icon className="h-4 w-4" />}
                     </button>
                   )}
                 </div>

@@ -1,8 +1,9 @@
 'use client'
 
-import { ArrowUpRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { memo } from 'react'
+
+import { ArrowUpRight01Icon } from '@/components/icons'
 
 /**
  * [INPUT]: 依赖 next/image 的 Image 组件
@@ -60,7 +61,7 @@ export const ToolCard = memo(function ToolCard({ tool }) {
           </div>
           <h3 className="text-body-semibold text-text-primary">{tool.name}</h3>
         </div>
-        <ArrowUpRightIcon
+        <ArrowUpRight01Icon
           size={14}
           className="text-text-placeholder group-hover:text-text-secondary mt-1 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
         />
