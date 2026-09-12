@@ -14,7 +14,7 @@ export function BookmarkTagFilter({ tags, collectionSlug }) {
           href={`/bookmarks/${collectionSlug}`}
           className={`text-body-medium rounded-lg px-3 py-1.5 transition-all duration-200 ${
             !selectedTag
-              ? 'bg-text-primary text-background-primary-default'
+              ? 'from-accent-500 to-accent-600 shadow-nav-selected bg-linear-to-b text-white'
               : 'bg-background-secondary-default text-text-secondary hover:bg-background-secondary-hover hover:text-text-primary'
           }`}
         >
@@ -26,7 +26,7 @@ export function BookmarkTagFilter({ tags, collectionSlug }) {
             href={`/bookmarks/${collectionSlug}?tag=${encodeURIComponent(tag)}`}
             className={`text-body-medium rounded-lg px-3 py-1.5 transition-all duration-200 ${
               selectedTag === tag
-                ? 'bg-text-primary text-background-primary-default'
+                ? 'from-accent-500 to-accent-600 shadow-nav-selected bg-linear-to-b text-white'
                 : 'bg-background-secondary-default text-text-secondary hover:bg-background-secondary-hover hover:text-text-primary'
             }`}
           >

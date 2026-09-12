@@ -15,12 +15,14 @@ import { cn } from '@/lib/utils'
  */
 
 const rowIconClass = 'size-5 shrink-0 text-foreground-icon-secondary'
+const activeRowIconClass = 'size-5 shrink-0 text-white'
 
-function RowIcon({ icon }) {
+function RowIcon({ icon, isActive = false }) {
+  const className = isActive ? activeRowIconClass : rowIconClass
   if (isValidElement(icon)) {
-    return cloneElement(icon, { className: rowIconClass, 'aria-hidden': true })
+    return cloneElement(icon, { className, 'aria-hidden': true })
   }
-  return <AtSignIcon className={rowIconClass} aria-hidden />
+  return <AtSignIcon className={className} aria-hidden />
 }
 
 export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
@@ -58,14 +60,14 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
       href={href}
       className={cn(
         'rounded-2lg flex items-center justify-between p-2',
-        isActive ? 'bg-text-primary text-text-white' : 'hover:bg-background-secondary-hover'
+        isActive
+          ? 'from-accent-500 to-accent-600 shadow-nav-selected bg-linear-to-b text-white'
+          : 'hover:bg-background-secondary-hover'
       )}
     >
       <span className="flex min-w-0 items-center gap-2">
-        <RowIcon icon={icon} />
-        <span className={cn('text-body-medium', !isActive && 'text-text-secondary', isActive && 'text-text-white')}>
-          {label}
-        </span>
+        <RowIcon icon={icon} isActive={isActive} />
+        <span className={cn('text-body-medium', isActive ? 'text-white' : 'text-text-secondary')}>{label}</span>
       </span>
       {shortcutNumber && (
         <span

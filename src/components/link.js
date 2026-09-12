@@ -32,7 +32,7 @@ export const Link = ({ href = '#', children, ...rest }) => {
         href={href + '?ref=pennlam.com'}
         target="_blank"
         rel="noopener noreferrer"
-        className="link break-words"
+        className="link text-accent-600 active:text-accent-800 break-words underline-offset-3 hover:underline"
         aria-label={typeof children === 'string' ? `${children}${getExternalLinkText(href)}` : undefined}
         {...rest}
       >
@@ -46,5 +46,11 @@ export const Link = ({ href = '#', children, ...rest }) => {
     )
   }
 
-  return <NextLink href={href} className="link" {...rest} />
+  return (
+    <NextLink
+      href={href}
+      className="link text-accent-600 active:text-accent-800 underline-offset-3 hover:underline"
+      {...rest}
+    />
+  )
 }

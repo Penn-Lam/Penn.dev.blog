@@ -14,17 +14,16 @@ export const WritingLink = ({ post, viewCount, isMobile, isActive, isLoading }) 
         key={post.slug}
         href={`/writing/${post.slug}`}
         className={cn(
-          'flex flex-col gap-1 transition-colors duration-300',
+          'flex flex-col gap-1 p-2 transition-colors duration-300',
+          !isMobile && 'rounded-2lg',
           !isMobile && isActive
-            ? 'bg-text-primary text-background-primary-default'
+            ? 'from-accent-500 to-accent-600 shadow-nav-selected bg-linear-to-b text-white'
             : 'hover:bg-background-secondary-default',
-          isMobile
-            ? 'border-separator-border hover:bg-background-secondary-default text-body-regular border-b px-4 py-3'
-            : 'rounded-lg p-2'
+          isMobile && 'border-separator-border text-body-regular rounded-none border-b px-4 py-3'
         )}
       >
         <span className="text-body-medium">{post.title}</span>
-        <span className={cn('transition-colors duration-300', isActive ? 'text-text-tertiary' : 'text-text-secondary')}>
+        <span className={cn('transition-colors duration-300', isActive ? 'text-white/80' : 'text-text-secondary')}>
           <time dateTime={date}>{formattedDate}</time>{' '}
           <span>
             {isLoading ? (

@@ -14,13 +14,15 @@ export const ListItem = ({ title, description, path }) => {
       key={path}
       href={path}
       className={cn(
-        'flex flex-col gap-1 rounded-lg p-2 transition-colors duration-300 *:transition-colors *:duration-300',
-        isActive ? 'bg-text-primary' : 'hover:bg-background-secondary-hover'
+        'rounded-2lg flex flex-col gap-1 p-2 transition-colors duration-300 *:transition-colors *:duration-300',
+        isActive
+          ? 'from-accent-500 to-accent-600 shadow-nav-selected bg-linear-to-b text-white'
+          : 'hover:bg-background-secondary-hover'
       )}
     >
-      <span className={cn('text-body-medium', isActive && 'text-text-white')}>{title}</span>
+      <span className={cn('text-body-medium', isActive && 'text-white')}>{title}</span>
       {description && (
-        <span className={cn('text-body-regular', isActive ? 'text-foreground-icon-quaternary' : 'text-text-secondary')}>
+        <span className={cn('text-body-regular', isActive ? 'text-white/80' : 'text-text-secondary')}>
           {description}
         </span>
       )}
