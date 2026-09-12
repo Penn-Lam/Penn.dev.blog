@@ -11,9 +11,8 @@ import Script from 'next/script'
 
 import { sharedMetadata } from '@/app/shared-metadata'
 import { ConsoleEasterEgg } from '@/components/console-easter-egg'
-import { MenuContent } from '@/components/menu-content'
 import { DialogStateProvider } from '@/components/quick-post-button'
-import { SideMenu } from '@/components/side-menu'
+import { SiteSidebar } from '@/components/site-sidebar'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ErrorBoundary } from '@/components/ui/error-boundary'
 import { Toaster } from '@/components/ui/sonner'
@@ -64,9 +63,7 @@ export default async function RootLayout({ children }) {
                 </div>
               )}
               <div className="lg:flex">
-                <SideMenu className="relative hidden lg:flex">
-                  <MenuContent />
-                </SideMenu>
+                <SiteSidebar />
                 <div className="flex flex-1">{children}</div>
               </div>
             </main>
