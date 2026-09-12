@@ -31,21 +31,12 @@ export const VinylPlayer = memo(() => {
         onClick={toggleOpen}
         className={cn(
           'text-body-medium flex w-full items-center justify-between rounded-lg p-2',
-          isOpen ? 'bg-text-primary text-background-primary-default' : 'hover:bg-background-secondary-default'
+          isOpen ? 'bg-background-secondary-default' : 'hover:bg-background-secondary-default'
         )}
       >
         <span className="flex items-center gap-2">
-          <DiscIcon size={16} />
+          <DiscIcon className="size-5" />
           Music
-        </span>
-        <span
-          className={cn(
-            'border-border-button-default bg-background-secondary-default text-caption-1-medium text-text-secondary hidden size-5 place-content-center rounded-sm border lg:grid',
-            isOpen && 'border-border-button-active bg-background-tertiary-default text-text-primary'
-          )}
-          title="Shortcut key: 9"
-        >
-          9
         </span>
       </button>
       {isOpen && isReady && (

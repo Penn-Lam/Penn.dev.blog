@@ -78,7 +78,6 @@ export const SiteSidebar = () => {
   return (
     <div className="hidden h-screen w-[284px] shrink-0 flex-col gap-3 p-3 lg:flex">
       <Sidebar
-        className="h-fit"
         items={items}
         selected={selected}
         header={(collapsed) => <SidebarIdentity collapsed={collapsed} />}
