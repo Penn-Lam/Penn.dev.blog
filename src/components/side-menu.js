@@ -53,12 +53,12 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
     () => (
       <ScrollArea
         className={cn(
-          'bg-background-secondary-default lg:border-separator-border hidden lg:flex lg:h-screen lg:flex-col lg:border-r',
+          'lg:border-border-button-white lg:bg-background-secondary-default lg:shadow-sidebar hidden lg:m-3 lg:flex lg:h-[calc(100vh-1.5rem)] lg:flex-col lg:rounded-3xl lg:border',
           isInner ? 'lg:w-80 xl:w-96' : 'lg:w-60 xl:w-72'
         )}
       >
         {title && (
-          <div className="border-separator-border bg-background-secondary-default sticky top-0 z-10 border-b px-5 py-3">
+          <div className="border-separator-border bg-background-secondary-default sticky top-0 z-10 border-b px-4 py-3">
             <div className="flex items-center justify-between">
               <span className="text-body-semibold">{title}</span>
               <div className="flex items-center gap-2">
