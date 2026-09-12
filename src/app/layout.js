@@ -12,6 +12,7 @@ import Script from 'next/script'
 import { sharedMetadata } from '@/app/shared-metadata'
 import { ConsoleEasterEgg } from '@/components/console-easter-egg'
 import { DialogStateProvider } from '@/components/quick-post-button'
+import { SidebarCollapseProvider } from '@/components/sidebar-collapse'
 import { SiteSidebar } from '@/components/site-sidebar'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ErrorBoundary } from '@/components/ui/error-boundary'
@@ -62,10 +63,12 @@ export default async function RootLayout({ children }) {
                   </div>
                 </div>
               )}
-              <div className="lg:flex">
-                <SiteSidebar />
-                <div className="flex flex-1">{children}</div>
-              </div>
+              <SidebarCollapseProvider>
+                <div className="lg:flex">
+                  <SiteSidebar />
+                  <div className="flex flex-1">{children}</div>
+                </div>
+              </SidebarCollapseProvider>
             </main>
             <Toaster />
             <TailwindIndicator />

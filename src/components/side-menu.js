@@ -9,6 +9,7 @@ import { ButtonLink } from '@/components/base/buttons/button'
 import { LoadingSpinner } from '@/components/loading-spinner'
 import { useDialogState } from '@/components/quick-post-button'
 import { ScrollArea } from '@/components/scroll-area'
+import { useSidebarCollapse } from '@/components/sidebar-collapse'
 
 const SubmitBookmarkDialog = dynamic(
   () => import('@/components/submit-bookmark/dialog').then((mod) => mod.SubmitBookmarkDialog),
@@ -36,6 +37,7 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
   const router = useRouter()
   const pathname = usePathname()
   const { isQuickPostOpen } = useDialogState()
+  const { collapsed } = useSidebarCollapse()
 
   useKeyPress(onKeyPress, Object.keys(keyCodePathnameMapping), isQuickPostOpen)
 
@@ -54,6 +56,8 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
       <ScrollArea
         className={cn(
           'lg:border-border-button-white lg:bg-background-secondary-default lg:shadow-sidebar hidden lg:m-3 lg:flex lg:h-[calc(100vh-1.5rem)] lg:flex-col lg:rounded-3xl lg:border',
+          'transition-[margin] duration-300 ease-in-out',
+          collapsed && 'lg:-ml-[212px]',
           isInner ? 'lg:w-80 xl:w-96' : 'lg:w-60 xl:w-72'
         )}
       >
@@ -83,7 +87,7 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
         <div className="bg-background-secondary-default flex flex-1 flex-col p-3">{children}</div>
       </ScrollArea>
     ),
-    [isInner, title, isWritingPath, isBookmarksPath, bookmarks, currentBookmark, children]
+    [isInner, title, isWritingPath, isBookmarksPath, bookmarks, currentBookmark, children, collapsed]
   )
 
   return memoizedScrollArea

@@ -130,6 +130,7 @@ export function Sidebar({
   header,
   footer,
   className,
+  onCollapsedChange,
 }: {
   /** Which nav item shows the selected (filled blue) state. */
   selected: SidebarNavKey;
@@ -140,8 +141,16 @@ export function Sidebar({
   /** Slot below the nav (e.g. the vinyl player); receives the collapsed state. */
   footer?: (collapsed: boolean) => ReactNode;
   className?: string;
+  /** Notified whenever the collapse toggle changes, so adjacent chrome (inner side panels) can react. */
+  onCollapsedChange?: (collapsed: boolean) => void;
 }) {
   const [collapsed, setCollapsed] = useState(false);
+
+  function toggleCollapsed() {
+    const next = !collapsed;
+    setCollapsed(next);
+    onCollapsedChange?.(next);
+  }
 
   return (
     <aside
@@ -185,7 +194,7 @@ export function Sidebar({
             type="button"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             aria-expanded={!collapsed}
-            onClick={() => setCollapsed((value) => !value)}
+            onClick={toggleCollapsed}
             className={cx(
               "cursor-pointer text-foreground-icon-secondary transition-transform duration-300 ease-in-out",
               collapsed && "flex w-9 items-center justify-center",

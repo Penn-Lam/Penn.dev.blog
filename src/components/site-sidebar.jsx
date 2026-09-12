@@ -6,6 +6,7 @@ import { cloneElement, useMemo } from 'react'
 import { Collapsible, Sidebar } from '@/components/application/dashboard/dashboard-sidebar'
 import { NavigationLink } from '@/components/navigation-link'
 import { useDialogState } from '@/components/quick-post-button'
+import { useSidebarCollapse } from '@/components/sidebar-collapse'
 import { VinylPlayer } from '@/components/vinyl-player'
 import { useKeyPress } from '@/hooks/useKeyPress'
 import { LINKS, PROFILES } from '@/lib/constants'
@@ -73,12 +74,14 @@ export const SiteSidebar = () => {
   )
 
   const selected = pathname === '/' ? 'home' : (pathname?.split('/')[1] ?? 'home')
+  const { setCollapsed } = useSidebarCollapse()
 
   return (
     <div className="hidden h-screen w-[284px] shrink-0 flex-col gap-3 p-3 lg:flex">
       <Sidebar
         items={items}
         selected={selected}
+        onCollapsedChange={setCollapsed}
         header={(collapsed) => <SidebarIdentity collapsed={collapsed} />}
         footer={(collapsed) =>
           collapsed ? null : (
