@@ -63,5 +63,6 @@ export {
   SkipForward as SkipForwardIcon,
   Sparkle as SparklesIcon,
   Tag as Tag01Icon,
-  VideoCamera as Video01Icon
+  VideoCamera as Video01Icon,
+  XLogo as XLogoIcon
 } from '@phosphor-icons/react'
