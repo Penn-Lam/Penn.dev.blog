@@ -9,6 +9,8 @@
 
 import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react'
 
+import { Switch } from '@/components/base/switch/switch'
+
 const STORAGE_KEY = 'sunny-mode'
 const SHUTTER_COUNT = 23
 const EVENT_NAME = 'sunny-mode-change'
@@ -50,26 +52,20 @@ function useSunnyMode() {
 }
 
 /* ========================================================================
-   iOS 风格 toggle 开关 + 调皮提示语
+   BoardUI switch + 调皮提示语
    ======================================================================== */
 export function SunnyToggle() {
   const { active, toggle } = useSunnyMode()
 
   return (
     <div className="flex items-center gap-3">
-      <button
-        role="switch"
-        aria-checked={active}
+      <Switch
+        size="md"
+        shape="pill"
+        isSelected={active}
+        onChange={toggle}
         aria-label={active ? '关闭阳光模式' : '开启阳光模式'}
-        onClick={toggle}
-        className="relative h-[26px] w-[46px] shrink-0 cursor-pointer rounded-full transition-colors duration-300"
-        style={{ backgroundColor: active ? '#f59e0b' : 'var(--color-background-tertiary-default)' }}
-      >
-        <span
-          className="bg-background-primary-default absolute top-[3px] left-[3px] h-5 w-5 rounded-full shadow-sm transition-transform duration-300"
-          style={{ transform: active ? 'translateX(20px)' : 'translateX(0)' }}
-        />
-      </button>
+      />
       <span className="text-body-2-regular text-text-tertiary italic">
         {active ? 'the sun is peeking through ☀' : '← psst… try flipping this'}
       </span>
