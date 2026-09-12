@@ -57,7 +57,7 @@ export const SideMenu = ({ children, title, bookmarks = [], isInner }) => {
         className={cn(
           'lg:border-border-button-white lg:bg-background-secondary-default lg:shadow-sidebar hidden lg:m-3 lg:flex lg:h-[calc(100vh-1.5rem)] lg:flex-col lg:rounded-3xl lg:border',
           'transition-[margin] duration-300 ease-in-out',
-          collapsed && 'lg:-ml-[212px]',
+          collapsed && 'lg:-ml-[200px]',
           isInner ? 'lg:w-80 xl:w-96' : 'lg:w-60 xl:w-72'
         )}
       >
