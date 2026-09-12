@@ -594,14 +594,6 @@
   padding-right: env(safe-area-inset-right);
 }
 
-@utility bg-dots {
-  @apply bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px];
-}
-
-@utility bg-grid {
-  @apply bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px];
-}
-
 @keyframes reveal {
   0% {
     opacity: 0;
