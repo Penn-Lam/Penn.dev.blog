@@ -83,7 +83,7 @@ export const SiteSidebar = () => {
         header={(collapsed) => <SidebarIdentity collapsed={collapsed} />}
         footer={(collapsed) =>
           collapsed ? null : (
-            <div className="flex flex-col gap-2 px-0.5">
+            <div className="flex flex-col gap-1 px-0.5">
               <VinylPlayer />
               <div className="flex flex-col gap-1">
                 <span className="text-caption-1-medium text-text-secondary px-1">Online</span>

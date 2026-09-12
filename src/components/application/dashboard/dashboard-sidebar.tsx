@@ -161,7 +161,7 @@ export function Sidebar({
           the matching negative margin borrows that space back from the rail's
           own padding, leaving every child exactly where it was. */}
       <div
-        className="-m-2 flex min-h-0 w-[calc(100%+16px)] flex-col gap-3 overflow-y-auto p-2 [scrollbar-width:none]"
+        className="-m-2 flex min-h-0 w-[calc(100%+16px)] flex-col gap-2 overflow-y-auto p-2 [scrollbar-width:none]"
       >
         {/* Identity / collapse control */}
         <div
