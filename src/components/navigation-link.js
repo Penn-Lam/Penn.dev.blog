@@ -3,7 +3,7 @@
 import { ArrowUpRightIcon, AtSignIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { memo, useMemo } from 'react'
+import { cloneElement, isValidElement, memo } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -14,9 +14,17 @@ import { cn } from '@/lib/utils'
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
+const rowIconClass = 'size-5 shrink-0 text-foreground-icon-secondary'
+
+function RowIcon({ icon }) {
+  if (isValidElement(icon)) {
+    return cloneElement(icon, { className: rowIconClass, 'aria-hidden': true })
+  }
+  return <AtSignIcon className={rowIconClass} aria-hidden />
+}
+
 export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
   const pathname = usePathname()
-  const iconCmp = useMemo(() => icon ?? <AtSignIcon size={16} />, [icon])
 
   const isInternal = href.startsWith('/')
   if (!isInternal) {
@@ -26,12 +34,13 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="hover:bg-background-secondary-hover flex items-center justify-between gap-2 rounded-lg p-2"
+        className="hover:bg-background-secondary-hover rounded-2lg flex items-center justify-between gap-2 p-2"
       >
-        <span className="text-body-medium inline-flex items-center gap-2">
-          {iconCmp} {label}
+        <span className="flex min-w-0 items-center gap-2">
+          <RowIcon icon={icon} />
+          <span className="text-body-medium text-text-secondary">{label}</span>
         </span>
-        <ArrowUpRightIcon size={16} />
+        <ArrowUpRightIcon size={16} className="text-foreground-icon-tertiary shrink-0" aria-hidden />
       </a>
     )
   }
@@ -48,13 +57,15 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
       key={href}
       href={href}
       className={cn(
-        'group flex items-center justify-between rounded-lg p-2',
+        'rounded-2lg flex items-center justify-between p-2',
         isActive ? 'bg-text-primary text-text-white' : 'hover:bg-background-secondary-hover'
       )}
     >
-      <span className="flex items-center gap-2">
-        {iconCmp}
-        <span className={cn('text-body-medium', isActive && 'text-text-white')}>{label}</span>
+      <span className="flex min-w-0 items-center gap-2">
+        <RowIcon icon={icon} />
+        <span className={cn('text-body-medium', !isActive && 'text-text-secondary', isActive && 'text-text-white')}>
+          {label}
+        </span>
       </span>
       {shortcutNumber && (
         <span

@@ -30,13 +30,13 @@ export const VinylPlayer = memo(() => {
       <button
         onClick={toggleOpen}
         className={cn(
-          'text-body-medium flex w-full items-center justify-between rounded-lg p-2',
-          isOpen ? 'bg-background-secondary-default' : 'hover:bg-background-secondary-default'
+          'rounded-2lg flex w-full items-center justify-between p-2',
+          isOpen ? 'bg-background-secondary-default' : 'hover:bg-background-secondary-hover'
         )}
       >
-        <span className="flex items-center gap-2">
-          <DiscIcon className="size-5" />
-          Music
+        <span className="flex min-w-0 items-center gap-2">
+          <DiscIcon className="text-foreground-icon-secondary size-5 shrink-0" />
+          <span className="text-body-medium text-text-secondary">Music</span>
         </span>
       </button>
       {isOpen && isReady && (
