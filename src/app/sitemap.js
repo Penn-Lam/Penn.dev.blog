@@ -6,6 +6,7 @@ export default async function sitemap() {
   const [allPosts, bookmarks, allPages] = await Promise.all([getAllPosts(), getBookmarks(), getAllPageSlugs()])
 
   const sortedWritings = getSortedPosts(allPosts)
+
   const writings = sortedWritings.map((post) => {
     return {
       url: `https://pennlam.com/writing/${post.slug}`,
@@ -26,14 +27,19 @@ export default async function sitemap() {
 
   const pages = allPages.map((page) => {
     let changeFrequency = 'yearly'
+
     if (['writing', 'journey'].includes(page.slug)) changeFrequency = 'monthly'
+
     if (['bookmarks'].includes(page.slug)) changeFrequency = 'daily'
 
     let lastModified = page.sys.publishedAt
+
     if (['writing', 'journey', 'bookmarks'].includes(page.slug)) lastModified = new Date()
 
     let priority = 0.5
+
     if (['writing', 'journey'].includes(page.slug)) priority = 0.8
+
     if (['bookmarks'].includes(page.slug)) priority = 1
 
     return {

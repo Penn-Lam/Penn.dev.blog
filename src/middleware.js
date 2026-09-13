@@ -31,6 +31,7 @@ export function middleware(request, event) {
    * This ensures that the user experience remains uninterrupted and free from unnecessary delays.
    */
   if (writingSlug && !isBotRequest) event.waitUntil(sendAnalytics())
+
   return NextResponse.next()
 }
 
