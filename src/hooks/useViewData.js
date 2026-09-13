@@ -76,8 +76,7 @@ export const useViewData = (slug) => {
           if (status === 'SUBSCRIBED') {
             console.info('Successfully subscribed to realtime updates')
           } else if (status === 'CHANNEL_ERROR') {
-            console.error('Failed to subscribe to realtime updates')
-            setError('Failed to subscribe to realtime updates')
+            console.info('Realtime updates temporarily unavailable')
           }
         })
     } catch (error) {

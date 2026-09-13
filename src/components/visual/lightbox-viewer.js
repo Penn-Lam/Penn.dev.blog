@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { CldImage, getCldVideoUrl } from 'next-cloudinary'
 import { useCallback, useEffect } from 'react'
 
-import { ArrowLeft01Icon, ArrowRight01Icon, Cancel01Icon } from '@/components/icons'
+import { CloseButton } from '@/components/base/buttons/close-button'
+import { ArrowLeft01Icon, ArrowRight01Icon } from '@/components/icons'
 
 export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate }) {
   const navigatePrevious = useCallback(() => {
@@ -65,12 +66,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
         onClick={onClose}
       >
         {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="bg-background-primary-default/90 text-text-primary hover:bg-background-primary-default absolute top-4 right-4 z-10 rounded-full p-2 shadow-lg transition-colors"
-        >
-          <Cancel01Icon className="h-6 w-6" />
-        </button>
+        <CloseButton size="md" aria-label="Close" onClick={onClose} className="absolute top-4 right-4 z-10 shadow-lg" />
 
         {/* Navigation Buttons */}
         {allMedia && allMedia.length > 1 && (

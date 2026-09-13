@@ -139,6 +139,7 @@ export function Select<T extends object>({
             className={cx(
               MENU_POPOVER_WIDTH,
               MENU_POPOVER_SURFACE,
+              "pointer-events-auto",
               // Listbox rows already space themselves 4px apart, so the
               // surface sits a touch tighter than the action-menu Dropdown.
               "p-2",
@@ -147,6 +148,9 @@ export function Select<T extends object>({
           >
             <AriaListBox
               items={items}
+              onWheel={(event) => {
+                if (triggerRef.current?.closest('[role="dialog"]')) event.stopPropagation();
+              }}
               className={cx(MENU_ITEMS_CONTAINER, "max-h-[240px] overflow-auto")}
             >
               <SelectSizeContext.Provider value={size}>{children}</SelectSizeContext.Provider>

@@ -4,9 +4,10 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/base/buttons/button'
+import { CloseButton } from '@/components/base/buttons/close-button'
 import { Textarea } from '@/components/base/textarea/textarea'
 import { ClientOnly } from '@/components/client-only'
-import { Cancel01Icon, PlusSignIcon, SendIcon } from '@/components/icons'
+import { PlusSignIcon, SendIcon } from '@/components/icons'
 
 // 创建全局对话框状态 Context
 const DialogStateContext = createContext({
@@ -156,13 +157,7 @@ export function QuickPostButton() {
       <div className="border-border-button-default bg-background-primary-default w-full max-w-lg rounded-xl border p-6 shadow-xl">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-title-3-semibold">Create New Musing</h2>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-foreground-icon-tertiary hover:bg-background-secondary-default hover:text-foreground-icon-primary focus-visible:ring-border-focus-ring rounded-full p-1 transition-colors outline-none focus-visible:ring-2"
-            aria-label="Close"
-          >
-            <Cancel01Icon size={20} />
-          </button>
+          <CloseButton size="md" aria-label="Close" onClick={() => setIsOpen(false)} />
         </div>
 
         <form onSubmit={handleSubmit}>

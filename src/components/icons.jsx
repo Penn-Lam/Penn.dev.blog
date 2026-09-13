@@ -42,6 +42,7 @@ export {
   Clock as Clock01Icon,
   Command as CommandIcon,
   Disc as DiscIcon,
+  EnvelopeSimple as EnvelopeSimpleIcon,
   Eye as EyeIcon,
   GithubLogo as GithubIcon,
   SquaresFour as GridIcon,
@@ -63,6 +64,7 @@ export {
   SkipForward as SkipForwardIcon,
   Sparkle as SparklesIcon,
   Tag as Tag01Icon,
+  User as UserIcon,
   VideoCamera as Video01Icon,
   XLogo as XLogoIcon
 } from '@phosphor-icons/react'

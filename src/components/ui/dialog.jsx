@@ -3,7 +3,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { memo } from 'react'
 
-import { Cancel01Icon } from '@/components/icons'
+import { CloseButton } from '@/components/base/buttons/close-button'
 import { cn } from '@/lib/utils'
 
 /**
@@ -74,17 +74,8 @@ const DialogContent = memo(({ className, children, ...props }) => {
         {...props}
       >
         {children}
-        <DialogPrimitive.Close
-          className={cn(
-            'hover:bg-background-primary-hover text-foreground-icon-primary absolute top-4 right-4 rounded-md opacity-70 transition-all',
-            'hover:scale-110 hover:opacity-100',
-            'focus-visible:ring-border-focus-ring outline-none focus-visible:ring-2',
-            'data-[state=open]:bg-background-primary-hover data-[state=open]:text-text-secondary disabled:pointer-events-none',
-            '[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4'
-          )}
-        >
-          <Cancel01Icon />
-          <span className="sr-only">Close</span>
+        <DialogPrimitive.Close asChild>
+          <CloseButton size="md" aria-label="Close" className="absolute top-4 right-4" />
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>

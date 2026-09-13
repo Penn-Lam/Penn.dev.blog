@@ -13,8 +13,10 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { Avatar } from '@/components/base/avatar/avatar'
 import { Button } from '@/components/base/buttons/button'
 import { Input } from '@/components/base/input/input'
+import { EnvelopeSimpleIcon, GithubIcon, Link02Icon, PencilEdit01Icon, UserIcon } from '@/components/icons'
 import { Form, FormField } from '@/components/ui/form'
 import { cn } from '@/lib/utils'
 
@@ -85,19 +87,26 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
 
   const fields = useMemo(
     () => [
-      { name: 'name', label: 'Name', placeholder: 'Penn', required: true },
-      { name: 'url', label: 'Website URL', placeholder: 'https://pennlam.com', required: true },
-      { name: 'avatar', label: 'Avatar URL', placeholder: 'https://example.com/avatar.png' },
-      { name: 'github', label: 'GitHub', placeholder: 'penn-lam' },
-      { name: 'signature', label: 'Signature', placeholder: 'A short tagline' },
-      { name: 'email', label: 'Email', placeholder: 'example@gmail.com' }
+      { name: 'name', label: 'Name', placeholder: 'Enter your name', icon: UserIcon, required: true },
+      { name: 'signature', label: 'Signature', placeholder: 'Enter your signature', icon: PencilEdit01Icon },
+      {
+        name: 'url',
+        label: 'Website URL',
+        placeholder: 'Enter your url',
+        icon: Link02Icon,
+        required: true,
+        fullWidth: true
+      },
+      { name: 'avatar', label: 'Avatar URL', placeholder: 'Enter your avatar url', fullWidth: true },
+      { name: 'github', label: 'GitHub', placeholder: 'Enter your GitHub username', icon: GithubIcon, fullWidth: true },
+      { name: 'email', label: 'Email', placeholder: 'Enter your email', icon: EnvelopeSimpleIcon, fullWidth: true }
     ],
     []
   )
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={cn('flex flex-col gap-4', className)} noValidate>
+      <form onSubmit={form.handleSubmit(onSubmit)} className={cn('grid grid-cols-2 gap-4', className)} noValidate>
         {fields.map((f) => (
           <FormField
             key={f.name}
@@ -105,9 +114,14 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
             name={f.name}
             render={({ field, fieldState }) => (
               <Input
+                className={f.fullWidth ? 'col-span-2' : undefined}
                 label={f.label}
                 isRequired={f.required}
                 placeholder={f.placeholder}
+                leadingIcon={f.icon}
+                leadingAddon={
+                  f.name === 'avatar' ? <Avatar size="sm" src={field.value || undefined} initials="?" /> : undefined
+                }
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
@@ -119,7 +133,7 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
             )}
           />
         ))}
-        <Button type="submit" className="w-full" disabled={isSubmitting || !isValid}>
+        <Button type="submit" className="col-span-2 w-full" disabled={isSubmitting || !isValid}>
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>

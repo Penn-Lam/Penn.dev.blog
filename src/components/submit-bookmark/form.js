@@ -11,6 +11,7 @@ import { Input } from '@/components/base/input/input'
 import { Label } from '@/components/base/input/label'
 import { Select, SelectItem } from '@/components/base/select/select'
 import { getDelightfulMessage } from '@/components/console-easter-egg'
+import { EnvelopeSimpleIcon, Link02Icon } from '@/components/icons'
 import { formSchema } from '@/components/submit-bookmark/utils'
 import { Form, FormField } from '@/components/ui/form'
 import { cn } from '@/lib/utils'
@@ -165,7 +166,8 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
       <Input
         label="Website URL"
         isRequired
-        placeholder="https://example.com"
+        placeholder="Enter your url"
+        leadingIcon={Link02Icon}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}
@@ -183,7 +185,8 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
       <Input
         label="Email"
         isRequired
-        placeholder="example@gmail.com"
+        placeholder="Enter your email"
+        leadingIcon={EnvelopeSimpleIcon}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}
