@@ -17,12 +17,12 @@ import Script from 'next/script'
 import { sharedMetadata } from '@/app/shared-metadata'
 import { ConsoleEasterEgg } from '@/components/console-easter-egg'
 import { EyeIcon } from '@/components/icons'
+import { SiteNotifications } from '@/components/notifications'
 import { DialogStateProvider } from '@/components/quick-post-button'
 import { SidebarCollapseProvider } from '@/components/sidebar-collapse'
 import { SiteSidebar } from '@/components/site-sidebar'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ErrorBoundary } from '@/components/ui/error-boundary'
-import { Toaster } from '@/components/ui/sonner'
 import { PROFILES } from '@/lib/constants'
 import { preloadGetAllPosts } from '@/lib/contentful'
 
@@ -76,7 +76,7 @@ export default async function RootLayout({ children }) {
                 </div>
               </SidebarCollapseProvider>
             </main>
-            <Toaster />
+            <SiteNotifications />
             <TailwindIndicator />
             <ConsoleEasterEgg />
           </DialogStateProvider>

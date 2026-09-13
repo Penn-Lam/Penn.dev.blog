@@ -1,8 +1,9 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
+import { notify } from '@/components/notifications'
 import { WritingLink } from '@/components/writing-link'
 import { useViewData } from '@/hooks/useViewData'
 import { cn } from '@/lib/utils'
@@ -10,6 +11,12 @@ import { cn } from '@/lib/utils'
 export const WritingListLayout = ({ list, isMobile }) => {
   const { viewData, error, isLoading } = useViewData()
   const pathname = usePathname()
+
+  useEffect(() => {
+    if (error) {
+      notify.error('Error loading view counts', error)
+    }
+  }, [error])
 
   const memoizedList = useMemo(() => {
     return list.map((post) => {
@@ -29,14 +36,5 @@ export const WritingListLayout = ({ list, isMobile }) => {
     })
   }, [list, viewData, pathname, isMobile, isLoading])
 
-  return (
-    <div className={cn(!isMobile && 'text-body-regular flex flex-col gap-1')}>
-      {error && (
-        <div className="bg-background-tertiary-error text-text-error-primary mb-4 rounded-md p-4">
-          <p>Error loading view counts: {error}</p>
-        </div>
-      )}
-      {memoizedList}
-    </div>
-  )
+  return <div className={cn(!isMobile && 'text-body-regular flex flex-col gap-1')}>{memoizedList}</div>
 }

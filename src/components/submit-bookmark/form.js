@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
 import { memo, useCallback, useId, useMemo, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 
 import { Button } from '@/components/base/buttons/button'
 import { Input } from '@/components/base/input/input'
@@ -12,12 +11,13 @@ import { Label } from '@/components/base/input/label'
 import { Select, SelectItem } from '@/components/base/select/select'
 import { getDelightfulMessage } from '@/components/console-easter-egg'
 import { EnvelopeSimpleIcon, Link02Icon } from '@/components/icons'
+import { notify } from '@/components/notifications'
 import { formSchema } from '@/components/submit-bookmark/utils'
 import { Form, FormField } from '@/components/ui/form'
 import { cn } from '@/lib/utils'
 
 /**
- * [INPUT]: 依赖 zod 验证、react-hook-form、sonner toast
+ * [INPUT]: 依赖 zod 验证、react-hook-form、BoardUI notification
  * [OUTPUT]: 对外提供 SubmitBookmarkForm 组件，提交书签表单
  * [POS]: components/submit-bookmark 的核心表单组件
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -126,29 +126,30 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
         const successMessages = [getRandomSuccessMessage(), getDelightfulMessage('bookmarkSubmit')]
         const randomMessage = successMessages[Math.floor(Math.random() * successMessages.length)]
 
-        toast.success('Bookmark submitted', {
-          description: (
-            <div className="space-y-1">
-              <p>{randomMessage}</p>
-              <p className="text-caption-1-regular text-text-tertiary">
-                <span className="underline underline-offset-4">{values.url}</span>
-              </p>
-            </div>
-          ),
-          duration: 5000
-        })
+        notify.success(
+          <div className="space-y-1">
+            <p>{randomMessage}</p>
+            <p className="text-caption-1-regular text-text-tertiary">
+              <span className="underline underline-offset-4">{values.url}</span>
+            </p>
+          </div>,
+          { duration: 5000 }
+        )
       } catch (error) {
         const errorMessage = getNetworkErrorMessage(error)
-        toast.error(errorMessage, {
-          action:
+        notify.error('Bookmark submission failed', errorMessage, {
+          actions:
             retryCount < 3
-              ? {
-                  label: 'Retry',
-                  onClick: () => {
-                    setRetryCount((c) => c + 1)
-                    onSubmit(values)
+              ? [
+                  {
+                    label: 'Retry',
+                    variant: 'primary',
+                    onClick: () => {
+                      setRetryCount((c) => c + 1)
+                      onSubmit(values)
+                    }
                   }
-                }
+                ]
               : undefined
         })
       } finally {

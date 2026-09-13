@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * [INPUT]: 依赖 zod 验证、react-hook-form、sonner toast
+ * [INPUT]: 依赖 zod 验证、react-hook-form、BoardUI notification
  * [OUTPUT]: 对外提供 SubmitFriendForm 组件
  * [POS]: components/submit-friend 的核心表单组件
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -10,22 +10,37 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { memo, useCallback, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Avatar } from '@/components/base/avatar/avatar'
 import { Button } from '@/components/base/buttons/button'
 import { Input } from '@/components/base/input/input'
-import { EnvelopeSimpleIcon, GithubIcon, Link02Icon, PencilEdit01Icon, UserIcon } from '@/components/icons'
+import {
+  EnvelopeSimpleIcon,
+  GithubIcon,
+  Link02Icon,
+  PencilEdit01Icon,
+  UserCircleIcon,
+  UserIcon
+} from '@/components/icons'
+import { notify } from '@/components/notifications'
 import { Form, FormField } from '@/components/ui/form'
 import { cn } from '@/lib/utils'
+
+const avatarUrlSchema = z.preprocess(
+  (value) => (typeof value === 'string' && value && !/^https?:\/\//i.test(value) ? `https://${value}` : value),
+  z.string().url({ message: 'Invalid URL.' }).or(z.literal('')).optional()
+)
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required.' }),
   url: z.string().url({ message: 'Invalid URL.' }),
-  avatar: z.string().url({ message: 'Invalid URL.' }).or(z.literal('')).optional(),
+  avatar: avatarUrlSchema,
   github: z.string().optional().or(z.literal('')),
-  signature: z.string().optional().or(z.literal('')),
+  signature: z
+    .string()
+    .regex(/^[^\p{Script=Han}]*$/u, { message: 'Chinese characters are not supported.' })
+    .optional(),
   email: z.string().email({ message: 'Invalid email.' }).or(z.literal('')).optional()
 })
 
@@ -67,16 +82,14 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
         }
 
         form.reset()
-        toast.success('Friend link submitted', {
-          description: (
-            <p>
-              Thanks! I'll review <span className="underline underline-offset-4">{values.name}</span> soon.
-            </p>
-          ),
-          duration: 5000
-        })
+        notify.success(
+          <p>
+            Thanks! I&apos;ll review <span className="underline underline-offset-4">{values.name}</span> soon.
+          </p>,
+          { duration: 5000 }
+        )
       } catch (error) {
-        toast.error(error.message || 'An unexpected error occurred.')
+        notify.error('Friend link submission failed', error.message || 'An unexpected error occurred.')
       } finally {
         setIsSubmittingLocked(false)
         setFormOpen(false)
@@ -120,7 +133,13 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
                 placeholder={f.placeholder}
                 leadingIcon={f.icon}
                 leadingAddon={
-                  f.name === 'avatar' ? <Avatar size="sm" src={field.value || undefined} initials="?" /> : undefined
+                  f.name === 'avatar' ? (
+                    field.value ? (
+                      <Avatar size="sm" src={avatarUrlSchema.safeParse(field.value).data || undefined} />
+                    ) : (
+                      <UserCircleIcon className="size-6 shrink-0" aria-hidden />
+                    )
+                  ) : undefined
                 }
                 value={field.value}
                 onChange={field.onChange}

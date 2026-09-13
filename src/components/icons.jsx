@@ -64,6 +64,7 @@ export {
   SkipForward as SkipForwardIcon,
   Sparkle as SparklesIcon,
   Tag as Tag01Icon,
+  UserCircle as UserCircleIcon,
   User as UserIcon,
   VideoCamera as Video01Icon,
   XLogo as XLogoIcon

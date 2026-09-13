@@ -13,12 +13,20 @@ import { z } from 'zod'
 import { createBitableRecord, getLarkTenantToken } from '@/lib/lark'
 import rateLimit from '@/lib/rate-limit'
 
+const avatarUrlSchema = z.preprocess(
+  (value) => (typeof value === 'string' && value && !/^https?:\/\//i.test(value) ? `https://${value}` : value),
+  z.string().url().or(z.literal('')).optional()
+)
+
 const formSchema = z.object({
   name: z.string().min(1),
   url: z.string().url(),
-  avatar: z.string().url().or(z.literal('')).optional(),
+  avatar: avatarUrlSchema,
   github: z.string().optional().or(z.literal('')),
-  signature: z.string().optional().or(z.literal('')),
+  signature: z
+    .string()
+    .regex(/^[^\p{Script=Han}]*$/u)
+    .optional(),
   email: z.string().email().or(z.literal('')).optional()
 })
 

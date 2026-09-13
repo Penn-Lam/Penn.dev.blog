@@ -1,13 +1,13 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { toast } from 'sonner'
 
 import { Button } from '@/components/base/buttons/button'
 import { CloseButton } from '@/components/base/buttons/close-button'
 import { Textarea } from '@/components/base/textarea/textarea'
 import { ClientOnly } from '@/components/client-only'
 import { PlusSignIcon, SendIcon } from '@/components/icons'
+import { notify } from '@/components/notifications'
 
 // 创建全局对话框状态 Context
 const DialogStateContext = createContext({
@@ -71,7 +71,7 @@ export function QuickPostButton() {
       })
 
       if (response.ok) {
-        toast.success('Musing published successfully!')
+        notify.success('Musing published successfully!')
         setContent('')
         setVisibility('Public')
         setCategoryTags(['Daily'])
@@ -79,7 +79,7 @@ export function QuickPostButton() {
 
         // 先触发 git-thoughts 仓库的 GitHub Action 来更新 issues.json
         try {
-          toast.info('Updating content...', { duration: 2000 })
+          notify.info('Updating content...', undefined, { duration: 2000 })
 
           // 等待几秒让 GitHub Action 完成
           setTimeout(async () => {
@@ -90,7 +90,7 @@ export function QuickPostButton() {
 
               if (revalidateResponse.ok) {
                 console.info('Page cache revalidated successfully')
-                toast.success('Content updated! Refreshing page...')
+                notify.info('Content updated! Refreshing page...')
                 // 延迟 1 秒后刷新页面
                 setTimeout(() => {
                   window.location.reload()
@@ -113,11 +113,11 @@ export function QuickPostButton() {
         }
       } else {
         const errorText = await response.text()
-        toast.error(`Failed to publish: ${errorText}`)
+        notify.error('Failed to publish', errorText)
       }
     } catch (error) {
       console.error('Submit error:', error)
-      toast.error('Failed to publish musing')
+      notify.error('Failed to publish musing')
     } finally {
       setIsSubmitting(false)
     }
