@@ -10,10 +10,12 @@ import { Input } from '@/components/base/input/input'
 import { Label } from '@/components/base/input/label'
 import { Select, SelectItem } from '@/components/base/select/select'
 import { getDelightfulMessage } from '@/components/console-easter-egg'
-import { EnvelopeSimpleIcon, Link02Icon } from '@/components/icons'
+import { EnvelopeSimpleIcon } from '@/components/icons'
 import { notify } from '@/components/notifications'
+import { NotionMentionLink } from '@/components/notion-mention-link'
 import { formSchema } from '@/components/submit-bookmark/utils'
 import { Form, FormField } from '@/components/ui/form'
+import { UrlFavicon } from '@/components/url-favicon'
 import { cn } from '@/lib/utils'
 
 /**
@@ -130,7 +132,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
           <div className="space-y-1">
             <p>{randomMessage}</p>
             <p className="text-caption-1-regular text-text-tertiary">
-              <span className="underline underline-offset-4">{values.url}</span>
+              <NotionMentionLink url={values.url} showPreview={false} />
             </p>
           </div>,
           { duration: 5000 }
@@ -168,7 +170,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
         label="Website URL"
         isRequired
         placeholder="Enter your url"
-        leadingIcon={Link02Icon}
+        leadingAddon={<UrlFavicon value={field.value} />}
         value={field.value}
         onChange={field.onChange}
         onBlur={field.onBlur}

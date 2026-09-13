@@ -1,12 +1,11 @@
 'use client'
 
-import Image from 'next/image'
 import { memo } from 'react'
 
-import { ArrowUpRight01Icon } from '@/components/icons'
+import { NotionMentionLink } from '@/components/notion-mention-link'
 
 /**
- * [INPUT]: 依赖 next/image 的 Image 组件
+ * [INPUT]: 依赖 NotionMentionLink 与工具数据
  * [OUTPUT]: 对外提供 ToolCard 组件，展示工具卡片
  * [POS]: components/ 的工具展示组件，被 CategorySection 使用
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -36,35 +35,11 @@ const TAG_COLORS = {
 
 export const ToolCard = memo(function ToolCard({ tool }) {
   return (
-    <a
-      href={tool.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group relative flex flex-col overflow-hidden rounded-2xl border p-5 transition-all duration-300"
-    >
-      {/* Header: Icon + Name + Arrow */}
-      <div className="mb-3 flex items-start justify-between">
-        <div className="flex items-center gap-3">
-          <div className="bg-background-secondary-default relative flex h-12 w-12 items-center justify-center rounded-xl">
-            <Image
-              src={`/tools/${tool.slug}.svg`}
-              alt={`${tool.name} icon`}
-              width={32}
-              height={32}
-              className="rounded"
-              onError={(e) => {
-                e.target.style.display = 'none'
-                e.target.nextSibling.style.display = 'flex'
-              }}
-            />
-            <div className="absolute inset-0 hidden items-center justify-center text-xl">🛠️</div>
-          </div>
-          <h3 className="text-body-semibold text-text-primary">{tool.name}</h3>
-        </div>
-        <ArrowUpRight01Icon
-          size={14}
-          className="text-text-placeholder group-hover:text-text-secondary mt-1 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
-        />
+    <article className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group relative flex flex-col overflow-hidden rounded-2xl border p-5 transition-all duration-300">
+      <div className="mb-3">
+        <NotionMentionLink url={tool.url} className="before:absolute before:inset-0">
+          {tool.name}
+        </NotionMentionLink>
       </div>
 
       {/* Description */}
@@ -88,6 +63,6 @@ export const ToolCard = memo(function ToolCard({ tool }) {
           {tool.tip}
         </div>
       )}
-    </a>
+    </article>
   )
 })

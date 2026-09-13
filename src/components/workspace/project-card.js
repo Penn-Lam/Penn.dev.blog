@@ -1,13 +1,13 @@
 'use client'
 
 /**
- * [INPUT]: 依赖 HugeIcons 图标的 ArrowUpRight01Icon 组件
+ * [INPUT]: 依赖 NotionMentionLink 与项目数据
  * [OUTPUT]: 对外提供 ProjectCard 组件，展示项目卡片
  * [POS]: components/workspace/ 的项目展示组件
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
-import { ArrowUpRight01Icon } from '@/components/icons'
+import { NotionMentionLink } from '@/components/notion-mention-link'
 
 const STATUS_CONFIG = {
   Live: {
@@ -32,19 +32,11 @@ export function ProjectCard({ title, tagline, status, stack, link, startDate }) 
       {/* Header */}
       <div className="mb-4 flex items-start justify-between">
         <div className="flex-1">
-          <h3 className="text-body-semibold text-text-primary mb-1">{title}</h3>
+          <h3 className="text-body-semibold text-text-primary mb-1">
+            {link ? <NotionMentionLink url={link}>{title}</NotionMentionLink> : title}
+          </h3>
           <p className="text-body-regular text-text-secondary">{tagline}</p>
         </div>
-        {link && (
-          <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-background-secondary-default text-text-placeholder hover:bg-background-tertiary-default hover:text-text-secondary flex h-8 w-8 items-center justify-center rounded-xl transition-all duration-300"
-          >
-            <ArrowUpRight01Icon className="h-4 w-4" />
-          </a>
-        )}
       </div>
 
       {/* Status & Date */}

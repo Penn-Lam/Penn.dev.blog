@@ -12,16 +12,15 @@ import { z } from 'zod'
 
 import { createBitableRecord, getLarkTenantToken } from '@/lib/lark'
 import rateLimit from '@/lib/rate-limit'
+import { addDefaultProtocol } from '@/lib/url'
 
-const avatarUrlSchema = z.preprocess(
-  (value) => (typeof value === 'string' && value && !/^https?:\/\//i.test(value) ? `https://${value}` : value),
-  z.string().url().or(z.literal('')).optional()
-)
+const urlSchema = z.preprocess(addDefaultProtocol, z.string().url())
+const optionalUrlSchema = z.preprocess(addDefaultProtocol, z.string().url().or(z.literal('')).optional())
 
 const formSchema = z.object({
   name: z.string().min(1),
-  url: z.string().url(),
-  avatar: avatarUrlSchema,
+  url: urlSchema,
+  avatar: optionalUrlSchema,
   github: z.string().optional().or(z.literal('')),
   signature: z
     .string()

@@ -1,9 +1,10 @@
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Image from 'next/image'
 import { memo } from 'react'
 
+import { RichText } from '@/components/contentful/rich-text'
+
 /**
- * [INPUT]: 依赖 contentful rich-text 渲染器和 next/image
+ * [INPUT]: 依赖 Contentful RichText 渲染器和 next/image
  * [OUTPUT]: 对外提供 JourneyCard 组件，展示旅程卡片
  * [POS]: components/journey 的核心卡片组件
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -25,7 +26,9 @@ export const JourneyCard = memo(({ title, description, image, index }) => {
     <div className="word-break-word flex flex-col">
       <span className="mb-px font-semibold tracking-tight">{title}</span>
       {description?.json && (
-        <div className="rich-text-journey text-body-regular">{documentToReactComponents(description.json)}</div>
+        <div className="rich-text-journey text-body-regular">
+          <RichText content={description} />
+        </div>
       )}
       {image?.url && (
         <div className="bg-background-primary-default mt-2.5 overflow-hidden rounded-xl">

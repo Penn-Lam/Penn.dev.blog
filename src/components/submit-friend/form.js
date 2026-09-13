@@ -15,27 +15,24 @@ import { z } from 'zod'
 import { Avatar } from '@/components/base/avatar/avatar'
 import { Button } from '@/components/base/buttons/button'
 import { Input } from '@/components/base/input/input'
-import {
-  EnvelopeSimpleIcon,
-  GithubIcon,
-  Link02Icon,
-  PencilEdit01Icon,
-  UserCircleIcon,
-  UserIcon
-} from '@/components/icons'
+import { EnvelopeSimpleIcon, GithubIcon, PencilEdit01Icon, UserCircleIcon, UserIcon } from '@/components/icons'
 import { notify } from '@/components/notifications'
+import { NotionMentionLink } from '@/components/notion-mention-link'
 import { Form, FormField } from '@/components/ui/form'
+import { UrlFavicon } from '@/components/url-favicon'
+import { addDefaultProtocol } from '@/lib/url'
 import { cn } from '@/lib/utils'
 
-const avatarUrlSchema = z.preprocess(
-  (value) => (typeof value === 'string' && value && !/^https?:\/\//i.test(value) ? `https://${value}` : value),
+const urlSchema = z.preprocess(addDefaultProtocol, z.string().url({ message: 'Invalid URL.' }))
+const optionalUrlSchema = z.preprocess(
+  addDefaultProtocol,
   z.string().url({ message: 'Invalid URL.' }).or(z.literal('')).optional()
 )
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required.' }),
-  url: z.string().url({ message: 'Invalid URL.' }),
-  avatar: avatarUrlSchema,
+  url: urlSchema,
+  avatar: optionalUrlSchema,
   github: z.string().optional().or(z.literal('')),
   signature: z
     .string()
@@ -83,9 +80,12 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
 
         form.reset()
         notify.success(
-          <p>
-            Thanks! I&apos;ll review <span className="underline underline-offset-4">{values.name}</span> soon.
-          </p>,
+          <div className="space-y-1">
+            <p>
+              Thanks! I&apos;ll review <span className="underline underline-offset-4">{values.name}</span> soon.
+            </p>
+            <NotionMentionLink url={values.url} showPreview={false} />
+          </div>,
           { duration: 5000 }
         )
       } catch (error) {
@@ -106,7 +106,6 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
         name: 'url',
         label: 'Website URL',
         placeholder: 'Enter your url',
-        icon: Link02Icon,
         required: true,
         fullWidth: true
       },
@@ -135,10 +134,12 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
                 leadingAddon={
                   f.name === 'avatar' ? (
                     field.value ? (
-                      <Avatar size="sm" src={avatarUrlSchema.safeParse(field.value).data || undefined} />
+                      <Avatar size="sm" src={optionalUrlSchema.safeParse(field.value).data || undefined} />
                     ) : (
                       <UserCircleIcon className="size-6 shrink-0" aria-hidden />
                     )
+                  ) : f.name === 'url' ? (
+                    <UrlFavicon value={field.value} />
                   ) : undefined
                 }
                 value={field.value}

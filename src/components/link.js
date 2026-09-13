@@ -1,6 +1,8 @@
 import NextLink from 'next/link'
 
+import { NotionMentionLink } from '@/components/notion-mention-link'
 import { isExternalLink } from '@/lib/utils'
+import { cx } from '@/utils/cx'
 
 /**
  * [INPUT]: 依赖 @/lib/utils 的 isExternalLink 函数
@@ -9,47 +11,20 @@ import { isExternalLink } from '@/lib/utils'
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
-/**
- * 生成外部链接的辅助文本（国际化友好）
- * @param {string} href - 链接地址
- * @returns {string} 屏幕阅读器友好的提示文本
- */
-function getExternalLinkText(href) {
-  try {
-    const url = new URL(href, window.location.origin)
-    const hostname = url.hostname
-    return `, opens ${hostname}`
-  } catch {
-    return ', opens external page'
-  }
-}
-
-export const Link = ({ href = '#', children, ...rest }) => {
+export const Link = ({ href = '#', children, className, ...rest }) => {
   const isExternal = isExternalLink(href)
   if (isExternal) {
     return (
-      <a
-        href={href + '?ref=pennlam.com'}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="link text-accent-600 active:text-accent-800 break-words underline-offset-3 hover:underline"
-        aria-label={typeof children === 'string' ? `${children}${getExternalLinkText(href)}` : undefined}
-        {...rest}
-      >
+      <NotionMentionLink url={href} className={className} {...rest}>
         {children}
-        {/* 视觉指示器 - 使用 CSS 伪元素 */}
-        <span
-          className="after:text-text-tertiary after:ml-0.5 after:align-super after:text-xs after:content-['_↗']"
-          aria-hidden="true"
-        />
-      </a>
+      </NotionMentionLink>
     )
   }
 
   return (
     <NextLink
       href={href}
-      className="link text-accent-600 active:text-accent-800 underline-offset-3 hover:underline"
+      className={cx('link text-accent-600 active:text-accent-800 underline-offset-3 hover:underline', className)}
       {...rest}
     />
   )
