@@ -32,6 +32,7 @@ async function testRevalidateAPI(baseUrl, testCase) {
     return { success: response.status === testCase.expectedStatus, result }
   } catch (error) {
     console.info(`❌ Test FAILED with error: ${error.message}`)
+
     return { success: false, error: error.message }
   }
 }
@@ -88,6 +89,7 @@ async function runTests() {
 
   for (const testCase of testCases) {
     const result = await testRevalidateAPI(baseUrl, testCase)
+
     if (result.success) passed++
 
     // 等待一下，避免请求过快
