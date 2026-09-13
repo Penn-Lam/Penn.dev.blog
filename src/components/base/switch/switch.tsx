@@ -37,7 +37,7 @@ export type SwitchSize = 'sm' | 'md' | 'lg'
 
 export type SwitchCornerStyle = 'pill' | 'rectangle'
 
-export const switchSizes = sortCx({
+const switchSizes = sortCx({
   sm: {
     track: 'h-4 w-7',
     trackRadius: { pill: 'rounded-full', rectangle: 'rounded-[3px]' },

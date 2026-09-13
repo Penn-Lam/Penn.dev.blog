@@ -1,8 +1,9 @@
 'use client'
 
-import { createContext, useContext, type ComponentType, type ReactNode, type Ref } from 'react'
+import { useContext, useMemo, type ComponentType, type ReactNode, type Ref } from 'react'
 import { Group as AriaGroup, Input as AriaInput, TextField as AriaTextField } from 'react-aria-components'
 import type { InputProps as AriaInputProps, TextFieldProps as AriaTextFieldProps } from 'react-aria-components'
+import { TextFieldContext, type InputSize, type TextFieldContextValue } from '@/components/base/input/input-context'
 import { Label } from './label'
 import { HintText } from './hint-text'
 import { cx, sortCx } from '@/utils/cx'
@@ -32,8 +33,6 @@ import { cx, sortCx } from '@/utils/cx'
  * Visuals stay 1:1 with Figma — see `styles/theme.css` for the tokens.
  */
 
-export type InputSize = 'medium' | 'small'
-
 type IconComponent = ComponentType<{
   className?: string
   'aria-hidden'?: boolean | 'true' | 'false'
@@ -42,18 +41,6 @@ type IconComponent = ComponentType<{
 /* -------------------------------------------------------------------------- */
 /*  TextFieldContext                                                           */
 /* -------------------------------------------------------------------------- */
-
-export interface TextFieldContextValue {
-  size?: InputSize
-  fieldClassName?: string
-  inputClassName?: string
-}
-
-/**
- * Shared by every field that wants Input's shell — `Textarea` reads the same
- * size and class overrides out of it, so a composed form stays consistent.
- */
-export const TextFieldContext = createContext<TextFieldContextValue>({})
 
 /* -------------------------------------------------------------------------- */
 /*  TextField                                                                  */
@@ -71,8 +58,10 @@ export function TextField({
   children,
   ...props
 }: TextFieldProps) {
+  const contextValue = useMemo(() => ({ size, fieldClassName, inputClassName }), [size, fieldClassName, inputClassName])
+
   return (
-    <TextFieldContext.Provider value={{ size, fieldClassName, inputClassName }}>
+    <TextFieldContext.Provider value={contextValue}>
       <AriaTextField
         {...props}
         data-input-size={size}

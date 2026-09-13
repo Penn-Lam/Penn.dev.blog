@@ -4,7 +4,7 @@ import type { ComponentType, HTMLAttributes, ReactNode, Ref } from 'react'
 import { Children, isValidElement, useEffect, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 import { RiCheckboxCircleFill, RiErrorWarningFill, RiInformationFill, RiNotification3Fill } from '@remixicon/react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react'
 import { Avatar, type AvatarProps } from '@/components/base/avatar/avatar'
 import { Button, type ButtonProps } from '@/components/base/buttons/button'
 import { CloseButton } from '@/components/base/buttons/close-button'
@@ -30,6 +30,7 @@ export type NotificationAvatar = Omit<AvatarProps, 'size'> & {
 }
 
 export type NotificationAction = {
+  id: string
   label: ReactNode
   onClick?: () => void
   variant?: ButtonProps['variant']
@@ -137,6 +138,97 @@ function NotificationAvatarVisual({ presence, className, ...avatar }: Notificati
   )
 }
 
+function NotificationActions({ actions }: { actions?: NotificationAction[] }) {
+  if (!actions?.length) return null
+
+  return (
+    <div className={styles.actions}>
+      {actions.map((action, index) => (
+        <Button
+          key={action.id}
+          size="small"
+          variant={action.variant ?? (index === 0 ? 'secondary' : 'primary')}
+          onClick={action.onClick}
+        >
+          {action.label}
+        </Button>
+      ))}
+    </div>
+  )
+}
+
+function NotificationProgress({ duration, delay }: { duration?: number; delay?: number }) {
+  if (!duration || duration <= 0) return null
+
+  return (
+    <m.span
+      aria-hidden
+      className="bg-accent-600 absolute inset-x-0 bottom-0 h-[3px] origin-left"
+      initial={{ scaleX: 1 }}
+      animate={{ scaleX: 0 }}
+      transition={{ duration: duration / 1000, delay, ease: 'linear' }}
+    />
+  )
+}
+
+function NotificationCardContent({
+  title,
+  description,
+  timestamp,
+  status,
+  icon,
+  avatar,
+  actions,
+  dismissible,
+  closeLabel,
+  autoDismissDuration,
+  introDelay,
+  onClose
+}: Pick<
+  NotificationProps,
+  | 'title'
+  | 'description'
+  | 'timestamp'
+  | 'status'
+  | 'icon'
+  | 'avatar'
+  | 'actions'
+  | 'dismissible'
+  | 'closeLabel'
+  | 'autoDismissDuration'
+  | 'introDelay'
+> & { status: NotificationStatus; onClose: () => void }) {
+  const Icon = icon ?? STATUS_ICON[status]
+
+  return (
+    <>
+      {avatar ? (
+        <NotificationAvatarVisual {...avatar} />
+      ) : (
+        <span className={cx(styles.visual, styles.status[status])}>
+          <Icon className={styles.icon} aria-hidden />
+        </span>
+      )}
+
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <p className={styles.title}>{title}</p>
+          {timestamp ? <span className={styles.timestamp}>{timestamp}</span> : null}
+        </div>
+        {description ? <p className={styles.description}>{description}</p> : null}
+
+        <NotificationActions actions={actions} />
+      </div>
+
+      {dismissible ? (
+        <CloseButton size="xs" aria-label={closeLabel} onClick={onClose} className={styles.close} />
+      ) : null}
+
+      <NotificationProgress duration={autoDismissDuration} delay={introDelay} />
+    </>
+  )
+}
+
 export function Notification({
   title,
   description,
@@ -156,7 +248,6 @@ export function Notification({
   ...props
 }: NotificationProps) {
   const [dismissed, setDismissed] = useState(false)
-  const Icon = icon ?? STATUS_ICON[status]
   const hasIntro = introDelay !== undefined
   const introDelayMs = (introDelay ?? 0) * 1000
 
@@ -169,93 +260,56 @@ export function Notification({
   }, [autoDismissDuration, introDelayMs])
 
   return (
-    <AnimatePresence onExitComplete={onDismiss}>
-      {!dismissed ? (
-        <motion.div
-          ref={ref}
-          role={role ?? (status === 'error' ? 'alert' : 'status')}
-          initial={hasIntro ? { opacity: 0, y: 12, scale: 0.97, filter: 'blur(4px)' } : false}
-          animate={
-            hasIntro
-              ? {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  filter: 'blur(0px)',
-                  transition: {
-                    duration: 0.25,
-                    delay: introDelay,
-                    ease: 'easeOut'
+    <LazyMotion features={domAnimation}>
+      <AnimatePresence onExitComplete={onDismiss}>
+        {!dismissed ? (
+          <m.div
+            ref={ref}
+            role={role ?? (status === 'error' ? 'alert' : 'status')}
+            initial={hasIntro ? { opacity: 0, y: 12, scale: 0.97, filter: 'blur(4px)' } : false}
+            animate={
+              hasIntro
+                ? {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    filter: 'blur(0px)',
+                    transition: {
+                      duration: 0.25,
+                      delay: introDelay,
+                      ease: 'easeOut'
+                    }
                   }
-                }
-              : undefined
-          }
-          exit={{
-            opacity: 0,
-            y: 8,
-            scale: 0.96,
-            filter: 'blur(3px)',
-            transition: { duration: 0.18, ease: 'easeOut' }
-          }}
-          className={cx(styles.card, className)}
-          {...props}
-        >
-          {avatar ? (
-            <NotificationAvatarVisual {...avatar} />
-          ) : (
-            <span className={cx(styles.visual, styles.status[status])}>
-              <Icon className={styles.icon} aria-hidden />
-            </span>
-          )}
-
-          <div className={styles.content}>
-            <div className={styles.header}>
-              <p className={styles.title}>{title}</p>
-              {timestamp ? <span className={styles.timestamp}>{timestamp}</span> : null}
-            </div>
-            {description ? <p className={styles.description}>{description}</p> : null}
-
-            {actions?.length ? (
-              <div className={styles.actions}>
-                {actions.map((action, index) => (
-                  <Button
-                    key={index}
-                    size="small"
-                    variant={action.variant ?? (index === 0 ? 'secondary' : 'primary')}
-                    onClick={action.onClick}
-                  >
-                    {action.label}
-                  </Button>
-                ))}
-              </div>
-            ) : null}
-          </div>
-
-          {dismissible ? (
-            <CloseButton
-              size="xs"
-              aria-label={closeLabel}
-              onClick={() => setDismissed(true)}
-              className={styles.close}
+                : undefined
+            }
+            exit={{
+              opacity: 0,
+              y: 8,
+              scale: 0.96,
+              filter: 'blur(3px)',
+              transition: { duration: 0.18, ease: 'easeOut' }
+            }}
+            className={cx(styles.card, className)}
+            {...props}
+          >
+            <NotificationCardContent
+              title={title}
+              description={description}
+              timestamp={timestamp}
+              status={status}
+              icon={icon}
+              avatar={avatar}
+              actions={actions}
+              dismissible={dismissible}
+              closeLabel={closeLabel}
+              autoDismissDuration={autoDismissDuration}
+              introDelay={introDelay}
+              onClose={() => setDismissed(true)}
             />
-          ) : null}
-
-          {autoDismissDuration && autoDismissDuration > 0 ? (
-            <motion.span
-              aria-hidden
-              className="bg-accent-600 absolute inset-x-0 bottom-0 h-[3px] origin-left"
-              initial={{ scaleX: 1 }}
-              animate={{ scaleX: 0 }}
-              transition={{
-                duration: autoDismissDuration / 1000,
-                delay: introDelay,
-                ease: 'linear'
-              }}
-            />
-          ) : null}
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+          </m.div>
+        ) : null}
+      </AnimatePresence>
+    </LazyMotion>
   )
 }
 
@@ -283,36 +337,38 @@ export function NotificationViewport({
   if (!mounted || typeof document === 'undefined') return null
 
   return createPortal(
-    <motion.div
-      layoutRoot
-      aria-label={ariaLabel}
-      className={cx(
-        'pointer-events-none fixed z-100 flex w-[min(400px,calc(100vw-24px))] flex-col gap-3',
-        VIEWPORT_POSITION[resolvedPosition],
-        className
-      )}
-      {...props}
-    >
-      <AnimatePresence initial={false} mode="popLayout">
-        {Children.toArray(children).map((child, index) => (
-          <motion.div
-            layout
-            key={isValidElement(child) && child.key !== null ? child.key : index}
-            className="pointer-events-auto w-full"
-            transition={{
-              layout: {
-                type: 'spring',
-                stiffness: 520,
-                damping: 42,
-                mass: 0.7
-              }
-            }}
-          >
-            {child}
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </motion.div>,
+    <LazyMotion features={domAnimation}>
+      <m.div
+        layoutRoot
+        aria-label={ariaLabel}
+        className={cx(
+          'pointer-events-none fixed z-100 flex w-[min(400px,calc(100vw-24px))] flex-col gap-3',
+          VIEWPORT_POSITION[resolvedPosition],
+          className
+        )}
+        {...props}
+      >
+        <AnimatePresence initial={false} mode="popLayout">
+          {Children.toArray(children).map((child) => (
+            <m.div
+              layout
+              key={isValidElement(child) ? child.key : String(child)}
+              className="pointer-events-auto w-full"
+              transition={{
+                layout: {
+                  type: 'spring',
+                  stiffness: 520,
+                  damping: 42,
+                  mass: 0.7
+                }
+              }}
+            >
+              {child}
+            </m.div>
+          ))}
+        </AnimatePresence>
+      </m.div>
+    </LazyMotion>,
     document.body
   )
 }

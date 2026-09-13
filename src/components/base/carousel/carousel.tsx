@@ -203,6 +203,8 @@ export function Carousel({
           the component stays self-contained. */}
       <div
         ref={trackRef}
+        role="region"
+        aria-label={`${props['aria-label']} slides`}
         tabIndex={0}
         className={cx(
           'relative flex w-full overflow-x-auto overscroll-x-contain outline-none',

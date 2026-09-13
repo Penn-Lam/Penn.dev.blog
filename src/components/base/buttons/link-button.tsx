@@ -133,6 +133,3 @@ export function LinkButton({
     </button>
   )
 }
-
-/** Style maps, exported for advanced composition and the dev Design Tuner. */
-export const linkButtonStyles = styles

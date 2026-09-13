@@ -5,7 +5,8 @@ import { Group as AriaGroup, TextArea as AriaTextArea } from 'react-aria-compone
 import type { TextAreaProps as AriaTextAreaProps } from 'react-aria-components'
 import { HintText } from '@/components/base/input/hint-text'
 import { Label } from '@/components/base/input/label'
-import { TextField, TextFieldContext, type InputSize, type TextFieldProps } from '@/components/base/input/input'
+import { TextField, type TextFieldProps } from '@/components/base/input/input'
+import { TextFieldContext, type InputSize } from '@/components/base/input/input-context'
 import { cx, sortCx } from '@/utils/cx'
 
 /**

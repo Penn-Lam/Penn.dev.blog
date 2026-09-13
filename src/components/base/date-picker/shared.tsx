@@ -15,6 +15,15 @@ import type { CalendarCellRenderProps } from 'react-aria-components'
 import { CalendarDate, getLocalTimeZone } from '@internationalized/date'
 import { cx } from '@/utils/cx'
 
+const MONTH_YEAR_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  month: 'long',
+  year: 'numeric'
+})
+
+function formatMonthYear(date: CalendarDate) {
+  return MONTH_YEAR_FORMATTER.format(date.toDate(getLocalTimeZone()))
+}
+
 /**
  * Shared building blocks for the base/date-picker family — `DateRangePicker`
  * (dual-month, node 3871:5738) and `DatePicker` (single-month, node
@@ -52,13 +61,7 @@ export function ChevronRight16({ className }: { className?: string }) {
   )
 }
 
-export function formatTriggerDate(date: CalendarDate) {
-  return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' }).format(
-    date.toDate(getLocalTimeZone())
-  )
-}
-
-export function formatChipDate(date: CalendarDate) {
+function formatChipDate(date: CalendarDate) {
   return `${String(date.day).padStart(2, '0')}/${String(date.month).padStart(2, '0')}/${date.year}`
 }
 
@@ -66,7 +69,7 @@ export function formatChipDate(date: CalendarDate) {
  *  null if the text isn't a valid date (out-of-range day/month is rejected
  *  up front; CalendarDate itself constrains impossible day-in-month combos
  *  like Feb 30). */
-export function parseChipDate(text: string): CalendarDate | null {
+function parseChipDate(text: string): CalendarDate | null {
   const match = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(text.trim())
 
   if (!match) return null
@@ -79,40 +82,55 @@ export function parseChipDate(text: string): CalendarDate | null {
   return new CalendarDate(year, month, day)
 }
 
-export function DayCell(props: CalendarCellRenderProps & { isRange: boolean }) {
-  const {
-    date,
-    formattedDate,
-    isSelected,
-    isSelectionStart,
-    isSelectionEnd,
-    isHovered,
-    isFocusVisible,
-    isDisabled,
-    isOutsideMonth,
-    isRange
-  } = props
+function getDayVisualState(props: CalendarCellRenderProps & { isRange: boolean }) {
+  const dayOfWeek = props.date.toDate(getLocalTimeZone()).getDay()
+  const isSingleDay = props.isRange ? props.isSelectionStart && props.isSelectionEnd : props.isSelected
 
-  if (isOutsideMonth) {
+  return {
+    dayOfWeek,
+    isSingleDay,
+    isEdge: props.isRange ? props.isSelectionStart || props.isSelectionEnd : props.isSelected,
+    extendLeft: props.isRange && props.isSelected && !props.isSelectionStart && dayOfWeek !== 0,
+    extendRight: props.isRange && props.isSelected && !props.isSelectionEnd && dayOfWeek !== 6
+  }
+}
+
+function rangeBackgroundClassName(props: CalendarCellRenderProps, visual: ReturnType<typeof getDayVisualState>) {
+  return cx(
+    'bg-date-range-background absolute inset-y-0 transition-[opacity,border-radius] duration-100 ease-out',
+    props.isSelectionStart ? 'left-1/2' : visual.extendLeft ? '-left-1.5' : 'left-0',
+    props.isSelectionEnd ? 'right-1/2' : visual.extendRight ? '-right-1.5' : 'right-0',
+    !props.isSelectionStart && visual.dayOfWeek === 0 && 'rounded-l-lg',
+    !props.isSelectionEnd && visual.dayOfWeek === 6 && 'rounded-r-lg',
+    props.isSelected && !visual.isSingleDay ? 'opacity-100' : 'opacity-0'
+  )
+}
+
+function dayButtonClassName(props: CalendarCellRenderProps) {
+  return cx(
+    'relative flex size-8 items-center justify-center rounded-lg outline-none',
+    !props.isSelected && props.isHovered && 'bg-background-secondary-hover',
+    'transition-colors duration-100 ease-out',
+    props.isFocusVisible && 'ring-border-focus-ring ring-2 ring-inset'
+  )
+}
+
+function rangeEdgeClassName(props: CalendarCellRenderProps, visual: ReturnType<typeof getDayVisualState>) {
+  return cx(
+    'bg-date-range-edge-background absolute inset-0 transition-[opacity,border-radius] duration-100 ease-out',
+    visual.isSingleDay && 'rounded-lg',
+    props.isSelectionStart && !visual.isSingleDay && 'rounded-l-lg',
+    props.isSelectionEnd && !visual.isSingleDay && 'rounded-r-lg',
+    visual.isEdge ? 'opacity-100' : 'opacity-0'
+  )
+}
+
+export function DayCell(props: CalendarCellRenderProps & { isRange: boolean }) {
+  if (props.isOutsideMonth) {
     return <div className="size-8" />
   }
 
-  const dayOfWeek = date.toDate(getLocalTimeZone()).getDay() // 0 = Sun ... 6 = Sat
-
-  // A plain (non-range) Calendar never sets isSelectionStart/isSelectionEnd —
-  // those are range-only concepts, so they stay false even for the one
-  // selected day. Without isRange, that day would fall through to the
-  // "middle of a range" backdrop path instead of rendering as its own pill.
-  const isSingleDay = isRange ? isSelectionStart && isSelectionEnd : isSelected
-  const isEdge = isRange ? isSelectionStart || isSelectionEnd : isSelected
-
-  // Cells sit 12px apart (Figma's row/column gap). A selected range should
-  // still read as one continuous band, so the background bridges that gap by
-  // extending half of it (6px) toward each selected neighbor — never past
-  // the first/last column of a row, where there's no neighbor to bridge to.
-  // Only meaningful for a RangeCalendar; a plain Calendar never bridges.
-  const extendLeft = isRange && isSelected && !isSelectionStart && dayOfWeek !== 0
-  const extendRight = isRange && isSelected && !isSelectionEnd && dayOfWeek !== 6
+  const visual = getDayVisualState(props)
 
   // The blue backgrounds fade in/out on opacity instead of popping instantly.
   // Both layers always render (geometry computed regardless of selection) so
@@ -125,37 +143,11 @@ export function DayCell(props: CalendarCellRenderProps & { isRange: boolean }) {
   // while the color is still visible.
   return (
     <div className="relative size-8">
-      <span
-        aria-hidden
-        className={cx(
-          'bg-date-range-background absolute inset-y-0 transition-[opacity,border-radius] duration-100 ease-out',
-          isSelectionStart ? 'left-1/2' : extendLeft ? '-left-1.5' : 'left-0',
-          isSelectionEnd ? 'right-1/2' : extendRight ? '-right-1.5' : 'right-0',
-          !isSelectionStart && dayOfWeek === 0 && 'rounded-l-lg',
-          !isSelectionEnd && dayOfWeek === 6 && 'rounded-r-lg',
-          isSelected && !isSingleDay ? 'opacity-100' : 'opacity-0'
-        )}
-      />
-      <div
-        className={cx(
-          'relative flex size-8 items-center justify-center rounded-lg outline-none',
-          !isSelected && isHovered && 'bg-background-secondary-hover',
-          'transition-colors duration-100 ease-out',
-          isFocusVisible && 'ring-border-focus-ring ring-2 ring-inset'
-        )}
-      >
-        <span
-          aria-hidden
-          className={cx(
-            'bg-date-range-edge-background absolute inset-0 transition-[opacity,border-radius] duration-100 ease-out',
-            isSingleDay && 'rounded-lg',
-            isSelectionStart && !isSingleDay && 'rounded-l-lg',
-            isSelectionEnd && !isSingleDay && 'rounded-r-lg',
-            isEdge ? 'opacity-100' : 'opacity-0'
-          )}
-        />
-        <span className={cx('text-body-medium text-text-primary relative', isDisabled && 'text-text-tertiary')}>
-          {formattedDate}
+      <span aria-hidden className={rangeBackgroundClassName(props, visual)} />
+      <div className={dayButtonClassName(props)}>
+        <span aria-hidden className={rangeEdgeClassName(props, visual)} />
+        <span className={cx('text-body-medium text-text-primary relative', props.isDisabled && 'text-text-tertiary')}>
+          {props.formattedDate}
         </span>
       </div>
     </div>
@@ -191,11 +183,7 @@ export function MonthPanel({
   const isRange = rangeState != null
   const panelDate = state ? state.visibleRange.start.add({ months: offset }) : null
 
-  const title = panelDate
-    ? new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' }).format(
-        panelDate.toDate(getLocalTimeZone())
-      )
-    : ''
+  const title = panelDate ? formatMonthYear(panelDate) : ''
 
   return (
     <div
@@ -301,22 +289,3 @@ export function DateChipInput({
     />
   )
 }
-
-/** Shared trigger-button chrome for both pickers (Figma's "Primary" button —
- *  calendar icon + formatted-value text, white surface, radius/2lg). */
-export const triggerButtonClassName = cx(
-  'inline-flex shrink-0 cursor-pointer items-center gap-0.5 rounded-2lg border border-border-button-default bg-background-primary-default p-2 shadow-xs outline-none',
-  'transition-[background-color,border-color,box-shadow] duration-150 ease',
-  'hover:bg-background-primary-hover hover:border-border-button-hover',
-  'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus-ring',
-  'disabled:cursor-not-allowed disabled:bg-background-primary-disabled disabled:text-text-tertiary disabled:shadow-none'
-)
-
-/** Shared popover chrome (Figma's rounded/3xl, background/secondary/default
- *  "Calendar component" surface) for both pickers. */
-export const popoverClassName = cx(
-  'origin-top rounded-3xl bg-background-secondary-default shadow-dropdown',
-  'transition duration-150 ease-out',
-  'data-[entering]:opacity-0 data-[entering]:scale-95 data-[entering]:blur-[2px]',
-  'data-[exiting]:opacity-0 data-[exiting]:scale-95 data-[exiting]:blur-[2px]'
-)

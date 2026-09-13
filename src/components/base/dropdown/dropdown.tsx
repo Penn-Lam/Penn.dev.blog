@@ -1,6 +1,15 @@
 'use client'
 
-import { createContext, useContext, useRef, useState, type ComponentProps, type ReactNode, type RefObject } from 'react'
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+  type RefObject
+} from 'react'
 import {
   Button as AriaButton,
   Dialog as AriaDialog,
@@ -92,9 +101,10 @@ export function Dropdown({ isOpen: controlledOpen, onOpenChange, children }: Dro
   useDismissOnOutsidePress(isOpen, () => setOpen(false), [triggerRef, popoverRef])
   // Pressing the trigger while open closes the menu instead of reopening
   const allowOpenChange = useTriggerToggle(isOpen, triggerRef)
+  const contextValue = useMemo(() => ({ triggerRef, popoverRef }), [])
 
   return (
-    <DropdownContext.Provider value={{ triggerRef, popoverRef }}>
+    <DropdownContext.Provider value={contextValue}>
       <AriaDialogTrigger isOpen={isOpen} onOpenChange={(o) => allowOpenChange(o) && setOpen(o)}>
         {children}
       </AriaDialogTrigger>

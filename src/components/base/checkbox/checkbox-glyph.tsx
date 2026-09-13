@@ -1,57 +1,42 @@
-import { cx } from "@/utils/cx";
-
-export type CheckboxSize = "sm" | "md";
-
-export const checkboxSizes: Record<
-  CheckboxSize,
-  { box: string; glyph: string; label: string; gap: string }
-> = {
-  md: { box: "size-4", glyph: "size-4", label: "text-body-medium", gap: "gap-2" },
-  sm: { box: "size-3.5", glyph: "size-3.5", label: "text-body-2-medium", gap: "gap-1.5" },
-};
+import { cx } from '@/utils/cx'
+import { checkboxSizes, type CheckboxSize } from './checkbox-styles'
 
 export interface CheckboxGlyphState {
-  isSelected: boolean;
-  isIndeterminate: boolean;
-  isFocusVisible: boolean;
-  isDisabled: boolean;
-  isHovered: boolean;
+  isSelected: boolean
+  isIndeterminate: boolean
+  isFocusVisible: boolean
+  isDisabled: boolean
+  isHovered: boolean
 }
 
 /**
  * The 16px (or 14px) checkbox box + tick/indeterminate glyph. Shared by the
  * standalone Checkbox and the CheckboxCard so their visuals stay identical.
  */
-export function CheckboxGlyph({
-  state,
-  size = "md",
-}: {
-  state: CheckboxGlyphState;
-  size?: CheckboxSize;
-}) {
-  const { isSelected, isIndeterminate, isFocusVisible, isDisabled, isHovered } = state;
-  const s = checkboxSizes[size];
-  const isMarked = isSelected || isIndeterminate;
-  const hover = isHovered && !isDisabled;
+export function CheckboxGlyph({ state, size = 'md' }: { state: CheckboxGlyphState; size?: CheckboxSize }) {
+  const { isSelected, isIndeterminate, isFocusVisible, isDisabled, isHovered } = state
+  const s = checkboxSizes[size]
+  const isMarked = isSelected || isIndeterminate
+  const hover = isHovered && !isDisabled
 
   return (
     <span
       aria-hidden
       className={cx(
-        "flex shrink-0 items-center justify-center rounded-sm",
-        "transition-[background-color,border-color,box-shadow] duration-150 ease",
+        'flex shrink-0 items-center justify-center rounded-sm',
+        'ease transition-[background-color,border-color,box-shadow] duration-150',
         s.box,
         isMarked
           ? cx(
-              "bg-linear-to-b shadow-checkbox-selected",
-              hover ? "from-accent-400 to-accent-500" : "from-accent-500 to-accent-600",
+              'shadow-checkbox-selected bg-linear-to-b',
+              hover ? 'from-accent-400 to-accent-500' : 'from-accent-500 to-accent-600'
             )
           : cx(
-              "border bg-background-primary-default shadow-xs",
-              hover ? "border-border-checkbox-hover" : "border-border-checkbox-default",
+              'bg-background-primary-default border shadow-xs',
+              hover ? 'border-border-checkbox-hover' : 'border-border-checkbox-default'
             ),
-        isDisabled && "opacity-50",
-        isFocusVisible && "ring-2 ring-border-focus-ring ring-offset-2",
+        isDisabled && 'opacity-50',
+        isFocusVisible && 'ring-border-focus-ring ring-2 ring-offset-2'
       )}
     >
       <svg viewBox="0 0 16 16" fill="none" className={s.glyph}>
@@ -70,5 +55,5 @@ export function CheckboxGlyph({
         ) : null}
       </svg>
     </span>
-  );
+  )
 }

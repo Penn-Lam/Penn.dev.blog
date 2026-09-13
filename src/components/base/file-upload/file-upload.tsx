@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { RiFileExcel2Line, RiFileImageLine, RiFileTextLine, RiUploadCloud2Line } from '@remixicon/react'
 import { cx } from '@/utils/cx'
 
@@ -35,7 +35,7 @@ export interface FileUploadProps {
   className?: string
 }
 
-export function formatFileSize(bytes: number) {
+function formatFileSize(bytes: number) {
   if (bytes >= 1024 * 1024) {
     const mb = bytes / (1024 * 1024)
 
@@ -60,6 +60,12 @@ function DefaultFileIcon({ file }: { file: File }) {
         : RiFileTextLine
 
   return <Icon className="text-foreground-icon-secondary size-6 shrink-0" aria-hidden />
+}
+
+function UploadFileIcon({ file, renderFileIcon }: { file: File | null; renderFileIcon?: (file: File) => ReactNode }) {
+  if (!file) return null
+
+  return renderFileIcon ? renderFileIcon(file) : <DefaultFileIcon file={file} />
 }
 
 /** Drives the Transitions.dev text-reveal states defined in globals.css. */
@@ -129,8 +135,9 @@ export function FileUpload({
   const [rejection, setRejection] = useState<string | null>(null)
   const [dragOver, setDragOver] = useState(false)
 
+  const inputId = useId()
   const inputRef = useRef<HTMLInputElement>(null)
-  const boxRef = useRef<HTMLDivElement>(null)
+  const boxRef = useRef<HTMLLabelElement>(null)
   const [box, setBox] = useState({ width: 533, height: 164 })
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
@@ -215,12 +222,10 @@ export function FileUpload({
     .join(', ')
 
   return (
-    <div
+    <label
       ref={boxRef}
-      role="button"
+      htmlFor={inputId}
       tabIndex={busy ? -1 : 0}
-      aria-label="Upload a file"
-      onClick={() => !busy && inputRef.current?.click()}
       onKeyDown={(event) => {
         if (!busy && (event.key === 'Enter' || event.key === ' ')) {
           event.preventDefault()
@@ -249,8 +254,11 @@ export function FileUpload({
       )}
     >
       <input
+        id={inputId}
         ref={inputRef}
         type="file"
+        disabled={busy}
+        aria-label="Upload a file"
         accept={allowedExtensions.map((extension) => `.${extension}`).join(',')}
         className="sr-only"
         tabIndex={-1}
@@ -357,7 +365,7 @@ export function FileUpload({
         )}
       >
         <span className="t-stagger-line t-stagger-line--1 border-border-button-default bg-background-primary-default flex size-10 items-center justify-center rounded-full border p-2">
-          {file && (renderFileIcon ? renderFileIcon(file) : <DefaultFileIcon file={file} />)}
+          <UploadFileIcon file={file} renderFileIcon={renderFileIcon} />
         </span>
         <p className="t-stagger-line t-stagger-line--2 text-body-medium text-text-primary mt-3.5 max-w-[90%] truncate">
           {file?.name}
@@ -382,6 +390,6 @@ export function FileUpload({
           </p>
         </div>
       </div>
-    </div>
+    </label>
   )
 }
