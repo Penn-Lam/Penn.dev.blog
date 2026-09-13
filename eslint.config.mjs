@@ -88,7 +88,15 @@ const patchedConfig = [
 
 const config = [
   ...patchedConfig,
-  { ignores: ['.next/*', 'src/components/base/**', 'src/components/application/**', 'src/components/foundations/**'] }
+  {
+    ignores: [
+      '.next/*',
+      'src/components/base/**',
+      'src/components/application/**',
+      'src/components/foundations/**',
+      'tools/oxlint/anti-slop/**'
+    ]
+  }
 ]
 
 export default config

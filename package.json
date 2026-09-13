@@ -13,8 +13,8 @@
     "prettier": "prettier --write \"**/*.{html,js,jsx,json,md,mdx,mjs}\"",
     "clear-cache": "rm -rf .next",
     "unused": "next-unused",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix",
+    "lint": "eslint . && oxlint .",
+    "lint:fix": "eslint --fix && oxlint --fix .",
     "outdated": "bun outdated"
   },
   "engines": {
@@ -80,6 +80,7 @@
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.26.0",
+    "@oxlint/plugins": "1.78.0",
     "@tailwindcss/postcss": "^4.1.7",
     "eslint": "^9.26.0",
     "eslint-config-next": "15.2.6",
@@ -91,6 +92,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.1.0",
     "next-unused": "^0.0.6",
+    "oxlint": "1.78.0",
     "portless": "^0.15.6",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
