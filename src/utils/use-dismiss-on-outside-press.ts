@@ -20,12 +20,16 @@ export function useDismissOnOutsidePress(
     if (!isOpen) return
 
     const handlePointerDown = (event: PointerEvent) => {
-      const target = event.target as Node
+      const target = event.target
+
+      if (!(target instanceof Node)) return
+
       if (refs.some((ref) => ref.current?.contains(target))) return
       onDismiss()
     }
 
     document.addEventListener('pointerdown', handlePointerDown, true)
+
     return () => document.removeEventListener('pointerdown', handlePointerDown, true)
   }, [isOpen, onDismiss, refs])
 }
@@ -45,29 +49,37 @@ export function useDismissOnOutsidePress(
  */
 export function useTriggerToggle(isOpen: boolean, triggerRef: RefObject<HTMLElement | null>) {
   const suppressReopenRef = useRef(false)
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     if (!isOpen) return
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (!triggerRef.current?.contains(event.target as Node)) return
+      if (!(event.target instanceof Node) || !triggerRef.current?.contains(event.target)) return
       suppressReopenRef.current = true
       // Safety valve: only the very next open within this click may be
       // swallowed; never leave a stale suppression behind.
-      setTimeout(() => {
+      clearTimeout(resetTimerRef.current)
+      resetTimerRef.current = setTimeout(() => {
         suppressReopenRef.current = false
       }, 400)
     }
 
     document.addEventListener('pointerdown', handlePointerDown, true)
-    return () => document.removeEventListener('pointerdown', handlePointerDown, true)
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown, true)
+      clearTimeout(resetTimerRef.current)
+    }
   }, [isOpen, triggerRef])
 
   return (next: boolean) => {
     if (next && suppressReopenRef.current) {
       suppressReopenRef.current = false
+
       return false
     }
+
     return true
   }
 }

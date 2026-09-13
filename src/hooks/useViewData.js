@@ -17,10 +17,12 @@ export const useViewData = (slug) => {
       setIsLoading(true)
       setError(null)
       const supabaseQuery = supabase.from(SUPABASE_TABLE_NAME).select('slug, view_count')
+
       if (slug) supabaseQuery.eq('slug', slug)
       const { data: supabaseData, error: queryError } = await supabaseQuery
 
       if (queryError) throw queryError
+
       if (supabaseData) setViewData(supabaseData)
     } catch (error) {
       console.error('Error fetching view data from Supabase:', error)
@@ -59,6 +61,7 @@ export const useViewData = (slug) => {
               if (!prev) return [payload.new]
 
               const index = prev.findIndex((item) => item.slug === payload.new.slug)
+
               if (index === -1) return [...prev, payload.new]
 
               // 检查数据是否真的变化
@@ -68,6 +71,7 @@ export const useViewData = (slug) => {
 
               const newData = [...prev]
               newData[index] = payload.new
+
               return newData
             })
           }
