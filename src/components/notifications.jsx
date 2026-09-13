@@ -91,6 +91,9 @@ export function SiteNotifications({ position = 'bottom-right' }) {
           introDelay={index * 0.06}
           autoDismissDuration={item.duration}
           onDismiss={() => dismiss(item.id)}
+          // 站点全局 base 层给裸 <p> 加了 mb-6（文章排版遗留），
+          // 卡片内全部 <p>（标题/描述/多段消息）在这里复位
+          className="[&_p]:mb-0"
         />
       ))}
     </NotificationViewport>
