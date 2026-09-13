@@ -14,7 +14,7 @@ ICO 在 src/app/favicon.ico，不放这里，避免与 App Router 文件约定�
 ## 品牌与内容资源
 assets/logo.webp: 像素头像主稿，站点图标源图
 assets/me.avif: 侧栏头像
-assets/fallback.avif / friends-card.png / leaves.png / summer-garden-ambience.mp3: 页面素材
+assets/bookmark-fallback.webp / friends-card.png / leaves.png / summer-garden-ambience.mp3: 页面素材
 fonts/: 签名字体
 tools/: 工具页 SVG
 ha/: Home Assistant 相关静态 CSS

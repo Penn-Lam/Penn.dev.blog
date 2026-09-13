@@ -64,7 +64,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
     >
       <span className="aspect-1200/630 overflow-hidden rounded-lg">
         <img
-          src={bookmark.cover || '/assets/fallback.avif'}
+          src={bookmark.cover || '/assets/bookmark-fallback.webp'}
           alt={getImageAlt(bookmark)}
           width={1200}
           height={630}
@@ -73,7 +73,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
           onError={(e) => {
             // 防止无限循环
             e.currentTarget.onerror = null
-            e.currentTarget.src = '/assets/fallback.avif'
+            e.currentTarget.src = '/assets/bookmark-fallback.webp'
           }}
           // eslint-disable-next-line react/no-unknown-property
           nopin="nopin"

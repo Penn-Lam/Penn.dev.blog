@@ -79,7 +79,8 @@ export const COLLECTION_IDS = [
   56815543, // Frontend
   62739440, // Backend
   62741470, // Infra & Hosting
-  62741405, // OPA
+  66769404, // Communication
+  66769394, // Monetization
   56815657, // Art
   60507989, // Music
   56815349, // Reading
