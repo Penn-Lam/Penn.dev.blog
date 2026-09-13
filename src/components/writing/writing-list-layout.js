@@ -3,9 +3,9 @@
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
 
-import { notify } from '@/components/notifications'
 import { WritingLink } from '@/components/writing-link'
 import { useViewData } from '@/hooks/useViewData'
+import { notify } from '@/lib/notifications'
 import { cn } from '@/lib/utils'
 
 export const WritingListLayout = ({ list, isMobile }) => {

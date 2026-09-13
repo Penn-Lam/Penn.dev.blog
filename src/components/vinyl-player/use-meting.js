@@ -33,6 +33,14 @@ export function useMeting() {
     if (!metingEl) return
 
     let attempts = 0
+    const onPlay = () => setIsPlaying(true)
+    const onPause = () => setIsPlaying(false)
+
+    const onSwitch = (event) => {
+      const ap = aplayerRef.current
+
+      if (ap) setCurrentTrack(extractTrack(ap.list.audios, event.index))
+    }
 
     const poll = setInterval(() => {
       if (++attempts > MAX_POLL_ATTEMPTS) {
@@ -52,10 +60,6 @@ export function useMeting() {
         setCurrentTrack(extractTrack(ap.list.audios, ap.list.index))
       }
 
-      const onPlay = () => setIsPlaying(true)
-      const onPause = () => setIsPlaying(false)
-      const onSwitch = (e) => setCurrentTrack(extractTrack(ap.list.audios, e.index))
-
       ap.on('play', onPlay)
       ap.on('pause', onPause)
       ap.on('listswitch', onSwitch)
@@ -68,9 +72,9 @@ export function useMeting() {
       const ap = aplayerRef.current
 
       if (ap) {
-        ap.off('play')
-        ap.off('pause')
-        ap.off('listswitch')
+        ap.off('play', onPlay)
+        ap.off('pause', onPause)
+        ap.off('listswitch', onSwitch)
       }
     }
   }, [])

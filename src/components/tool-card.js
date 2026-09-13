@@ -35,7 +35,7 @@ const TAG_COLORS = {
 
 export const ToolCard = memo(function ToolCard({ tool }) {
   return (
-    <article className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group relative flex flex-col overflow-hidden rounded-2xl border p-5 transition-all duration-300">
+    <article className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group relative flex flex-col overflow-hidden rounded-2xl border p-5 transition-[border-color,box-shadow] duration-300">
       <div className="mb-3">
         <NotionMentionLink url={tool.url} className="before:absolute before:inset-0">
           {tool.name}

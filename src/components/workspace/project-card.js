@@ -28,7 +28,7 @@ export function ProjectCard({ title, tagline, status, stack, link, startDate }) 
   const statusConfig = STATUS_CONFIG[status] || STATUS_CONFIG.Planned
 
   return (
-    <div className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group flex flex-col overflow-hidden rounded-2xl border p-5 transition-all duration-300">
+    <div className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group flex flex-col overflow-hidden rounded-2xl border p-5 transition-[border-color,box-shadow] duration-300">
       {/* Header */}
       <div className="mb-4 flex items-start justify-between">
         <div className="flex-1">

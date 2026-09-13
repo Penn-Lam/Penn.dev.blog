@@ -9,6 +9,43 @@ import { Gallery } from './gallery'
 import { LightboxViewer } from './lightbox-viewer'
 import { TabSelector } from './tab-selector'
 
+function VisualError({ error }) {
+  return (
+    <div className="flex min-h-[40vh] items-center justify-center">
+      <div className="text-center">
+        <h2 className="text-title-2-semibold text-text-primary mb-2">Something went wrong</h2>
+        <p className="text-text-secondary">{error}</p>
+      </div>
+    </div>
+  )
+}
+
+function VisualResults({ isLoading, items, mediaType, sourceType, showAll, onItemClick }) {
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-text-secondary animate-pulse">Loading your visual works...</div>
+      </div>
+    )
+  }
+
+  if (items.length > 0) return <Gallery items={items} onItemClick={onItemClick} />
+
+  const sourceLabel = sourceType === 'photography' ? 'photography' : 'AI-generated'
+  const mediaLabel = mediaType === 'image' ? 'images' : 'videos'
+
+  return (
+    <div className="flex items-center justify-center py-20">
+      <div className="text-center">
+        <h3 className="text-title-3-medium text-text-primary mb-2">No content available</h3>
+        <p className="text-text-secondary">
+          {showAll ? 'No visual works available yet.' : `No ${sourceLabel} ${mediaLabel} available yet.`}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export function VisualExplorer() {
   const [mediaType, setMediaType] = useState('image')
   const [sourceType, setSourceType] = useState('photography')
@@ -42,14 +79,7 @@ export function VisualExplorer() {
   }
 
   if (error) {
-    return (
-      <div className="flex min-h-[40vh] items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-title-2-semibold text-text-primary mb-2">Something went wrong</h2>
-          <p className="text-text-secondary">{error}</p>
-        </div>
-      </div>
-    )
+    return <VisualError error={error} />
   }
 
   return (
@@ -69,26 +99,14 @@ export function VisualExplorer() {
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
         >
-          {isLoading ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="text-text-secondary animate-pulse">Loading your visual works...</div>
-            </div>
-          ) : filteredData.length > 0 ? (
-            <Gallery items={filteredData} onItemClick={handleMediaClick} />
-          ) : (
-            <div className="flex items-center justify-center py-20">
-              <div className="text-center">
-                <h3 className="text-title-3-medium text-text-primary mb-2">No content available</h3>
-                <p className="text-text-secondary">
-                  {showAll
-                    ? 'No visual works available yet.'
-                    : `No ${sourceType === 'photography' ? 'photography' : 'AI-generated'} ${
-                        mediaType === 'image' ? 'images' : 'videos'
-                      } available yet.`}
-                </p>
-              </div>
-            </div>
-          )}
+          <VisualResults
+            isLoading={isLoading}
+            items={filteredData}
+            mediaType={mediaType}
+            sourceType={sourceType}
+            showAll={showAll}
+            onItemClick={handleMediaClick}
+          />
         </motion.div>
       </AnimatePresence>
 

@@ -94,7 +94,7 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
   // 标题渲染 - 使用 CSS will-change 提示 GPU
   const titleElement = scrollTitle ? (
     <span
-      className="will-change-transform-opacity text-body-semibold line-clamp-2"
+      className="text-body-semibold line-clamp-2"
       style={{
         transform: `translateY(${transformRef.current.translateY}%)`,
         opacity: transformRef.current.opacity

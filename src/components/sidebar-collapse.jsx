@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 /**
  * [INPUT]: 无
@@ -13,10 +13,9 @@ const SidebarCollapseContext = createContext({ collapsed: false, setCollapsed: (
 
 export const SidebarCollapseProvider = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
+  const value = useMemo(() => ({ collapsed, setCollapsed }), [collapsed])
 
-  return (
-    <SidebarCollapseContext.Provider value={{ collapsed, setCollapsed }}>{children}</SidebarCollapseContext.Provider>
-  )
+  return <SidebarCollapseContext.Provider value={value}>{children}</SidebarCollapseContext.Provider>
 }
 
 export const useSidebarCollapse = () => useContext(SidebarCollapseContext)

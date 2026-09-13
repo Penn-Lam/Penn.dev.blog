@@ -43,7 +43,7 @@ function MusingCard({ musing }) {
   }, [expanded])
 
   return (
-    <article className="border-separator-border bg-background-primary-default hover:border-border-button-hover group hover:shadow-card mb-4 break-inside-avoid overflow-hidden rounded-2xl border p-5 transition-all duration-300">
+    <article className="border-separator-border bg-background-primary-default hover:border-border-button-hover group hover:shadow-card mb-4 break-inside-avoid overflow-hidden rounded-2xl border p-5 transition-[border-color,box-shadow] duration-300">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="text-caption-1-regular text-text-tertiary flex items-center gap-2">
@@ -54,7 +54,7 @@ function MusingCard({ musing }) {
           href={musing.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-background-primary-default text-text-placeholder hover:bg-background-secondary-default hover:text-text-secondary flex h-7 w-7 items-center justify-center rounded-lg transition-all duration-200"
+          className="bg-background-primary-default text-text-placeholder hover:bg-background-secondary-default hover:text-text-secondary flex h-7 w-7 items-center justify-center rounded-lg transition-colors duration-200"
         >
           <ArrowUpRight01Icon size={12} />
         </Link>
@@ -77,7 +77,7 @@ function MusingCard({ musing }) {
       {/* Expand button */}
       {showExpand && (
         <button
-          className="border-border-button-default bg-background-primary-default text-caption-1-medium text-text-secondary hover:border-border-button-hover hover:text-text-primary mt-4 self-start rounded-lg border px-3 py-1 transition-all duration-200 hover:shadow-sm"
+          className="border-border-button-default bg-background-primary-default text-caption-1-medium text-text-secondary hover:border-border-button-hover hover:text-text-primary mt-4 self-start rounded-lg border px-3 py-1 transition-[color,border-color,box-shadow] duration-200 hover:shadow-sm"
           onClick={() => setExpanded((v) => !v)}
         >
           {expanded ? '收起' : '展开'}

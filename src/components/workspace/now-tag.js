@@ -25,7 +25,7 @@ export function NowTag({ projects }) {
 
         <div className="space-y-4">
           {projects.map((project, index) => (
-            <div key={index} className={index > 0 ? 'border-accent-100 border-t pt-4' : ''}>
+            <div key={project.project} className={index > 0 ? 'border-accent-100 border-t pt-4' : ''}>
               <h2 className="text-title-2-bold text-text-primary mb-2">{project.project}</h2>
 
               {project.description && <p className="text-text-secondary mb-3 max-w-2xl">{project.description}</p>}

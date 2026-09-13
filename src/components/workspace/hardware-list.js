@@ -52,7 +52,7 @@ export function HardwareList({ items }) {
           return (
             <div
               key={index}
-              className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group flex items-start gap-4 rounded-2xl border p-4 transition-all duration-300"
+              className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group flex items-start gap-4 rounded-2xl border p-4 transition-[border-color,box-shadow] duration-300"
             >
               <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-lg ${config.color}`}>
                 {config.icon}

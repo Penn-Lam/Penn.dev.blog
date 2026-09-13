@@ -11,11 +11,11 @@ import { Label } from '@/components/base/input/label'
 import { Select, SelectItem } from '@/components/base/select/select'
 import { getDelightfulMessage } from '@/components/console-easter-egg'
 import { EnvelopeSimpleIcon } from '@/components/icons'
-import { notify } from '@/components/notifications'
 import { NotionMentionLink } from '@/components/notion-mention-link'
 import { formSchema } from '@/components/submit-bookmark/utils'
 import { Form, FormField } from '@/components/ui/form'
 import { UrlFavicon } from '@/components/url-favicon'
+import { notify } from '@/lib/notifications'
 import { cn } from '@/lib/utils'
 
 /**
@@ -150,6 +150,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
             retryCount < 3
               ? [
                   {
+                    id: 'retry',
                     label: 'Retry',
                     variant: 'primary',
                     onClick: () => {
