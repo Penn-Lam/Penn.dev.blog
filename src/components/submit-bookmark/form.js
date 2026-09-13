@@ -42,12 +42,15 @@ function getNetworkErrorMessage(error) {
   if (!navigator.onLine) {
     return NETWORK_ERRORS.OFFLINE
   }
+
   if (error.message?.includes('timed out') || error.name === 'TimeoutError') {
     return NETWORK_ERRORS.TIMEOUT
   }
+
   if (error.message?.includes('500') || error.message?.includes('server')) {
     return NETWORK_ERRORS.SERVER_ERROR
   }
+
   return error.message || NETWORK_ERRORS.UNKNOWN
 }
 
@@ -61,6 +64,7 @@ function getRandomSuccessMessage() {
     'Another gem for your digital garden.',
     'Indexed and ready for retrieval.'
   ]
+
   return messages[Math.floor(Math.random() * messages.length)]
 }
 
@@ -95,6 +99,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
       if (isSubmittingLocked) return
 
       setIsSubmittingLocked(true)
+
       try {
         const controller = new AbortController()
         const timeoutId = setTimeout(() => controller.abort(), 30000) // 30s 超时
@@ -117,6 +122,7 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
           if (response.status === 429) {
             throw new Error('Rate limit exceeded. Please wait before submitting again.')
           }
+
           throw new Error(data.error || 'Submission failed')
         }
 
@@ -270,4 +276,5 @@ export const SubmitBookmarkForm = memo(({ className, setFormOpen, bookmarks, cur
     </Form>
   )
 })
+
 SubmitBookmarkForm.displayName = 'SubmitBookmarkForm'

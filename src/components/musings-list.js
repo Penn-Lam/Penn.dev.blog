@@ -20,6 +20,7 @@ import { TagFilter } from './tag-filter'
 function MusingCard({ musing }) {
   const [expanded, setExpanded] = useState(false)
   const date = new Date(musing.created_at)
+
   const formattedDate = date.toLocaleDateString('zh-CN', {
     year: 'numeric',
     month: 'short',
@@ -32,8 +33,10 @@ function MusingCard({ musing }) {
   useEffect(() => {
     if (expanded || !contentRef.current) {
       setShowExpand(false)
+
       return
     }
+
     const el = contentRef.current
     const hasImage = el.querySelector('img') !== null
     setShowExpand(hasImage || el.scrollHeight > 400)
@@ -106,11 +109,13 @@ export function MusingsList({ musings, selectedTag }) {
         musing.tags.forEach((tag) => tags.add(tag))
       }
     })
+
     return Array.from(tags).sort()
   }, [musings])
 
   const filteredMusings = useMemo(() => {
     if (!selectedTag) return musings
+
     return musings.filter((musing) => musing.tags && musing.tags.includes(selectedTag))
   }, [musings, selectedTag])
 

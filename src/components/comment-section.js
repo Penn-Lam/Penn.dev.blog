@@ -15,6 +15,7 @@ export function CommentSection({ page, className }) {
               const params = new URLSearchParams({
                 callback: window.location.href
               })
+
               window.location.href = `/sign-in?${params.toString()}`
             }
           }}

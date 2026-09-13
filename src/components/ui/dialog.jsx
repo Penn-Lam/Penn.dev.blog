@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils'
 const Dialog = memo(({ ...props }) => {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
 })
+
 Dialog.displayName = 'Dialog'
 
 function DialogTrigger({ ...props }) {
@@ -33,6 +34,7 @@ function DialogTrigger({ ...props }) {
 const DialogPortal = memo(({ ...props }) => {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
 })
+
 DialogPortal.displayName = 'DialogPortal'
 
 function DialogClose({ ...props }) {
@@ -53,6 +55,7 @@ const DialogOverlay = memo(({ className, ...props }) => {
     />
   )
 })
+
 DialogOverlay.displayName = 'DialogOverlay'
 
 const DialogContent = memo(({ className, children, ...props }) => {
@@ -81,6 +84,7 @@ const DialogContent = memo(({ className, children, ...props }) => {
     </DialogPortal>
   )
 })
+
 DialogContent.displayName = 'DialogContent'
 
 function DialogHeader({ className, ...props }) {
@@ -118,6 +122,7 @@ const DialogDescription = memo(({ className, ...props }) => {
     />
   )
 })
+
 DialogDescription.displayName = 'DialogDescription'
 
 export {

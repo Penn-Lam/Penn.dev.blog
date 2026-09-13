@@ -10,6 +10,7 @@ export async function GET() {
   const sortedPosts = getSortedPosts(allPosts)
   const date = new Date()
   const siteURL = 'https://pennlam.com'
+
   const author = {
     name: 'Penn',
     link: 'https://pennlam.com'

@@ -24,7 +24,9 @@ const SUCCESS_AVATAR = {
 }
 
 let nextId = 0
+
 let items = []
+
 const listeners = new Set()
 
 function emit() {
@@ -35,6 +37,7 @@ function push(item) {
   nextId += 1
   items = [...items, { id: nextId, ...item }]
   emit()
+
   return nextId
 }
 
@@ -45,15 +48,18 @@ function dismiss(id) {
 
 function subscribe(listener) {
   listeners.add(listener)
+
   return () => listeners.delete(listener)
 }
 
 export function notify({ title, description, status = 'neutral', avatar, timestamp, duration = 5000 }) {
   const id = push({ title, description, status, avatar, timestamp, duration })
+
   // autoDismissDuration 走组件内倒计时条；到期后这里真正移除
   if (duration > 0) {
     setTimeout(() => dismiss(id), duration + 300)
   }
+
   return id
 }
 

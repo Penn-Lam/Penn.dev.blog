@@ -13,6 +13,7 @@ import { cx } from '@/utils/cx'
 
 export const Link = ({ href = '#', children, className, ...rest }) => {
   const isExternal = isExternalLink(href)
+
   if (isExternal) {
     return (
       <NotionMentionLink url={href} className={className} {...rest}>

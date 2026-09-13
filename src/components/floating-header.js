@@ -11,6 +11,7 @@ import { ArrowLeft01Icon, RssIcon } from '@/components/icons'
 import { LoadingSpinner } from '@/components/loading-spinner'
 
 const MobileDrawer = dynamic(() => import('@/components/mobile-drawer').then((mod) => mod.MobileDrawer))
+
 const SubmitBookmarkDrawer = dynamic(
   () => import('@/components/submit-bookmark/drawer').then((mod) => mod.SubmitBookmarkDrawer),
   {
@@ -18,6 +19,7 @@ const SubmitBookmarkDrawer = dynamic(
     ssr: false
   }
 )
+
 import { MOBILE_SCROLL_THRESHOLD, SCROLL_AREA_ID } from '@/lib/constants'
 
 /**
@@ -38,6 +40,7 @@ import { MOBILE_SCROLL_THRESHOLD, SCROLL_AREA_ID } from '@/lib/constants'
 // 滚动节流辅助函数
 function throttle(callback, limit = 16) {
   let waiting = false
+
   return function (...args) {
     if (!waiting) {
       callback.apply(this, args)
@@ -77,6 +80,7 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
     if (!scrollTitle) return
 
     const scrollAreaElem = document.querySelector(`#${SCROLL_AREA_ID}`)
+
     if (!scrollAreaElem) return
 
     // 使用节流的滚动处理
@@ -149,4 +153,5 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
     </header>
   )
 })
+
 FloatingHeader.displayName = 'FloatingHeader'

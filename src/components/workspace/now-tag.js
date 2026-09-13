@@ -5,6 +5,7 @@ import { Clock01Icon } from '@/components/icons'
 export function NowTag({ projects }) {
   const formatDate = (dateString) => {
     const date = new Date(dateString)
+
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',

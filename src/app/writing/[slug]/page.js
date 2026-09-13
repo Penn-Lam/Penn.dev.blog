@@ -13,6 +13,7 @@ import { getDateTimeFormat, isDevelopment } from '@/lib/utils'
 
 export async function generateStaticParams() {
   const allPosts = await getAllPostSlugs()
+
   if (!allPosts || allPosts.length === 0) {
     return []
   }
@@ -23,10 +24,12 @@ export async function generateStaticParams() {
 async function fetchData(slug) {
   const { isEnabled } = await draftMode()
   const data = await getPost(slug, isDevelopment ? true : isEnabled)
+
   if (!data) notFound()
 
   // Ensure required data structure exists with comprehensive fallbacks
   const title = data.title || 'Untitled'
+
   const safeData = {
     title,
     date: data.date || null,
@@ -107,6 +110,7 @@ export async function generateMetadata(props) {
   const params = await props.params
   const { slug } = params
   const seoData = await getWritingSeo(slug)
+
   if (!seoData) {
     return {
       title: 'Blog Post',

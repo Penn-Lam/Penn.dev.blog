@@ -17,6 +17,7 @@ function generateTitle(content) {
   // 尝试在词边界处截断，避免截断单词
   let title = cleanContent.substring(0, 50)
   const lastSpaceIndex = title.lastIndexOf(' ')
+
   const lastPuncIndex = Math.max(
     title.lastIndexOf('。'),
     title.lastIndexOf('！'),
@@ -47,6 +48,7 @@ export async function POST(request) {
 
     // 检查是否包含验证码
     const secretCode = process.env.MUSING_CODE
+
     if (!secretCode) {
       return new NextResponse('服务器配置错误', { status: 500 })
     }
@@ -63,6 +65,7 @@ export async function POST(request) {
 
     // 调用 GitHub API 创建 Issue
     const githubToken = process.env.GITHUB_PAT
+
     if (!githubToken) {
       return new NextResponse('GitHub token 未配置', { status: 500 })
     }
@@ -88,6 +91,7 @@ export async function POST(request) {
     if (!response.ok) {
       const error = await response.text()
       console.error('GitHub API error:', error)
+
       return new NextResponse(`GitHub API 错误: ${response.status}`, { status: 500 })
     }
 
@@ -104,6 +108,7 @@ export async function POST(request) {
     })
   } catch (error) {
     console.error('API error:', error)
+
     return new NextResponse('服务器内部错误', { status: 500 })
   }
 }

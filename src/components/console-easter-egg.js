@@ -99,10 +99,13 @@ export function ConsoleEasterEgg() {
     // 拦截命令
     const handleCommand = (command) => {
       const cmd = command.toLowerCase().trim()
+
       if (hiddenCommands[cmd]) {
         originalInfo(`%c${hiddenCommands[cmd]}`, 'font-size: 12px; color: #22c55e; font-family: monospace;')
+
         return true
       }
+
       return false
     }
 
@@ -151,6 +154,7 @@ export const DELIGHTFUL_MESSAGES = {
   // 随机获取一条消息
   getRandom: (category) => {
     const messages = DELIGHTFUL_MESSAGES[category]
+
     return messages ? messages[Math.floor(Math.random() * messages.length)] : ''
   }
 }

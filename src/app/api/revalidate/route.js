@@ -88,6 +88,7 @@ export async function POST(request) {
             { status: 400 }
           )
         }
+
         break
       case CONTENT_TYPES.POST:
         if (slug) {
@@ -104,6 +105,7 @@ export async function POST(request) {
             { status: 400 }
           )
         }
+
         break
       case CONTENT_TYPES.LOGBOOK:
         revalidatePath('/journey')
@@ -122,6 +124,7 @@ export async function POST(request) {
     return Response.json({ revalidated: true, now: Date.now() })
   } catch (error) {
     console.error('Revalidation error:', error)
+
     return NextResponse.json({ message: 'Error revalidating', error: error.message }, { status: 500 })
   }
 }

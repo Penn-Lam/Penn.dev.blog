@@ -34,6 +34,7 @@ export function VisualExplorer() {
 
   const handleFilterChange = (filterState) => {
     setShowAll(filterState.showAll)
+
     if (!filterState.showAll) {
       setMediaType(filterState.mediaType)
       setSourceType(filterState.sourceType)

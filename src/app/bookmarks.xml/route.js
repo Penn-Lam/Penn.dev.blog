@@ -8,6 +8,7 @@ export async function GET() {
   const bookmarks = await getBookmarks()
   const date = new Date()
   const siteURL = 'https://pennlam.com'
+
   const author = {
     name: 'Onur Şuyalçınkaya',
     link: 'https://onur.dev'
@@ -27,6 +28,7 @@ export async function GET() {
   })
 
   const bookmarkList = []
+
   for (const bookmark of bookmarks) {
     const bookmarkItems = await getBookmarkItems(bookmark._id)
     const { items = [] } = bookmarkItems ?? {}
@@ -51,6 +53,7 @@ export async function GET() {
   const sortedBookmarks = bookmarkList.sort(
     (a, b) => new Date(b.updated || b.created) - new Date(a.updated || a.created)
   )
+
   sortedBookmarks.forEach((bookmark) => {
     feed.addItem({ ...bookmark })
   })

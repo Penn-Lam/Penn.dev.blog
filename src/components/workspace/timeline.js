@@ -10,16 +10,19 @@ export function Timeline({ entries }) {
 
   const toggleExpanded = (index) => {
     const newExpanded = new Set(expandedItems)
+
     if (newExpanded.has(index)) {
       newExpanded.delete(index)
     } else {
       newExpanded.add(index)
     }
+
     setExpandedItems(newExpanded)
   }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
+
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import type { HTMLAttributes, Ref } from "react";
-import { cx, sortCx } from "@/utils/cx";
+import type { HTMLAttributes, Ref } from 'react'
+import { cx, sortCx } from '@/utils/cx'
 
 /**
  * Figma source: Board UI → Avatar (styles Avatar/1…Avatar/26; used throughout
@@ -20,63 +20,45 @@ import { cx, sortCx } from "@/utils/cx";
  *   pink    → bg color/pink/200,    text color/pink/500
  */
 
-type AvatarSize = "xs" | "sm" | "md" | "lg";
-type AvatarColor = "neutral" | "blue" | "lime" | "pink";
+type AvatarSize = 'xs' | 'sm' | 'md' | 'lg'
+
+type AvatarColor = 'neutral' | 'blue' | 'lime' | 'pink'
 
 export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
-  size?: AvatarSize;
-  color?: AvatarColor;
+  size?: AvatarSize
+  color?: AvatarColor
   /** Photo URL. Wins over `initials`. */
-  src?: string;
-  alt?: string;
+  src?: string
+  alt?: string
   /** Fallback initials, e.g. "M". */
-  initials?: string;
-  ref?: Ref<HTMLSpanElement>;
+  initials?: string
+  ref?: Ref<HTMLSpanElement>
 }
 
 const styles = sortCx({
-  base: "inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full text-center align-middle transition-[width,height,font-size] duration-200 ease",
+  base: 'inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full text-center align-middle transition-[width,height,font-size] duration-200 ease',
   size: {
-    xs: "size-5 text-[10px] leading-[15px] font-semibold",
-    sm: "size-6 text-caption-1-semibold tracking-normal",
-    md: "size-8 text-headline-semibold",
-    lg: "size-9 text-[18px] leading-6 font-semibold",
+    xs: 'size-5 text-[10px] leading-[15px] font-semibold',
+    sm: 'size-6 text-caption-1-semibold tracking-normal',
+    md: 'size-8 text-headline-semibold',
+    lg: 'size-9 text-[18px] leading-6 font-semibold'
   },
   color: {
-    neutral: "bg-avatar-neutral-background text-text-secondary",
-    blue: "bg-blue-300 text-blue-900",
-    lime: "bg-lime-200 text-lime-700",
-    pink: "bg-pink-200 text-pink-500",
-  },
-});
+    neutral: 'bg-avatar-neutral-background text-text-secondary',
+    blue: 'bg-blue-300 text-blue-900',
+    lime: 'bg-lime-200 text-lime-700',
+    pink: 'bg-pink-200 text-pink-500'
+  }
+})
 
-export function Avatar({
-  size = "md",
-  color = "neutral",
-  src,
-  alt,
-  initials,
-  className,
-  ref,
-  ...props
-}: AvatarProps) {
+export function Avatar({ size = 'md', color = 'neutral', src, alt, initials, className, ref, ...props }: AvatarProps) {
   return (
-    <span
-      ref={ref}
-      className={cx(styles.base, styles.size[size], styles.color[color], className)}
-      {...props}
-    >
+    <span ref={ref} className={cx(styles.base, styles.size[size], styles.color[color], className)} {...props}>
       {src ? (
-        <img
-          src={src}
-          alt={alt ?? ""}
-          loading="lazy"
-          decoding="async"
-          className="size-full object-cover"
-        />
+        <img src={src} alt={alt ?? ''} loading="lazy" decoding="async" className="size-full object-cover" />
       ) : (
         initials
       )}
     </span>
-  );
+  )
 }

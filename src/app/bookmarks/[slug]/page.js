@@ -11,12 +11,14 @@ import { sortByProperty } from '@/lib/utils'
 
 export async function generateStaticParams() {
   const bookmarks = await getBookmarks()
+
   return bookmarks.map((bookmark) => ({ slug: bookmark.slug }))
 }
 
 async function fetchData(slug) {
   const bookmarks = await getBookmarks()
   const currentBookmark = bookmarks.find((bookmark) => bookmark.slug === slug)
+
   if (!currentBookmark) notFound()
 
   const sortedBookmarks = sortByProperty(bookmarks, 'title')
@@ -27,6 +29,7 @@ async function fetchData(slug) {
     // 验证返回的数据
     if (!bookmarkItems || !bookmarkItems.result) {
       console.error(`Failed to fetch items for collection ${currentBookmark._id}`)
+
       return {
         bookmarks: sortedBookmarks,
         currentBookmark,
@@ -41,6 +44,7 @@ async function fetchData(slug) {
     }
   } catch (error) {
     console.error(`Error fetching bookmark items: ${error.message}`)
+
     return {
       bookmarks: sortedBookmarks,
       currentBookmark,
@@ -79,6 +83,7 @@ export async function generateMetadata(props) {
   const { slug } = params
   const bookmarks = await getBookmarks()
   const currentBookmark = bookmarks.find((bookmark) => bookmark.slug === slug)
+
   if (!currentBookmark) return null
 
   const siteUrl = `/bookmarks/${currentBookmark.slug}`

@@ -26,6 +26,7 @@ export const BookmarkList = ({ initialData, id, collectionSlug }) => {
   const fetchInfiniteData = useCallback(async () => {
     setIsLoading(true)
     const newData = await getBookmarkItemsByPageIndex(id, pageIndex)
+
     if (newData.result) setData((prevData) => [...prevData, ...newData.items])
     setIsLoading(false)
   }, [id, pageIndex])
@@ -42,12 +43,14 @@ export const BookmarkList = ({ initialData, id, collectionSlug }) => {
         bookmark.tags.forEach((tag) => tags.add(tag))
       }
     })
+
     return Array.from(tags).sort()
   }, [data])
 
   // 根据选中的标签过滤书签
   const filteredData = useMemo(() => {
     if (!selectedTag) return data
+
     return data.filter((bookmark) => bookmark.tags && bookmark.tags.includes(selectedTag))
   }, [data, selectedTag])
 
@@ -61,6 +64,7 @@ export const BookmarkList = ({ initialData, id, collectionSlug }) => {
         lastChunk.push(element)
       }
     })
+
     return [[...firstChunk], [...lastChunk]]
   }, [filteredData])
 

@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   Children,
@@ -10,11 +10,11 @@ import {
   useState,
   type HTMLAttributes,
   type ReactNode,
-  type Ref,
-} from "react";
-import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
-import { IconButton } from "@/components/base/buttons/icon-button";
-import { cx } from "@/utils/cx";
+  type Ref
+} from 'react'
+import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
+import { IconButton } from '@/components/base/buttons/icon-button'
+import { cx } from '@/utils/cx'
 
 /**
  * Gallery carousel: a horizontal run of cards you slide through.
@@ -36,25 +36,24 @@ import { cx } from "@/utils/cx";
  * the controls are real buttons that disable at the ends.
  */
 
-export interface CarouselProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "onScroll"> {
-  children: ReactNode;
+export interface CarouselProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onScroll'> {
+  children: ReactNode
   /** Names the carousel for assistive tech. */
-  "aria-label": string;
+  'aria-label': string
   /** Prev/next buttons above the track. */
-  showArrows?: boolean;
+  showArrows?: boolean
   /** Position indicator below the track. */
-  showDots?: boolean;
+  showDots?: boolean
   /** Where a card comes to rest when it snaps. */
-  align?: "start" | "center";
+  align?: 'start' | 'center'
   /** Gap between cards, in px. */
-  gap?: number;
-  ref?: Ref<HTMLDivElement>;
+  gap?: number
+  ref?: Ref<HTMLDivElement>
 }
 
 export interface CarouselItemProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-  ref?: Ref<HTMLDivElement>;
+  children: ReactNode
+  ref?: Ref<HTMLDivElement>
 }
 
 /**
@@ -68,106 +67,115 @@ export function CarouselItem({ children, className, ref, ...props }: CarouselIte
       ref={ref}
       role="group"
       aria-roledescription="slide"
-      className={cx("w-full shrink-0 snap-start", className)}
+      className={cx('w-full shrink-0 snap-start', className)}
       {...props}
     >
       {children}
     </div>
-  );
+  )
 }
 
 export function Carousel({
   children,
   showArrows = true,
   showDots = true,
-  align = "start",
+  align = 'start',
   gap = 16,
   className,
   ref,
   ...props
 }: CarouselProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
+  const [atStart, setAtStart] = useState(true)
+  const [atEnd, setAtEnd] = useState(false)
 
-  const count = Children.toArray(children).filter(isValidElement).length;
+  const count = Children.toArray(children).filter(isValidElement).length
 
   const items = useCallback(
-    () => Array.from(trackRef.current?.children ?? []) as HTMLElement[],
-    [],
-  );
+    () => Array.from(trackRef.current?.children ?? []).filter((item) => item instanceof HTMLElement),
+    []
+  )
 
   const measure = useCallback(() => {
-    const track = trackRef.current;
-    if (!track) return;
+    const track = trackRef.current
+
+    if (!track) return
 
     // 1px of slack: scrollLeft is fractional on hi-DPI displays, so an exact
     // comparison leaves the end arrow enabled on a fully scrolled track.
-    const start = track.scrollLeft <= 1;
-    const end = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
-    setAtStart(start);
-    setAtEnd(end);
+    const start = track.scrollLeft <= 1
+    const end = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1
+    setAtStart(start)
+    setAtEnd(end)
 
-    const all = items();
-    if (all.length === 0) return;
+    const all = items()
+
+    if (all.length === 0) return
 
     // At the far end the last cards share the viewport, so the final card can
     // never reach the left edge and "nearest" would settle on the one before
     // it — leaving the last dot permanently unlit and making a click on it
     // look broken. The ends are therefore pinned rather than measured.
     if (end) {
-      setActive(all.length - 1);
-      return;
-    }
-    if (start) {
-      setActive(0);
-      return;
+      setActive(all.length - 1)
+
+      return
     }
 
-    let nearest = 0;
-    let shortest = Number.POSITIVE_INFINITY;
+    if (start) {
+      setActive(0)
+
+      return
+    }
+
+    let nearest = 0
+    let shortest = Number.POSITIVE_INFINITY
     all.forEach((item, index) => {
-      const distance = Math.abs(item.offsetLeft - track.scrollLeft);
+      const distance = Math.abs(item.offsetLeft - track.scrollLeft)
+
       if (distance < shortest) {
-        shortest = distance;
-        nearest = index;
+        shortest = distance
+        nearest = index
       }
-    });
-    setActive(nearest);
-  }, [items]);
+    })
+    setActive(nearest)
+  }, [items])
 
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
+    const track = trackRef.current
+
+    if (!track) return
 
     // ResizeObserver fires once on observe, which is what takes the first
     // measurement — no synchronous setState in the effect body.
-    const observer = new ResizeObserver(measure);
-    observer.observe(track);
-    track.addEventListener("scroll", measure, { passive: true });
+    const observer = new ResizeObserver(measure)
+    observer.observe(track)
+    track.addEventListener('scroll', measure, { passive: true })
+
     return () => {
-      observer.disconnect();
-      track.removeEventListener("scroll", measure);
-    };
-  }, [measure]);
+      observer.disconnect()
+      track.removeEventListener('scroll', measure)
+    }
+  }, [measure])
 
   const scrollToIndex = (index: number) => {
-    const track = trackRef.current;
-    const target = items()[Math.max(0, Math.min(index, count - 1))];
-    if (!track || !target) return;
+    const track = trackRef.current
+    const target = items()[Math.max(0, Math.min(index, count - 1))]
+
+    if (!track || !target) return
     // `matchMedia` rather than a hook: this runs on click, so reading the
     // preference at that moment is both current and cheap.
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    track.scrollTo({ left: target.offsetLeft, behavior: reduce ? "auto" : "smooth" });
-  };
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    track.scrollTo({ left: target.offsetLeft, behavior: reduce ? 'auto' : 'smooth' })
+  }
 
   return (
     <div
       ref={ref}
       role="group"
       aria-roledescription="carousel"
-      className={cx("flex w-full flex-col gap-4", className)}
+      className={cx('flex w-full flex-col gap-4', className)}
       {...props}
     >
       {showArrows && count > 0 ? (
@@ -197,10 +205,10 @@ export function Carousel({
         ref={trackRef}
         tabIndex={0}
         className={cx(
-          "relative flex w-full overflow-x-auto overscroll-x-contain outline-none",
-          "snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-          "focus-visible:ring-2 focus-visible:ring-border-focus-ring focus-visible:ring-offset-2",
-          align === "center" && "[&>*]:snap-center",
+          'relative flex w-full overflow-x-auto overscroll-x-contain outline-none',
+          'snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+          'focus-visible:ring-border-focus-ring focus-visible:ring-2 focus-visible:ring-offset-2',
+          align === 'center' && '[&>*]:snap-center'
         )}
         style={{ gap }}
       >
@@ -208,8 +216,8 @@ export function Carousel({
             hand-number their own slides. */}
         {Children.map(children, (child, index) =>
           isValidElement<CarouselItemProps>(child)
-            ? cloneElement(child, { "aria-label": `${index + 1} of ${count}` })
-            : child,
+            ? cloneElement(child, { 'aria-label': `${index + 1} of ${count}` })
+            : child
         )}
       </div>
 
@@ -223,15 +231,15 @@ export function Carousel({
               aria-current={index === active}
               onClick={() => scrollToIndex(index)}
               className={cx(
-                "h-1.5 cursor-pointer rounded-full transition-all duration-200 ease-out",
+                'h-1.5 cursor-pointer rounded-full transition-all duration-200 ease-out',
                 index === active
-                  ? "w-4 bg-text-primary"
-                  : "w-1.5 bg-background-tertiary-default hover:bg-border-button-active",
+                  ? 'bg-text-primary w-4'
+                  : 'bg-background-tertiary-default hover:bg-border-button-active w-1.5'
               )}
             />
           ))}
         </div>
       ) : null}
     </div>
-  );
+  )
 }

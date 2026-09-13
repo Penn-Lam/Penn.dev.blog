@@ -32,6 +32,7 @@ const Line = ({ line }) => {
     ),
     success: () => <div className="mt-2 text-yellow-400">{line.text}</div>
   }
+
   return types[line.type]?.() || <div className="text-gray-300">{line.text}</div>
 }
 
@@ -44,21 +45,26 @@ export const EasterEgg = ({ tools = [] }) => {
     if (!allTools?.length) {
       setLines((prev) => [...prev, { type: 'output', text: 'No tools found...' }])
       setIsAnimating(false)
+
       return
     }
 
     let currentIndex = 0
+
     const typeNextTool = () => {
       if (currentIndex >= allTools.length) {
         setLines((prev) => [...prev, { type: 'empty' }, { type: 'success', text: 'Done! Press ESC to close...' }])
         setIsAnimating(false)
+
         return
       }
+
       const tool = allTools[currentIndex]
       setLines((prev) => [...prev, { type: 'tool', name: tool.name, desc: tool.desc }])
       currentIndex++
       setTimeout(typeNextTool, 60)
     }
+
     typeNextTool()
   }, [])
 
@@ -78,6 +84,7 @@ export const EasterEgg = ({ tools = [] }) => {
   useEffect(() => {
     const listener = new KonamiListener(startTerminal)
     listener.start()
+
     return () => listener.stop()
   }, [startTerminal])
 
@@ -85,6 +92,7 @@ export const EasterEgg = ({ tools = [] }) => {
     if (!isActive) return
     const handleKey = (e) => e.key === 'Escape' && setIsActive(false)
     document.addEventListener('keydown', handleKey)
+
     return () => document.removeEventListener('keydown', handleKey)
   }, [isActive])
 

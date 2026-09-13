@@ -17,6 +17,7 @@ async function getMusings() {
     }
 
     const musings = await response.json()
+
     return musings
   } catch (error) {
     console.error('Failed to fetch musings from GitHub:', error)
@@ -29,6 +30,7 @@ async function getMusings() {
         const testDataPath = path.join(process.cwd(), 'public', 'test-musings.json')
         const testData = JSON.parse(fs.readFileSync(testDataPath, 'utf8'))
         console.info('Using test data as fallback')
+
         return testData
       } catch (testError) {
         console.error('Failed to load test data:', testError)

@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { useState, type ComponentType, type ReactNode } from "react";
-import { RiSideBarFill } from "@remixicon/react";
-import { Badge } from "@/components/base/badges/badge";
-import { cx } from "@/utils/cx";
+import Link from 'next/link'
+import { useState, type ComponentType, type ReactNode } from 'react'
+import { RiSideBarFill } from '@remixicon/react'
+import { Badge } from '@/components/base/badges/badge'
+import { cx } from '@/utils/cx'
 
 /**
  * Figma sources:
@@ -28,9 +28,9 @@ import { cx } from "@/utils/cx";
  */
 
 type IconComponent = ComponentType<{
-  className?: string;
-  "aria-hidden"?: boolean | "true" | "false";
-}>;
+  className?: string
+  'aria-hidden'?: boolean | 'true' | 'false'
+}>
 
 /**
  * Collapsible text/badge slot: blurs + fades + shrinks away when the rail
@@ -40,25 +40,25 @@ type IconComponent = ComponentType<{
 export function Collapsible({
   collapsed,
   children,
-  className,
+  className
 }: {
-  collapsed: boolean;
-  children: ReactNode;
-  className?: string;
+  collapsed: boolean
+  children: ReactNode
+  className?: string
 }) {
   return (
     <span
       className={cx(
-        "flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,filter] duration-300 ease-in-out",
+        'flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,filter] duration-300 ease-in-out',
         // Expanded, the cap is the row itself: a fixed cap (it was 160px)
         // clipped any label wider than it, "Components and Blocks" included.
-        collapsed ? "max-w-0 opacity-0 blur-[3px]" : "max-w-full opacity-100 blur-0",
-        className,
+        collapsed ? 'max-w-0 opacity-0 blur-[3px]' : 'blur-0 max-w-full opacity-100',
+        className
       )}
     >
       {children}
     </span>
-  );
+  )
 }
 
 function NavItem({
@@ -67,62 +67,57 @@ function NavItem({
   badge,
   isSelected = false,
   collapsed = false,
-  href,
+  href
 }: {
-  icon: IconComponent;
-  label: string;
-  badge?: ReactNode;
-  isSelected?: boolean;
-  collapsed?: boolean;
-  href: string;
+  icon: IconComponent
+  label: string
+  badge?: ReactNode
+  isSelected?: boolean
+  collapsed?: boolean
+  href: string
 }) {
   return (
     <Link
       href={href}
-      aria-current={isSelected ? "page" : undefined}
+      aria-current={isSelected ? 'page' : undefined}
       aria-label={label}
       title={collapsed ? label : undefined}
       className={cx(
-        "flex items-center justify-between overflow-hidden rounded-2lg p-2",
-        "transition-[width,background-color] duration-300 ease-in-out",
-        collapsed ? "w-9" : "w-full",
+        'rounded-2lg flex items-center justify-between overflow-hidden p-2',
+        'transition-[width,background-color] duration-300 ease-in-out',
+        collapsed ? 'w-9' : 'w-full',
         isSelected
-          ? "bg-linear-to-b from-accent-500 to-accent-600 shadow-nav-selected"
-          : "hover:bg-background-secondary-hover",
+          ? 'from-accent-500 to-accent-600 shadow-nav-selected bg-linear-to-b'
+          : 'hover:bg-background-secondary-hover'
       )}
     >
       <span className="flex min-w-0 items-center gap-2">
         <Icon
-          className={cx("size-5 shrink-0", isSelected ? "text-white" : "text-foreground-icon-secondary")}
+          className={cx('size-5 shrink-0', isSelected ? 'text-white' : 'text-foreground-icon-secondary')}
           aria-hidden
         />
         <Collapsible collapsed={collapsed}>
-          <span
-            className={cx(
-              "text-body-medium whitespace-nowrap",
-              isSelected ? "text-white" : "text-text-secondary",
-            )}
-          >
+          <span className={cx('text-body-medium whitespace-nowrap', isSelected ? 'text-white' : 'text-text-secondary')}>
             {label}
           </span>
         </Collapsible>
       </span>
       {badge && <Collapsible collapsed={collapsed}>{badge}</Collapsible>}
     </Link>
-  );
+  )
 }
 
 /** A primary navigation row. */
 export interface SidebarNavItem {
-  key: string;
-  label: string;
-  icon: IconComponent;
-  href: string;
-  badge?: string | number;
+  key: string
+  label: string
+  icon: IconComponent
+  href: string
+  badge?: string | number
 }
 
 /** Kept as a name for callers that typed their `selected` prop; any key works. */
-export type SidebarNavKey = string;
+export type SidebarNavKey = string
 
 export function Sidebar({
   selected,
@@ -130,38 +125,38 @@ export function Sidebar({
   header,
   footer,
   className,
-  onCollapsedChange,
+  onCollapsedChange
 }: {
   /** Which nav item shows the selected (filled blue) state. */
-  selected: SidebarNavKey;
+  selected: SidebarNavKey
   /** Primary navigation rows. */
-  items: SidebarNavItem[];
+  items: SidebarNavItem[]
   /** Identity slot at the top; receives the collapsed state so the label can shrink to just the avatar. */
-  header?: (collapsed: boolean) => ReactNode;
+  header?: (collapsed: boolean) => ReactNode
   /** Slot below the nav (e.g. the vinyl player); receives the collapsed state. */
-  footer?: (collapsed: boolean) => ReactNode;
-  className?: string;
+  footer?: (collapsed: boolean) => ReactNode
+  className?: string
   /** Notified whenever the collapse toggle changes, so adjacent chrome (inner side panels) can react. */
-  onCollapsedChange?: (collapsed: boolean) => void;
+  onCollapsedChange?: (collapsed: boolean) => void
 }) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false)
 
   function toggleCollapsed() {
-    const next = !collapsed;
-    setCollapsed(next);
-    onCollapsedChange?.(next);
+    const next = !collapsed
+    setCollapsed(next)
+    onCollapsedChange?.(next)
   }
 
   return (
     <aside
       className={cx(
-        "flex h-full shrink-0 flex-col overflow-hidden",
-        "rounded-3xl border border-border-button-white bg-background-secondary-default shadow-sidebar",
-        "transition-[width] duration-300 ease-in-out",
+        'flex h-full shrink-0 flex-col overflow-hidden',
+        'border-border-button-white bg-background-secondary-default shadow-sidebar rounded-3xl border',
+        'transition-[width] duration-300 ease-in-out',
         // Collapsed rail keeps the 60px spec: 1px border + 11px padding on each
         // side leaves an exactly 36px column so the w-9 (36px) icon items center.
-        collapsed ? "w-[60px] px-[11px] py-3" : "w-[260px] p-3",
-        className,
+        collapsed ? 'w-[60px] px-[11px] py-3' : 'w-[260px] p-3',
+        className
       )}
     >
       {/* `overflow-y: auto` forces the x axis to clip too, and this box hugs
@@ -169,39 +164,35 @@ export function Sidebar({
           focus rings all landed outside it. Padding moves the clip edge out;
           the matching negative margin borrows that space back from the rail's
           own padding, leaving every child exactly where it was. */}
-      <div
-        className="-m-2 flex min-h-0 w-[calc(100%+16px)] flex-col gap-2 overflow-y-auto p-2 [scrollbar-width:none]"
-      >
+      <div className="-m-2 flex min-h-0 w-[calc(100%+16px)] [scrollbar-width:none] flex-col gap-2 overflow-y-auto p-2">
         {/* Identity / collapse control */}
         <div
           className={cx(
-            "flex w-full transition-[gap] duration-300 ease-in-out",
-            collapsed
-              ? "flex-col-reverse items-start justify-center gap-2.5"
-              : "flex-row items-center justify-between",
+            'flex w-full transition-[gap] duration-300 ease-in-out',
+            collapsed ? 'flex-col-reverse items-start justify-center gap-2.5' : 'flex-row items-center justify-between'
           )}
         >
           {/* The clip hides the label as `max-width` animates shut. */}
           <div
             className={cx(
-              "-m-2 min-w-0 overflow-hidden p-2 transition-[max-width,opacity,transform] duration-300 ease-in-out",
-              collapsed ? "max-w-12" : "max-w-[206px]",
+              '-m-2 min-w-0 overflow-hidden p-2 transition-[max-width,opacity,transform] duration-300 ease-in-out',
+              collapsed ? 'max-w-12' : 'max-w-[206px]'
             )}
           >
             {header?.(collapsed)}
           </div>
           <button
             type="button"
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             aria-expanded={!collapsed}
             onClick={toggleCollapsed}
             className={cx(
-              "cursor-pointer text-foreground-icon-secondary transition-transform duration-300 ease-in-out",
-              collapsed && "flex w-9 items-center justify-center",
+              'text-foreground-icon-secondary cursor-pointer transition-transform duration-300 ease-in-out',
+              collapsed && 'flex w-9 items-center justify-center'
             )}
           >
             <RiSideBarFill
-              className={cx("size-5 transition-transform duration-300 ease-in-out", !collapsed && "-scale-x-100")}
+              className={cx('size-5 transition-transform duration-300 ease-in-out', !collapsed && '-scale-x-100')}
               aria-hidden
             />
           </button>
@@ -211,9 +202,10 @@ export function Sidebar({
             collapsed column is exactly as wide as a 36px item, so padding
             here pushes every item 2px right and the rail's own clip shaves
             that much off its selected fill and hover state. */}
-        <nav className={cx("flex w-full flex-col gap-1", !collapsed && "px-0.5")}>
+        <nav className={cx('flex w-full flex-col gap-1', !collapsed && 'px-0.5')}>
           {items.map((item) => {
-            const isSelected = selected === item.key;
+            const isSelected = selected === item.key
+
             return (
               <NavItem
                 key={item.key}
@@ -224,16 +216,16 @@ export function Sidebar({
                 collapsed={collapsed}
                 badge={
                   item.badge !== undefined ? (
-                    <Badge color={isSelected ? "primary" : "neutral"}>{item.badge}</Badge>
+                    <Badge color={isSelected ? 'primary' : 'neutral'}>{item.badge}</Badge>
                   ) : undefined
                 }
               />
-            );
+            )
           })}
         </nav>
 
         {footer?.(collapsed)}
       </div>
     </aside>
-  );
+  )
 }

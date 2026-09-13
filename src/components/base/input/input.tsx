@@ -1,24 +1,11 @@
-"use client";
+'use client'
 
-import {
-  createContext,
-  useContext,
-  type ComponentType,
-  type ReactNode,
-  type Ref,
-} from "react";
-import {
-  Group as AriaGroup,
-  Input as AriaInput,
-  TextField as AriaTextField,
-} from "react-aria-components";
-import type {
-  InputProps as AriaInputProps,
-  TextFieldProps as AriaTextFieldProps,
-} from "react-aria-components";
-import { Label } from "./label";
-import { HintText } from "./hint-text";
-import { cx, sortCx } from "@/utils/cx";
+import { createContext, useContext, type ComponentType, type ReactNode, type Ref } from 'react'
+import { Group as AriaGroup, Input as AriaInput, TextField as AriaTextField } from 'react-aria-components'
+import type { InputProps as AriaInputProps, TextFieldProps as AriaTextFieldProps } from 'react-aria-components'
+import { Label } from './label'
+import { HintText } from './hint-text'
+import { cx, sortCx } from '@/utils/cx'
 
 /**
  * Figma source: Board UI → Input (node 3665:1849).
@@ -45,42 +32,39 @@ import { cx, sortCx } from "@/utils/cx";
  * Visuals stay 1:1 with Figma — see `styles/theme.css` for the tokens.
  */
 
-export type InputSize = "medium" | "small";
+export type InputSize = 'medium' | 'small'
 
 type IconComponent = ComponentType<{
-  className?: string;
-  "aria-hidden"?: boolean | "true" | "false";
-}>;
+  className?: string
+  'aria-hidden'?: boolean | 'true' | 'false'
+}>
 
 /* -------------------------------------------------------------------------- */
 /*  TextFieldContext                                                           */
 /* -------------------------------------------------------------------------- */
 
 export interface TextFieldContextValue {
-  size?: InputSize;
-  fieldClassName?: string;
-  inputClassName?: string;
+  size?: InputSize
+  fieldClassName?: string
+  inputClassName?: string
 }
 
 /**
  * Shared by every field that wants Input's shell — `Textarea` reads the same
  * size and class overrides out of it, so a composed form stays consistent.
  */
-export const TextFieldContext = createContext<TextFieldContextValue>({});
+export const TextFieldContext = createContext<TextFieldContextValue>({})
 
 /* -------------------------------------------------------------------------- */
 /*  TextField                                                                  */
 /* -------------------------------------------------------------------------- */
 
-export interface TextFieldProps
-  extends Omit<AriaTextFieldProps, "className">,
-    TextFieldContextValue {
-  className?: string;
-  children?: ReactNode | ((state: { isRequired: boolean; isInvalid: boolean; isDisabled: boolean; isReadOnly: boolean }) => ReactNode);
+export interface TextFieldProps extends Omit<AriaTextFieldProps, 'className'>, TextFieldContextValue {
+  className?: string
 }
 
 export function TextField({
-  size = "medium",
+  size = 'medium',
   fieldClassName,
   inputClassName,
   className,
@@ -92,73 +76,70 @@ export function TextField({
       <AriaTextField
         {...props}
         data-input-size={size}
-        className={cx(
-          "group flex h-max w-full flex-col items-start gap-1",
-          className,
-        )}
+        className={cx('group flex h-max w-full flex-col items-start gap-1', className)}
       >
-        {children as never /* RAC accepts render-prop children */}
+        {children}
       </AriaTextField>
     </TextFieldContext.Provider>
-  );
+  )
 }
 
-TextField.displayName = "TextField";
+TextField.displayName = 'TextField'
 
 /* -------------------------------------------------------------------------- */
 /*  InputBase                                                                  */
 /* -------------------------------------------------------------------------- */
 
-export interface InputBaseProps extends Omit<AriaInputProps, "size" | "className"> {
-  size?: InputSize;
-  className?: string;
-  leadingIcon?: IconComponent;
-  trailingIcon?: IconComponent;
+export interface InputBaseProps extends Omit<AriaInputProps, 'size' | 'className'> {
+  size?: InputSize
+  className?: string
+  leadingIcon?: IconComponent
+  trailingIcon?: IconComponent
   /** Custom element rendered in the leading slot (Phone basic uses this). */
-  leadingAddon?: ReactNode;
+  leadingAddon?: ReactNode
   /** Class for the field shell. */
-  fieldClassName?: string;
+  fieldClassName?: string
   /** Ref to the <input> element. */
-  ref?: Ref<HTMLInputElement>;
+  ref?: Ref<HTMLInputElement>
   /** Ref to the field shell wrapper. */
-  groupRef?: Ref<HTMLDivElement>;
+  groupRef?: Ref<HTMLDivElement>
 }
 
 const inputStyles = sortCx({
   field: [
-    "relative flex w-full items-center",
-    "rounded-2lg",
-    "bg-background-tertiary-default text-foreground-icon-tertiary",
-    "ring-2 ring-inset ring-transparent",
-    "transition-[background-color,box-shadow,color] duration-[var(--input-transition-ms)] ease",
-  ].join(" "),
+    'relative flex w-full items-center',
+    'rounded-2lg',
+    'bg-background-tertiary-default text-foreground-icon-tertiary',
+    'ring-2 ring-inset ring-transparent',
+    'transition-[background-color,box-shadow,color] duration-[var(--input-transition-ms)] ease'
+  ].join(' '),
 
   fieldSize: {
-    medium: "p-2",                // 8px all sides → h auto = 36
-    small:  "h-8 px-1.5 py-2",    // 32 / 6 / 8
+    medium: 'p-2', // 8px all sides → h auto = 36
+    small: 'h-8 px-1.5 py-2' // 32 / 6 / 8
   },
 
   // When a leadingAddon is present (Phone basic): tighten left padding.
   fieldWithAddonSize: {
-    medium: "h-9 pl-1 pr-2 py-2", // 36 / 4 / 8 / 8
-    small:  "h-8 pl-1 pr-1.5 py-2",
+    medium: 'h-9 pl-1 pr-2 py-2', // 36 / 4 / 8 / 8
+    small: 'h-8 pl-1 pr-1.5 py-2'
   },
 
-  content: "flex w-full items-center gap-2 min-w-0",
-  leftSection: "flex flex-1 items-center gap-0.5 min-w-0",
+  content: 'flex w-full items-center gap-2 min-w-0',
+  leftSection: 'flex flex-1 items-center gap-0.5 min-w-0',
 
   input: [
-    "min-w-0 flex-1 bg-transparent border-0 outline-none p-0 m-0",
-    "font-sans text-body-regular text-text-primary pl-1",
-    "placeholder:text-text-tertiary",
-    "focus:placeholder:text-text-primary",
-    "disabled:text-input-disabled-text disabled:placeholder:text-input-disabled-text",
-    "disabled:cursor-not-allowed",
-    "aria-invalid:placeholder:text-text-error-placeholder",
-  ].join(" "),
+    'min-w-0 flex-1 bg-transparent border-0 outline-none p-0 m-0',
+    'font-sans text-body-regular text-text-primary pl-1',
+    'placeholder:text-text-tertiary',
+    'focus:placeholder:text-text-primary',
+    'disabled:text-input-disabled-text disabled:placeholder:text-input-disabled-text',
+    'disabled:cursor-not-allowed',
+    'aria-invalid:placeholder:text-text-error-placeholder'
+  ].join(' '),
 
-  icon: "size-5 shrink-0",
-});
+  icon: 'size-5 shrink-0'
+})
 
 export function InputBase({
   size: sizeProp,
@@ -171,9 +152,9 @@ export function InputBase({
   groupRef,
   ...inputProps
 }: InputBaseProps) {
-  const ctx = useContext(TextFieldContext);
-  const size: InputSize = sizeProp ?? ctx.size ?? "medium";
-  const hasAddon = leadingAddon !== undefined && leadingAddon !== null;
+  const ctx = useContext(TextFieldContext)
+  const size: InputSize = sizeProp ?? ctx.size ?? 'medium'
+  const hasAddon = leadingAddon !== undefined && leadingAddon !== null
 
   return (
     <AriaGroup
@@ -181,73 +162,46 @@ export function InputBase({
       className={({ isFocusWithin, isHovered, isDisabled, isInvalid }) =>
         cx(
           inputStyles.field,
-          hasAddon
-            ? inputStyles.fieldWithAddonSize[size]
-            : inputStyles.fieldSize[size],
+          hasAddon ? inputStyles.fieldWithAddonSize[size] : inputStyles.fieldSize[size],
           // Hover: idle, no focus, no disabled, no invalid
-          isHovered &&
-            !isFocusWithin &&
-            !isDisabled &&
-            !isInvalid &&
-            "ring-border-button-hover",
+          isHovered && !isFocusWithin && !isDisabled && !isInvalid && 'ring-border-button-hover',
           // Focus wins over hover
-          isFocusWithin &&
-            !isDisabled &&
-            !isInvalid &&
-            "ring-border-button-active",
+          isFocusWithin && !isDisabled && !isInvalid && 'ring-border-button-active',
           // Disabled
-          isDisabled &&
-            "bg-input-disabled-background text-input-disabled-foreground",
+          isDisabled && 'bg-input-disabled-background text-input-disabled-foreground',
           // Invalid
-          isInvalid && "bg-background-tertiary-error text-foreground-icon-error",
+          isInvalid && 'bg-background-tertiary-error text-foreground-icon-error',
           ctx.fieldClassName,
-          fieldClassName,
+          fieldClassName
         )
       }
     >
       <div className={inputStyles.content}>
         <div className={inputStyles.leftSection}>
-          {hasAddon ? (
-            leadingAddon
-          ) : Leading ? (
-            <Leading className={inputStyles.icon} aria-hidden />
-          ) : null}
-          <AriaInput
-            ref={ref}
-            {...inputProps}
-            className={cx(inputStyles.input, ctx.inputClassName, className)}
-          />
+          {hasAddon ? leadingAddon : Leading ? <Leading className={inputStyles.icon} aria-hidden /> : null}
+          <AriaInput ref={ref} {...inputProps} className={cx(inputStyles.input, ctx.inputClassName, className)} />
         </div>
-        {Trailing ? (
-          <Trailing className={inputStyles.icon} aria-hidden />
-        ) : null}
+        {Trailing ? <Trailing className={inputStyles.icon} aria-hidden /> : null}
       </div>
     </AriaGroup>
-  );
+  )
 }
 
-InputBase.displayName = "InputBase";
+InputBase.displayName = 'InputBase'
 
 /* -------------------------------------------------------------------------- */
 /*  Input (composed)                                                           */
 /* -------------------------------------------------------------------------- */
 
 export interface InputProps
-  extends Omit<TextFieldProps, "children">,
-    Pick<
-      InputBaseProps,
-      | "leadingIcon"
-      | "trailingIcon"
-      | "leadingAddon"
-      | "fieldClassName"
-      | "groupRef"
-      | "ref"
-    > {
-  label?: ReactNode;
-  hint?: ReactNode;
+  extends
+    Omit<TextFieldProps, 'children'>,
+    Pick<InputBaseProps, 'leadingIcon' | 'trailingIcon' | 'leadingAddon' | 'fieldClassName' | 'groupRef' | 'ref'> {
+  label?: ReactNode
+  hint?: ReactNode
   /** Show an info icon next to the label. Replace with tooltip when Tooltip lands. */
-  tooltip?: boolean | string;
-  placeholder?: string;
+  tooltip?: boolean | string
+  placeholder?: string
 }
 
 export function Input({
@@ -270,19 +224,12 @@ export function Input({
       className={className}
       // Don't clobber an explicit aria-label; fall back to the placeholder
       // only for unlabelled fields that don't provide one.
-      aria-label={
-        textFieldProps["aria-label"] ??
-        (!label && typeof placeholder === "string" ? placeholder : undefined)
-      }
+      aria-label={textFieldProps['aria-label'] ?? (!label ? placeholder : undefined)}
     >
       {({ isRequired, isInvalid }) => (
         <>
           {label && (
-            <Label
-              isRequired={isRequired}
-              isInvalid={isInvalid}
-              tooltip={tooltip}
-            >
+            <Label isRequired={isRequired} isInvalid={isInvalid} tooltip={tooltip}>
               {label}
             </Label>
           )}
@@ -299,7 +246,7 @@ export function Input({
         </>
       )}
     </TextField>
-  );
+  )
 }
 
-Input.displayName = "Input";
+Input.displayName = 'Input'

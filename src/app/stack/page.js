@@ -39,6 +39,7 @@ export default async function StackPage() {
 
 export async function generateMetadata() {
   const seoData = await getPageSeo('stack')
+
   if (!seoData) {
     return {
       title: 'Stack',

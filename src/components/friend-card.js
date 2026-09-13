@@ -10,6 +10,7 @@
 import { useEffect, useState } from 'react'
 
 const LEVEL_COLORS = ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127']
+
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
 function GithubHeatmap({ github }) {
@@ -21,6 +22,7 @@ function GithubHeatmap({ github }) {
       .then((res) => res.json())
       .then((raw) => {
         const contributions = raw.contributions || []
+
         if (!contributions.length) return
 
         // 按日期升序分组为周
@@ -29,11 +31,14 @@ function GithubHeatmap({ github }) {
         let week = []
         ascending.forEach((day, i) => {
           const dow = new Date(day.date).getDay()
+
           if (dow === 0 && week.length > 0) {
             weeks.push(week)
             week = []
           }
+
           week.push(day)
+
           if (i === ascending.length - 1) weeks.push(week)
         })
 
@@ -45,6 +50,7 @@ function GithubHeatmap({ github }) {
         const monthMarks = []
         weeks.forEach((w, wi) => {
           const month = new Date(w[0].date).getMonth()
+
           if (month !== currentMonth) {
             monthMarks.push({ month, weekIndex: wi })
             currentMonth = month
@@ -90,12 +96,15 @@ function GithubHeatmap({ github }) {
               style={{ backgroundColor: LEVEL_COLORS[day.level] || LEVEL_COLORS[0] }}
             />
           ))
+
           const lastDow = new Date(week[week.length - 1].date).getDay()
+
           for (let i = lastDow + 1; i < 7; i++) {
             cells.push(
               <div key={`${wi}-pad-${i}`} className="aspect-square min-h-0 min-w-0" style={{ visibility: 'hidden' }} />
             )
           }
+
           return cells
         })}
       </div>

@@ -1,5 +1,4 @@
-export const addDefaultProtocol = (value) =>
-  typeof value === 'string' && value && !/^https?:\/\//i.test(value) ? `https://${value}` : value
+export const addDefaultProtocol = (value) => (value && !/^https?:\/\//i.test(value) ? `https://${value}` : value)
 
 export function getUrlHostname(value) {
   try {
@@ -10,7 +9,7 @@ export function getUrlHostname(value) {
 }
 
 export function isValidWebsiteUrl(value) {
-  if (typeof value !== 'string' || !value || /\s/.test(value)) return false
+  if (!value || /\s/.test(value)) return false
 
   try {
     const url = new URL(addDefaultProtocol(value))
@@ -32,5 +31,6 @@ export function isValidWebsiteUrl(value) {
 
 export function getFaviconUrl(value) {
   const hostname = getUrlHostname(value)
+
   return hostname ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(hostname)}&sz=32` : null
 }

@@ -9,6 +9,7 @@ import { getSortedPosts } from '@/lib/utils'
 async function fetchData() {
   const allPosts = await getAllPosts()
   const sortedPosts = getSortedPosts(allPosts)
+
   return { sortedPosts }
 }
 

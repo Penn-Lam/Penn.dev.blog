@@ -15,6 +15,7 @@ async function fetchData() {
   const allPosts = await getAllPosts()
   const sortedPosts = getSortedPosts(allPosts)
   const items = getItemsByYear(sortedPosts)
+
   return { items }
 }
 

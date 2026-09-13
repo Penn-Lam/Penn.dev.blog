@@ -1,11 +1,5 @@
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ComponentType,
-  ReactNode,
-  Ref,
-} from "react";
-import { cx, sortCx } from "@/utils/cx";
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentType, ReactNode, Ref } from 'react'
+import { cx, sortCx } from '@/utils/cx'
 
 /**
  * Figma source: Board UI → Buttons (node 3656:13819).
@@ -43,50 +37,49 @@ import { cx, sortCx } from "@/utils/cx";
  * `variant` to avoid the clash.
  */
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
-type ButtonSize = "medium" | "small" | "xs";
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
+
+type ButtonSize = 'medium' | 'small' | 'xs'
 
 type IconComponent = ComponentType<{
-  className?: string;
-  "aria-hidden"?: boolean | "true" | "false";
-}>;
+  className?: string
+  'aria-hidden'?: boolean | 'true' | 'false'
+}>
 
-export interface ButtonProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  iconOnly?: boolean;
-  leadingIcon?: IconComponent;
-  trailingIcon?: IconComponent;
-  children?: ReactNode;
-  ref?: Ref<HTMLButtonElement>;
+export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
+  variant?: ButtonVariant
+  size?: ButtonSize
+  iconOnly?: boolean
+  leadingIcon?: IconComponent
+  trailingIcon?: IconComponent
+  children?: ReactNode
+  ref?: Ref<HTMLButtonElement>
 }
 
-export interface ButtonLinkProps
-  extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children"> {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  iconOnly?: boolean;
-  leadingIcon?: IconComponent;
-  trailingIcon?: IconComponent;
-  children?: ReactNode;
-  ref?: Ref<HTMLAnchorElement>;
+export interface ButtonLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children'> {
+  variant?: ButtonVariant
+  size?: ButtonSize
+  iconOnly?: boolean
+  leadingIcon?: IconComponent
+  trailingIcon?: IconComponent
+  children?: ReactNode
+  ref?: Ref<HTMLAnchorElement>
 }
 
 const styles = sortCx({
   base: [
-    "inline-flex items-center justify-center gap-0.5 whitespace-nowrap overflow-hidden",
-    "font-sans select-none cursor-pointer",
-    "button-press-motion",
-    "outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus-ring",
-    "disabled:cursor-not-allowed aria-disabled:cursor-not-allowed",
-  ].join(" "),
+    'inline-flex items-center justify-center gap-0.5 whitespace-nowrap overflow-hidden',
+    'font-sans select-none cursor-pointer',
+    'button-press-motion',
+    'outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus-ring',
+    'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed'
+  ].join(' '),
 
   // Base shape per size (used when label is present OR medium icon-only).
   size: {
-    medium: "h-9 rounded-2lg p-2 text-body-medium",
-    small:  "h-8 rounded-lg px-2 py-1.5 text-body-medium",
-    xs:     "h-6 rounded-sm px-2 text-caption-1-semibold",
+    medium: 'h-9 rounded-2lg p-2 text-body-medium',
+    small: 'h-8 rounded-lg px-2 py-1.5 text-body-medium',
+    xs: 'h-6 rounded-sm px-2 text-caption-1-semibold'
   },
 
   // Icon-only override:
@@ -96,60 +89,60 @@ const styles = sortCx({
   //   Xs     → forces 24×24, content-centered — used for the calendar
   //            template's edit-icon buttons (timezone/participants/reminder).
   iconOnlySize: {
-    medium: "",                // base size already produces 36×36 with a 20px icon
-    small:  "size-8 p-0",      // hard 32×32, content-centered
-    xs:     "size-6 p-0",      // hard 24×24, content-centered
+    medium: '', // base size already produces 36×36 with a 20px icon
+    small: 'size-8 p-0', // hard 32×32, content-centered
+    xs: 'size-6 p-0' // hard 24×24, content-centered
   },
 
   icon: {
-    medium: "size-5 shrink-0",        // 20px
-    small:  "size-[18px] shrink-0",   // 18px
-    xs:     "size-3.5 shrink-0",      // 14px
+    medium: 'size-5 shrink-0', // 20px
+    small: 'size-[18px] shrink-0', // 18px
+    xs: 'size-3.5 shrink-0' // 14px
   },
 
   label: {
-    medium: "inline-flex items-center justify-center px-1 shrink-0",    // px=4
-    small:  "inline-flex items-center justify-center px-0.5 shrink-0",  // px=2
-    xs:     "inline-flex items-center justify-center px-0.5 shrink-0",  // px=2
+    medium: 'inline-flex items-center justify-center px-1 shrink-0', // px=4
+    small: 'inline-flex items-center justify-center px-0.5 shrink-0', // px=2
+    xs: 'inline-flex items-center justify-center px-0.5 shrink-0' // px=2
   },
 
   variant: {
     primary: [
-      "bg-button-primary text-text-white shadow-xs",
-      "disabled:text-button-primary-disabled-foreground disabled:shadow-none",
-      "aria-disabled:text-button-primary-disabled-foreground aria-disabled:shadow-none",
-    ].join(" "),
+      'bg-button-primary text-text-white shadow-xs',
+      'disabled:text-button-primary-disabled-foreground disabled:shadow-none',
+      'aria-disabled:text-button-primary-disabled-foreground aria-disabled:shadow-none'
+    ].join(' '),
     danger: [
-      "bg-button-danger text-text-white shadow-xs",
-      "disabled:text-foreground-disabled-danger disabled:shadow-none",
-      "aria-disabled:text-foreground-disabled-danger aria-disabled:shadow-none",
-    ].join(" "),
+      'bg-button-danger text-text-white shadow-xs',
+      'disabled:text-foreground-disabled-danger disabled:shadow-none',
+      'aria-disabled:text-foreground-disabled-danger aria-disabled:shadow-none'
+    ].join(' '),
     secondary: [
-      "bg-background-primary-default text-text-primary",
-      "border border-border-button-default shadow-xs",
-      "hover:bg-background-primary-hover  hover:border-border-button-hover",
-      "active:bg-background-primary-active active:border-border-button-active",
-      "disabled:bg-background-primary-disabled disabled:border-border-button-default disabled:text-text-tertiary disabled:shadow-none",
-      "aria-disabled:bg-background-primary-disabled aria-disabled:border-border-button-default aria-disabled:text-text-tertiary aria-disabled:shadow-none",
-    ].join(" "),
+      'bg-background-primary-default text-text-primary',
+      'border border-border-button-default shadow-xs',
+      'hover:bg-background-primary-hover  hover:border-border-button-hover',
+      'active:bg-background-primary-active active:border-border-button-active',
+      'disabled:bg-background-primary-disabled disabled:border-border-button-default disabled:text-text-tertiary disabled:shadow-none',
+      'aria-disabled:bg-background-primary-disabled aria-disabled:border-border-button-default aria-disabled:text-text-tertiary aria-disabled:shadow-none'
+    ].join(' '),
     ghost: [
-      "bg-button-ghost-background text-button-ghost-foreground",
-      "hover:bg-button-ghost-hover active:bg-button-ghost-active",
-      "disabled:bg-button-ghost-disabled disabled:text-button-ghost-disabled-foreground disabled:shadow-none",
-      "aria-disabled:bg-button-ghost-disabled aria-disabled:text-button-ghost-disabled-foreground aria-disabled:shadow-none",
-    ].join(" "),
-  },
-});
+      'bg-button-ghost-background text-button-ghost-foreground',
+      'hover:bg-button-ghost-hover active:bg-button-ghost-active',
+      'disabled:bg-button-ghost-disabled disabled:text-button-ghost-disabled-foreground disabled:shadow-none',
+      'aria-disabled:bg-button-ghost-disabled aria-disabled:text-button-ghost-disabled-foreground aria-disabled:shadow-none'
+    ].join(' ')
+  }
+})
 
 export function Button({
-  variant = "primary",
-  size = "medium",
+  variant = 'primary',
+  size = 'medium',
   iconOnly = false,
   leadingIcon: Leading,
   trailingIcon: Trailing,
   children,
   className,
-  type = "button",
+  type = 'button',
   ref,
   ...props
 }: ButtonProps) {
@@ -162,7 +155,7 @@ export function Button({
         styles.size[size],
         styles.variant[variant],
         iconOnly && styles.iconOnlySize[size],
-        className,
+        className
       )}
       {...props}
     >
@@ -170,17 +163,15 @@ export function Button({
       {!iconOnly && children !== undefined && children !== null && (
         <span className={styles.label[size]}>{children}</span>
       )}
-      {!iconOnly && Trailing ? (
-        <Trailing className={styles.icon[size]} aria-hidden />
-      ) : null}
+      {!iconOnly && Trailing ? <Trailing className={styles.icon[size]} aria-hidden /> : null}
     </button>
-  );
+  )
 }
 
 /** Anchor counterpart to Button for navigational actions. */
 export function ButtonLink({
-  variant = "primary",
-  size = "medium",
+  variant = 'primary',
+  size = 'medium',
   iconOnly = false,
   leadingIcon: Leading,
   trailingIcon: Trailing,
@@ -197,7 +188,7 @@ export function ButtonLink({
         styles.size[size],
         styles.variant[variant],
         iconOnly && styles.iconOnlySize[size],
-        className,
+        className
       )}
       {...props}
     >
@@ -205,12 +196,10 @@ export function ButtonLink({
       {!iconOnly && children !== undefined && children !== null && (
         <span className={styles.label[size]}>{children}</span>
       )}
-      {!iconOnly && Trailing ? (
-        <Trailing className={styles.icon[size]} aria-hidden />
-      ) : null}
+      {!iconOnly && Trailing ? <Trailing className={styles.icon[size]} aria-hidden /> : null}
     </a>
-  );
+  )
 }
 
 /** Style maps, exported for advanced composition and the dev Design Tuner. */
-export const buttonStyles = styles;
+export const buttonStyles = styles

@@ -14,6 +14,7 @@ const fetchGraphQL = cache(async (query, preview = isDevelopment) => {
     ]
       .filter(Boolean)
       .join(', ')
+
     throw new Error(
       `Contentful environment variable(s) are not set: ${missingVars}. Please check your .env.local file.`
     )
@@ -34,10 +35,13 @@ const fetchGraphQL = cache(async (query, preview = isDevelopment) => {
       const errorBody = await res.text()
       throw new Error(`Failed to fetch from Contentful. Status: ${res.status}. Body: ${errorBody}`)
     }
+
     const json = await res.json()
+
     if (json.errors) {
       throw new Error(`Contentful GraphQL Errors: ${json.errors.map((e) => e.message).join('\n')}`)
     }
+
     return json
   } catch {
     throw new Error('Failed to fetch data from Contentful. Please check server logs for more details.')
@@ -71,6 +75,7 @@ export const getAllPosts = cache(async (preview = isDevelopment) => {
     return entries?.data?.postCollection?.items ?? []
   } catch (error) {
     console.info(error)
+
     return []
   }
 })
@@ -160,6 +165,7 @@ export const getPost = cache(async (slug, preview = isDevelopment) => {
     )
 
     const data = entry?.data?.postCollection?.items?.[0]
+
     if (!data) return null
 
     // Ensure the data structure is complete with fallbacks
@@ -172,6 +178,7 @@ export const getPost = cache(async (slug, preview = isDevelopment) => {
     }
   } catch (error) {
     console.info(error)
+
     return null
   }
 })
@@ -203,6 +210,7 @@ export const getWritingSeo = cache(async (slug, preview = isDevelopment) => {
     )
 
     const data = entry?.data?.postCollection?.items?.[0]
+
     if (!data) return null
 
     // Ensure the data structure is complete with fallbacks
@@ -213,6 +221,7 @@ export const getWritingSeo = cache(async (slug, preview = isDevelopment) => {
     }
   } catch (error) {
     console.info(error)
+
     return null
   }
 })
@@ -241,6 +250,7 @@ export const getPageSeo = cache(async (slug, preview = isDevelopment) => {
     return entry?.data?.pageCollection?.items?.[0] ?? null
   } catch (error) {
     console.info(error)
+
     return null
   }
 })
@@ -267,6 +277,7 @@ export const getAllPageSlugs = cache(async (preview = isDevelopment) => {
     return entries?.data?.pageCollection?.items ?? []
   } catch (error) {
     console.info(error)
+
     return []
   }
 })
@@ -287,6 +298,7 @@ export const getAllPostSlugs = cache(async (preview = isDevelopment) => {
     return entries?.data?.postCollection?.items ?? []
   } catch (error) {
     console.info(error)
+
     return []
   }
 })
@@ -334,6 +346,7 @@ export const getPage = cache(async (slug, preview = isDevelopment) => {
     return entry?.data?.pageCollection?.items?.[0] ?? null
   } catch (error) {
     console.info(error)
+
     return null
   }
 })
@@ -369,6 +382,7 @@ export const getAllLogbook = cache(async (preview = isDevelopment) => {
     return entries?.data?.logbookCollection?.items ?? []
   } catch (error) {
     console.info(error)
+
     return []
   }
 })

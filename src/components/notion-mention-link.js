@@ -12,6 +12,7 @@ const metadataCache = new Map()
 
 function PreviewImage({ src, height }) {
   const [failedSrc, setFailedSrc] = useState(null)
+
   if (!src || src === failedSrc) return null
 
   return (
@@ -37,6 +38,7 @@ function LinkPreview({ href, endpoint, children, hostname, previewHeight }) {
     fetch(`${endpoint}?${new URLSearchParams({ url: href })}`, { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error('Preview request failed')
+
         return response.json()
       })
       .then((data) => {

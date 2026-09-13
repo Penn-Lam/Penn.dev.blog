@@ -29,6 +29,7 @@ const Carousel = memo(({ orientation = 'horizontal', opts, setApi, plugins, clas
     ),
     plugins
   )
+
   const [canScrollPrev, setCanScrollPrev] = useState(false)
   const [canScrollNext, setCanScrollNext] = useState(false)
 
@@ -80,10 +81,8 @@ const Carousel = memo(({ orientation = 'horizontal', opts, setApi, plugins, clas
     api.on('select', onSelect)
 
     return () => {
-      if (typeof api.off === 'function') {
-        api.off('reInit', onSelect)
-        api.off('select', onSelect)
-      }
+      api.off('reInit', onSelect)
+      api.off('select', onSelect)
     }
   }, [api, onSelect])
 
@@ -116,6 +115,7 @@ const Carousel = memo(({ orientation = 'horizontal', opts, setApi, plugins, clas
     </CarouselContext.Provider>
   )
 })
+
 Carousel.displayName = 'Carousel'
 
 const CarouselContent = memo(({ className, ...props }) => {
@@ -131,6 +131,7 @@ const CarouselContent = memo(({ className, ...props }) => {
     </div>
   )
 })
+
 CarouselContent.displayName = 'CarouselContent'
 
 const CarouselItem = memo(({ className, ...props }) => {
@@ -146,6 +147,7 @@ const CarouselItem = memo(({ className, ...props }) => {
     />
   )
 })
+
 CarouselItem.displayName = 'CarouselItem'
 
 const carouselArrowStyles = cn(
@@ -181,6 +183,7 @@ const CarouselPrevious = memo(({ className, ...props }) => {
     </button>
   )
 })
+
 CarouselPrevious.displayName = 'CarouselPrevious'
 
 const CarouselNext = memo(({ className, ...props }) => {
@@ -208,6 +211,7 @@ const CarouselNext = memo(({ className, ...props }) => {
     </button>
   )
 })
+
 CarouselNext.displayName = 'CarouselNext'
 
 export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious }

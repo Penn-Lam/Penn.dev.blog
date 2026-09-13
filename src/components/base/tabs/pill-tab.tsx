@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import type { ComponentType, HTMLAttributes, ReactNode, Ref } from "react";
-import { cx, sortCx } from "@/utils/cx";
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import type { ComponentType, HTMLAttributes, ReactNode, Ref } from 'react'
+import { cx, sortCx } from '@/utils/cx'
 
-const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 /**
  * Figma source: Board UI → "ai_chat" → Changes / Browser panel switcher
@@ -27,172 +27,173 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  */
 
 type IconComponent = ComponentType<{
-  className?: string;
-  "aria-hidden"?: boolean | "true" | "false";
-}>;
+  className?: string
+  'aria-hidden'?: boolean | 'true' | 'false'
+}>
 
-export type PillTabVariant = "blue" | "gray";
+export type PillTabVariant = 'blue' | 'gray'
 
 const styles = sortCx({
   radius: {
-    blue: "rounded-full",
-    gray: "rounded-2lg",
+    blue: 'rounded-full',
+    gray: 'rounded-2lg'
   },
   thumb: {
-    blue: "bg-pill-tab-blue-selected-background",
-    gray: "bg-background-tertiary-default",
+    blue: 'bg-pill-tab-blue-selected-background',
+    gray: 'bg-background-tertiary-default'
   },
   hover: {
-    blue: "bg-pill-tab-blue-hover-background",
-    gray: "bg-background-primary-hover",
+    blue: 'bg-pill-tab-blue-hover-background',
+    gray: 'bg-background-primary-hover'
   },
   selectedIcon: {
-    blue: "text-accent-500",
-    gray: "text-foreground-icon-primary",
+    blue: 'text-accent-500',
+    gray: 'text-foreground-icon-primary'
   },
   selectedLabel: {
-    blue: "text-accent-500",
-    gray: "text-text-primary",
-  },
-});
+    blue: 'text-accent-500',
+    gray: 'text-text-primary'
+  }
+})
 
 type Thumb = {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-  variant: PillTabVariant;
-};
+  left: number
+  top: number
+  width: number
+  height: number
+  variant: PillTabVariant
+}
 
 export interface PillTabListProps extends HTMLAttributes<HTMLDivElement> {
-  ref?: Ref<HTMLDivElement>;
+  ref?: Ref<HTMLDivElement>
 }
 
 export function PillTabList({ children, className, ref, ...props }: PillTabListProps) {
-  const innerRef = useRef<HTMLDivElement>(null);
-  const [thumb, setThumb] = useState<Thumb | null>(null);
+  const innerRef = useRef<HTMLDivElement>(null)
+  const [thumb, setThumb] = useState<Thumb | null>(null)
 
   useIsomorphicLayoutEffect(() => {
-    const el = innerRef.current;
-    if (!el) return;
+    const el = innerRef.current
+
+    if (!el) return
+
     const measure = () => {
-      const selected = el.querySelector<HTMLElement>("[data-pill-selected]");
-      if (!selected) return;
+      const selected = el.querySelector<HTMLElement>('[data-pill-selected]')
+
+      if (!selected) return
       setThumb({
         left: selected.offsetLeft,
         top: selected.offsetTop,
         width: selected.offsetWidth,
         height: selected.offsetHeight,
-        variant: selected.dataset.pillVariant === "gray" ? "gray" : "blue",
-      });
-    };
-    measure();
-    const mo = new MutationObserver(measure);
+        variant: selected.dataset.pillVariant === 'gray' ? 'gray' : 'blue'
+      })
+    }
+
+    measure()
+    const mo = new MutationObserver(measure)
     mo.observe(el, {
       attributes: true,
       subtree: true,
-      attributeFilter: ["data-pill-selected"],
-    });
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
+      attributeFilter: ['data-pill-selected']
+    })
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+
     return () => {
-      mo.disconnect();
-      ro.disconnect();
-    };
-  }, []);
+      mo.disconnect()
+      ro.disconnect()
+    }
+  }, [])
 
   const setRefs = (node: HTMLDivElement | null) => {
-    innerRef.current = node;
-    if (typeof ref === "function") ref(node);
-    else if (ref) (ref as { current: HTMLDivElement | null }).current = node;
-  };
+    innerRef.current = node
+
+    if (ref instanceof Function) ref(node)
+    else if (ref) ref.current = node
+  }
 
   return (
-    <div
-      ref={setRefs}
-      role="group"
-      className={cx("relative inline-flex items-center gap-1", className)}
-      {...props}
-    >
+    <div ref={setRefs} role="group" className={cx('relative inline-flex items-center gap-1', className)} {...props}>
       {thumb && (
         <span
           aria-hidden
           className={cx(
-            "pointer-events-none absolute left-0 top-0",
-            "transition-[transform,width,height] duration-300",
-            "[transition-timing-function:cubic-bezier(0.34,1.2,0.64,1)]",
+            'pointer-events-none absolute top-0 left-0',
+            'transition-[transform,width,height] duration-300',
+            '[transition-timing-function:cubic-bezier(0.34,1.2,0.64,1)]',
             styles.radius[thumb.variant],
-            styles.thumb[thumb.variant],
+            styles.thumb[thumb.variant]
           )}
           style={{
             transform: `translate(${thumb.left}px, ${thumb.top}px)`,
             width: thumb.width,
-            height: thumb.height,
+            height: thumb.height
           }}
         />
       )}
       {children}
     </div>
-  );
+  )
 }
 
 export function PillTab({
-  variant = "blue",
+  variant = 'blue',
   icon: Icon,
   isSelected,
   onSelect,
   children,
-  className,
+  className
 }: {
-  variant?: PillTabVariant;
-  icon?: IconComponent;
-  isSelected: boolean;
-  onSelect: () => void;
-  children: ReactNode;
-  className?: string;
+  variant?: PillTabVariant
+  icon?: IconComponent
+  isSelected: boolean
+  onSelect: () => void
+  children: ReactNode
+  className?: string
 }) {
   return (
     <button
       type="button"
       aria-pressed={isSelected}
-      data-pill-selected={isSelected ? "" : undefined}
+      data-pill-selected={isSelected ? '' : undefined}
       data-pill-variant={variant}
       onClick={onSelect}
       className={cx(
-        "group relative z-10 flex shrink-0 cursor-pointer items-center gap-1 px-2 py-[5px]",
+        'group relative z-10 flex shrink-0 cursor-pointer items-center gap-1 px-2 py-[5px]',
         styles.radius[variant],
-        "outline-none transition-colors duration-150 ease",
-        "focus-visible:ring-2 focus-visible:ring-border-focus-ring",
-        className,
+        'ease transition-colors duration-150 outline-none',
+        'focus-visible:ring-border-focus-ring focus-visible:ring-2',
+        className
       )}
     >
       <span
         aria-hidden
         className={cx(
-          "pointer-events-none absolute inset-0 opacity-0",
-          "transition-opacity duration-200 ease-out",
+          'pointer-events-none absolute inset-0 opacity-0',
+          'transition-opacity duration-200 ease-out',
           styles.radius[variant],
           styles.hover[variant],
-          !isSelected && "group-hover:opacity-100",
+          !isSelected && 'group-hover:opacity-100'
         )}
       />
       {Icon && (
         <Icon
           className={cx(
-            "relative z-10 size-5 shrink-0",
-            isSelected ? styles.selectedIcon[variant] : "text-foreground-icon-secondary",
+            'relative z-10 size-5 shrink-0',
+            isSelected ? styles.selectedIcon[variant] : 'text-foreground-icon-secondary'
           )}
           aria-hidden
         />
       )}
       <span
         className={cx(
-          "relative z-10 text-body-medium whitespace-nowrap",
-          isSelected ? styles.selectedLabel[variant] : "text-text-secondary",
+          'text-body-medium relative z-10 whitespace-nowrap',
+          isSelected ? styles.selectedLabel[variant] : 'text-text-secondary'
         )}
       >
         {children}
       </span>
     </button>
-  );
+  )
 }

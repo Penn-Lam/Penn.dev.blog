@@ -95,4 +95,5 @@ export const CodeBlock = memo(({ title, code }) => {
     </>
   )
 })
+
 CodeBlock.displayName = 'CodeBlock'

@@ -1,5 +1,7 @@
-export { EasterEgg } from './easter-egg'
-export { HardwareList } from './hardware-list'
-export { NowTag } from './now-tag'
-export { ProjectCard } from './project-card'
-export { Timeline } from './timeline'
+import { EasterEgg } from './easter-egg'
+import { HardwareList } from './hardware-list'
+import { NowTag } from './now-tag'
+import { ProjectCard } from './project-card'
+import { Timeline } from './timeline'
+
+export { EasterEgg, HardwareList, NowTag, ProjectCard, Timeline }

@@ -6,10 +6,12 @@ import { getPageSeo } from '@/lib/contentful'
 import { getBoldFont, getRegularFont } from '@/lib/fonts'
 
 export const alt = 'Bookmarks'
+
 export const size = {
   width: sharedMetadata.ogImage.width,
   height: sharedMetadata.ogImage.height
 }
+
 export const contentType = sharedMetadata.ogImage.type
 
 export default async function Image() {

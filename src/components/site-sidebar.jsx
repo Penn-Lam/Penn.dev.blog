@@ -57,6 +57,7 @@ export const SiteSidebar = () => {
 
   function onKeyPress(event) {
     const targetPathname = keyCodePathnameMapping[event.code]
+
     if (targetPathname && targetPathname !== pathname) router.push(targetPathname)
   }
 

@@ -36,6 +36,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
     }
 
     document.addEventListener('keydown', handleKeyPress)
+
     return () => document.removeEventListener('keydown', handleKeyPress)
   }, [isOpen, onClose, navigateNext, navigatePrevious])
 
@@ -51,6 +52,7 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
         quality: 'auto'
       })
     }
+
     return media.videoUrl || media.url
   }
 

@@ -25,14 +25,17 @@ export async function generateStaticParams() {
 export async function GET(_, props) {
   const params = await props.params
   const { slug } = params
+
   const [seoData = {}, regularFontData, boldFontData] = await Promise.all([
     getPageSeo(slug),
     getRegularFont(),
     getBoldFont()
   ])
+
   const { seo: { title, description, ogImageTitle, ogImageSubtitle } = {} } = seoData
 
   let icon = null
+
   switch (slug) {
     case 'stack':
       icon = (

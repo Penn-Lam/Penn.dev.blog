@@ -80,4 +80,5 @@ export const VinylPlayer = memo(() => {
     </div>
   )
 })
+
 VinylPlayer.displayName = 'VinylPlayer'

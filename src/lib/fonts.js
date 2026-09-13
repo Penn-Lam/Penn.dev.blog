@@ -22,5 +22,6 @@ export const getRegularFont = cache(async () => {
 export const getBoldFont = cache(async () => {
   const response = await readFile('src/assets/fonts/Geist-Medium.otf')
   const font = Uint8Array.from(response).buffer
+
   return font
 })

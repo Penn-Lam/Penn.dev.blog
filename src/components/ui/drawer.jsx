@@ -28,6 +28,7 @@ const Drawer = memo(({ shouldScaleBackground = true, ...props }) => {
     />
   )
 })
+
 Drawer.displayName = 'Drawer'
 
 const DrawerTrigger = memo(DrawerPrimitive.Trigger)
@@ -44,6 +45,7 @@ const DrawerOverlay = memo(({ className, ...props }) => {
     />
   )
 })
+
 DrawerOverlay.displayName = 'DrawerOverlay'
 
 const DrawerContent = memo(({ className, children, ...props }) => {
@@ -64,6 +66,7 @@ const DrawerContent = memo(({ className, children, ...props }) => {
     </DrawerPortal>
   )
 })
+
 DrawerContent.displayName = 'DrawerContent'
 
 function DrawerHeader({ className, ...props }) {
@@ -77,11 +80,13 @@ function DrawerFooter({ className, ...props }) {
 const DrawerTitle = memo(({ className, ...props }) => {
   return <DrawerPrimitive.Title className={cn('text-title-3-semibold', className)} {...props} />
 })
+
 DrawerTitle.displayName = 'DrawerTitle'
 
 const DrawerDescription = memo(({ className, ...props }) => {
   return <DrawerPrimitive.Description className={cn('text-body-regular text-text-secondary', className)} {...props} />
 })
+
 DrawerDescription.displayName = 'DrawerDescription'
 
 export {

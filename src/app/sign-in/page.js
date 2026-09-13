@@ -13,6 +13,7 @@ export default function SignInPage() {
   const searchParams = useSearchParams()
   const callbackURL = searchParams.get('callback') || '/'
   const providerError = searchParams.get('error')
+
   const [error, setError] = useState(
     providerError ? ERROR_MESSAGES[providerError] || 'Unable to sign in with GitHub.' : null
   )
@@ -20,6 +21,7 @@ export default function SignInPage() {
   useEffect(() => {
     if (providerError) {
       setError(ERROR_MESSAGES[providerError] || 'Unable to sign in with GitHub.')
+
       return
     }
 
@@ -29,15 +31,18 @@ export default function SignInPage() {
           error: 'github',
           callback: callbackURL
         })
+
         const response = await authClient.signIn.social({
           provider: 'github',
           callbackURL,
           errorCallbackURL: `/sign-in?${errorParams.toString()}`,
           disableRedirect: true
         })
+
         if (response?.error) {
           throw response.error
         }
+
         if (response?.data?.url) {
           window.location.href = response.data.url
         }

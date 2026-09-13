@@ -28,14 +28,17 @@ export function EasterEgg({ trigger = 'work hard' }) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
+
       timeoutRef.current = setTimeout(() => {
         setKeySequence('')
       }, 3000)
     }
 
     document.addEventListener('keydown', handleKeyPress)
+
     return () => {
       document.removeEventListener('keydown', handleKeyPress)
+
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }

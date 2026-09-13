@@ -2,8 +2,11 @@ import { OpenGraphImage } from '@/components/og-image'
 import { getPageSeo } from '@/lib/contentful'
 
 export const runtime = 'edge'
+
 export const alt = '工具集'
+
 export const size = { width: 1200, height: 630 }
+
 export const contentType = 'image/png'
 
 export default async function OpengraphImage() {
@@ -12,6 +15,7 @@ export default async function OpengraphImage() {
 
   try {
     const seoData = await getPageSeo('stack')
+
     if (seoData?.seo) {
       title = seoData.seo.title || title
       description = seoData.seo.description || description

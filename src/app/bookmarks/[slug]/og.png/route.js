@@ -14,9 +14,11 @@ export const size = {
 
 export async function generateStaticParams() {
   const bookmarks = await getBookmarks()
+
   if (!bookmarks || bookmarks.length === 0) {
     return []
   }
+
   return bookmarks.map((bookmark) => ({ slug: bookmark.slug }))
 }
 
@@ -75,6 +77,7 @@ export async function GET(_, props) {
     }
 
     const currentBookmark = bookmarks.find((bookmark) => bookmark.slug === slug)
+
     if (!currentBookmark) {
       // Return default OG image if specific bookmark not found
       return new ImageResponse(

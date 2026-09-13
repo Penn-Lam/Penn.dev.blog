@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { createContext, useContext, useRef, useState } from "react";
-import type { ReactNode, Ref } from "react";
+import { createContext, useContext, useRef, useState } from 'react'
+import type { ReactNode, Ref } from 'react'
 import {
   Button as AriaButton,
   ListBox as AriaListBox,
@@ -9,22 +9,23 @@ import {
   Popover as AriaPopover,
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
-} from "react-aria-components";
+  composeRenderProps
+} from 'react-aria-components'
 import type {
   ListBoxItemProps as AriaListBoxItemProps,
   SelectProps as AriaSelectProps,
-  SelectValueRenderProps as AriaSelectValueRenderProps,
-} from "react-aria-components";
+  SelectValueRenderProps as AriaSelectValueRenderProps
+} from 'react-aria-components'
 import {
   MENU_ITEM,
   MENU_ITEM_ACTIVE,
   MENU_ITEMS_CONTAINER,
   MENU_POPOVER_SURFACE,
-  MENU_POPOVER_WIDTH,
-} from "@/components/base/dropdown/menu-styles";
-import { ChevronDownSmall } from "@/components/foundations/icons/chevrons";
-import { cx } from "@/utils/cx";
-import { useDismissOnOutsidePress, useTriggerToggle } from "@/utils/use-dismiss-on-outside-press";
+  MENU_POPOVER_WIDTH
+} from '@/components/base/dropdown/menu-styles'
+import { ChevronDownSmall } from '@/components/foundations/icons/chevrons'
+import { cx } from '@/utils/cx'
+import { useDismissOnOutsidePress, useTriggerToggle } from '@/utils/use-dismiss-on-outside-press'
 
 /**
  * Figma source: Board UI → dashboard 1 dropdown triggers ("All prices" filter
@@ -43,32 +44,31 @@ import { useDismissOnOutsidePress, useTriggerToggle } from "@/utils/use-dismiss-
  * Item content is free-form: pass a `StatusDot` + text for status selects.
  */
 
-export type SelectSize = "sm" | "md";
+export type SelectSize = 'sm' | 'md'
 
-const SelectSizeContext = createContext<SelectSize>("md");
+const SelectSizeContext = createContext<SelectSize>('md')
 
-export interface SelectProps<T extends object>
-  extends Omit<AriaSelectProps<T>, "children"> {
+export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 'children'> {
   /** Trigger width. Defaults to hug content; the menu uses the shared 266px width. */
-  className?: string;
-  triggerClassName?: string;
+  className?: string
+  triggerClassName?: string
   /** Classes for the open popover (e.g. constrain its width). */
-  popoverClassName?: string;
+  popoverClassName?: string
   /** `md` (default) or `sm` for compact/dense contexts (e.g. compact tables). */
-  size?: SelectSize;
-  children: ReactNode;
-  items?: Iterable<T>;
+  size?: SelectSize
+  children: ReactNode
+  items?: Iterable<T>
   /** Customise the trigger's rendered value (e.g. a compact flag + dial code).
    *  Falls back to the selected item's own content when omitted. */
-  renderValue?: ReactNode | ((values: AriaSelectValueRenderProps<T>) => ReactNode);
-  ref?: Ref<HTMLDivElement>;
+  renderValue?: ReactNode | ((values: AriaSelectValueRenderProps<T>) => ReactNode)
+  ref?: Ref<HTMLDivElement>
 }
 
 export function Select<T extends object>({
   className,
   triggerClassName,
   popoverClassName,
-  size = "md",
+  size = 'md',
   children,
   items,
   renderValue,
@@ -83,12 +83,12 @@ export function Select<T extends object>({
   // is hard-coupled to `!isNonModal` in usePopover), so open state is
   // controlled here and dismissal restored manually — the same fix as the
   // date-picker family (see utils/use-dismiss-on-outside-press.ts).
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  useDismissOnOutsidePress(isOpen, () => setIsOpen(false), [triggerRef, popoverRef]);
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const popoverRef = useRef<HTMLElement>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  useDismissOnOutsidePress(isOpen, () => setIsOpen(false), [triggerRef, popoverRef])
   // Pressing the trigger while open closes the popover instead of reopening
-  const allowOpenChange = useTriggerToggle(isOpen, triggerRef);
+  const allowOpenChange = useTriggerToggle(isOpen, triggerRef)
 
   return (
     <AriaSelect
@@ -96,39 +96,34 @@ export function Select<T extends object>({
       {...props}
       isOpen={isOpen}
       onOpenChange={(o) => allowOpenChange(o) && setIsOpen(o)}
-      className={cx("group flex flex-col", className)}
+      className={cx('group flex flex-col', className)}
     >
       {({ isOpen }) => (
         <>
           <AriaButton
             ref={triggerRef}
             className={cx(
-              "flex w-full cursor-pointer items-center justify-between rounded-2lg",
-              "border border-border-button-default bg-background-primary-default shadow-xs",
-              "text-text-primary",
-              "transition-[background-color,border-color,box-shadow,padding,font-size] duration-200 ease",
-              "hover:bg-background-primary-hover hover:border-border-button-hover",
-              "outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border-focus-ring",
-              "disabled:cursor-not-allowed disabled:bg-background-primary-disabled disabled:text-text-tertiary disabled:shadow-none",
-              size === "sm"
-                ? "gap-1 px-[7px] py-1 text-body-2-medium"
-                : "gap-1.5 px-2.5 py-2 text-body-medium",
-              triggerClassName,
+              'rounded-2lg flex w-full cursor-pointer items-center justify-between',
+              'border-border-button-default bg-background-primary-default border shadow-xs',
+              'text-text-primary',
+              'ease transition-[background-color,border-color,box-shadow,padding,font-size] duration-200',
+              'hover:bg-background-primary-hover hover:border-border-button-hover',
+              'focus-visible:ring-border-focus-ring outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+              'disabled:bg-background-primary-disabled disabled:text-text-tertiary disabled:cursor-not-allowed disabled:shadow-none',
+              size === 'sm' ? 'text-body-2-medium gap-1 px-[7px] py-1' : 'text-body-medium gap-1.5 px-2.5 py-2',
+              triggerClassName
             )}
           >
             <AriaSelectValue
-              className={cx(
-                "flex min-w-0 items-center truncate",
-                size === "sm" ? "gap-1" : "gap-[5px]",
-              )}
+              className={cx('flex min-w-0 items-center truncate', size === 'sm' ? 'gap-1' : 'gap-[5px]')}
             >
-              {renderValue as never /* RAC accepts node or render-prop */}
+              {renderValue}
             </AriaSelectValue>
             <ChevronDownSmall
               className={cx(
-                "shrink-0 text-text-secondary transition-transform duration-200 ease",
-                size === "sm" ? "size-3.5" : "size-4",
-                isOpen && "rotate-180",
+                'text-text-secondary ease shrink-0 transition-transform duration-200',
+                size === 'sm' ? 'size-3.5' : 'size-4',
+                isOpen && 'rotate-180'
               )}
             />
           </AriaButton>
@@ -139,19 +134,19 @@ export function Select<T extends object>({
             className={cx(
               MENU_POPOVER_WIDTH,
               MENU_POPOVER_SURFACE,
-              "pointer-events-auto",
+              'pointer-events-auto',
               // Listbox rows already space themselves 4px apart, so the
               // surface sits a touch tighter than the action-menu Dropdown.
-              "p-2",
-              popoverClassName,
+              'p-2',
+              popoverClassName
             )}
           >
             <AriaListBox
               items={items}
               onWheel={(event) => {
-                if (triggerRef.current?.closest('[role="dialog"]')) event.stopPropagation();
+                if (triggerRef.current?.closest('[role="dialog"]')) event.stopPropagation()
               }}
-              className={cx(MENU_ITEMS_CONTAINER, "max-h-[240px] overflow-auto")}
+              className={cx(MENU_ITEMS_CONTAINER, 'max-h-[240px] overflow-auto')}
             >
               <SelectSizeContext.Provider value={size}>{children}</SelectSizeContext.Provider>
             </AriaListBox>
@@ -159,29 +154,30 @@ export function Select<T extends object>({
         </>
       )}
     </AriaSelect>
-  );
+  )
 }
 
-export interface SelectItemProps extends Omit<AriaListBoxItemProps, "children"> {
-  children?: ReactNode;
+export interface SelectItemProps extends Omit<AriaListBoxItemProps, 'children'> {
+  children?: ReactNode
 }
 
 export function SelectItem({ className, children, ...props }: SelectItemProps) {
-  const size = useContext(SelectSizeContext);
+  const size = useContext(SelectSizeContext)
+
   return (
     <AriaListBoxItem
       {...props}
-      className={(state) =>
+      className={composeRenderProps(className, (className, state) =>
         cx(
           MENU_ITEM,
-          size === "sm" ? "px-2 py-1.5 text-body-2-medium" : "text-body-medium",
+          size === 'sm' ? 'text-body-2-medium px-2 py-1.5' : 'text-body-medium',
           (state.isFocused || state.isSelected) && MENU_ITEM_ACTIVE,
-          state.isDisabled && "cursor-not-allowed text-text-disabled",
-          typeof className === "function" ? className(state) : className,
+          state.isDisabled && 'text-text-disabled cursor-not-allowed',
+          className
         )
-      }
+      )}
     >
       {children}
     </AriaListBoxItem>
-  );
+  )
 }

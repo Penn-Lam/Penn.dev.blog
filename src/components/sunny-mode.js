@@ -12,7 +12,9 @@ import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react'
 import { Switch } from '@/components/base/switch/switch'
 
 const STORAGE_KEY = 'sunny-mode'
+
 const SHUTTER_COUNT = 23
+
 const EVENT_NAME = 'sunny-mode-change'
 
 /* ========================================================================
@@ -22,6 +24,7 @@ let listeners = new Set()
 
 function subscribe(cb) {
   listeners.add(cb)
+
   return () => listeners.delete(cb)
 }
 
@@ -39,6 +42,7 @@ function useSunnyMode() {
   useEffect(() => {
     const handler = () => listeners.forEach((cb) => cb())
     window.addEventListener(EVENT_NAME, handler)
+
     return () => window.removeEventListener(EVENT_NAME, handler)
   }, [])
 
@@ -61,7 +65,7 @@ export function SunnyToggle() {
     <div className="flex items-center gap-3">
       <Switch
         size="md"
-        shape="pill"
+        cornerStyle="pill"
         isSelected={active}
         onChange={toggle}
         aria-label={active ? '关闭阳光模式' : '开启阳光模式'}
@@ -89,6 +93,7 @@ export function SunnyOverlay() {
       audio.volume = 0.4
       audioRef.current = audio
     }
+
     if (active) {
       audioRef.current.play().catch(() => {})
     } else {

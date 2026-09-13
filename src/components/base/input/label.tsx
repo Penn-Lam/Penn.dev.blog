@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import type { ReactNode, Ref } from "react";
-import { RiInformationFill } from "@remixicon/react";
-import type { LabelProps as AriaLabelProps } from "react-aria-components";
-import { Label as AriaLabel } from "react-aria-components";
-import { cx } from "@/utils/cx";
+import type { ReactNode, Ref } from 'react'
+import { RiInformationFill } from '@remixicon/react'
+import type { LabelProps as AriaLabelProps } from 'react-aria-components'
+import { Label as AriaLabel } from 'react-aria-components'
+import { cx } from '@/utils/cx'
 
 /**
  * Field label. Wraps `react-aria-components`' Label so the parent `TextField`
@@ -22,13 +22,13 @@ import { cx } from "@/utils/cx";
  */
 
 export interface LabelProps extends AriaLabelProps {
-  children: ReactNode;
-  isRequired?: boolean;
+  children: ReactNode
+  isRequired?: boolean
   /** Reserved for invalid-aware styling (asterisk color, etc.) once we need it. */
-  isInvalid?: boolean;
+  isInvalid?: boolean
   /** Show the info icon next to the label. */
-  tooltip?: boolean | string;
-  ref?: Ref<HTMLLabelElement>;
+  tooltip?: boolean | string
+  ref?: Ref<HTMLLabelElement>
 }
 
 export function Label({
@@ -39,32 +39,21 @@ export function Label({
   children,
   ...props
 }: LabelProps) {
-  void _isInvalid;
+  void _isInvalid
+
   return (
     <AriaLabel
       data-label="true"
       {...props}
-      className={cx(
-        "flex cursor-default items-center gap-0.5",
-        "text-body-medium text-text-primary",
-        className,
-      )}
+      className={cx('flex cursor-default items-center gap-0.5', 'text-body-medium text-text-primary', className)}
     >
       {children}
       {isRequired && (
-        <span
-          aria-hidden="true"
-          className="text-body-medium text-text-error-primary"
-        >
+        <span aria-hidden="true" className="text-body-medium text-text-error-primary">
           *
         </span>
       )}
-      {tooltip && (
-        <RiInformationFill
-          className="size-4 shrink-0 text-foreground-icon-quaternary"
-          aria-hidden
-        />
-      )}
+      {tooltip && <RiInformationFill className="text-foreground-icon-quaternary size-4 shrink-0" aria-hidden />}
     </AriaLabel>
-  );
+  )
 }

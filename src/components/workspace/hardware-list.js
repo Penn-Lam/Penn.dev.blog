@@ -48,6 +48,7 @@ export function HardwareList({ items }) {
             label: 'Device',
             color: 'bg-background-secondary-default text-text-secondary'
           }
+
           return (
             <div
               key={index}

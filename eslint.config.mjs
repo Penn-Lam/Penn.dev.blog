@@ -10,7 +10,9 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
+
 const __dirname = path.dirname(__filename)
+
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: eslint.configs.recommended,
@@ -82,6 +84,13 @@ const patchedConfig = [
     files: ['*.mjs'],
     rules: {
       'import/no-anonymous-default-export': 'off'
+    }
+  },
+  {
+    files: ['src/app/layout.js'],
+    rules: {
+      // Geist declares this subpath through an ambient module that eslint-plugin-import cannot resolve.
+      'import/named': 'off'
     }
   }
 ]

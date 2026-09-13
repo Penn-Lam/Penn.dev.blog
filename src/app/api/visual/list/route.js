@@ -31,6 +31,7 @@ export async function GET() {
     if (imageResult.resources.length > 0) {
       console.info('🔍 First image resource structure:', JSON.stringify(imageResult.resources[0], null, 2))
     }
+
     if (videoResult.resources.length > 0) {
       console.info('🔍 First video resource structure:', JSON.stringify(videoResult.resources[0], null, 2))
     }
@@ -60,17 +61,20 @@ export async function GET() {
         r.context?.caption ||
         r.tags?.find((tag) => tag.startsWith('title:'))?.replace('title:', '') ||
         ''
+
       const description =
         r.metadata?.description ||
         r.context?.description ||
         r.context?.alt ||
         r.tags?.find((tag) => tag.startsWith('desc:'))?.replace('desc:', '') ||
         ''
+
       const location =
         r.metadata?.location ||
         r.context?.location ||
         r.tags?.find((tag) => tag.startsWith('location:'))?.replace('location:', '') ||
         ''
+
       const camera =
         r.metadata?.camera ||
         r.context?.camera ||
@@ -79,6 +83,7 @@ export async function GET() {
 
       // 获取拍摄时间 - 从EXIF数据中提取
       let capturedAt = null
+
       if (r.image_metadata && r.image_metadata.DateTimeOriginal) {
         capturedAt = r.image_metadata.DateTimeOriginal
       } else if (r.image_metadata && r.image_metadata.DateTime) {
@@ -133,17 +138,20 @@ export async function GET() {
         r.context?.caption ||
         r.tags?.find((tag) => tag.startsWith('title:'))?.replace('title:', '') ||
         ''
+
       const description =
         r.metadata?.description ||
         r.context?.description ||
         r.context?.alt ||
         r.tags?.find((tag) => tag.startsWith('desc:'))?.replace('desc:', '') ||
         ''
+
       const location =
         r.metadata?.location ||
         r.context?.location ||
         r.tags?.find((tag) => tag.startsWith('location:'))?.replace('location:', '') ||
         ''
+
       const camera =
         r.metadata?.camera ||
         r.context?.camera ||
@@ -181,6 +189,7 @@ export async function GET() {
     })
   } catch (e) {
     console.error('❌ API Error:', e)
+
     return new Response(JSON.stringify({ ok: false, error: e.message, stack: e.stack }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }

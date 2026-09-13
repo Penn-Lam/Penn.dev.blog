@@ -15,13 +15,16 @@ import { cn } from '@/lib/utils'
  */
 
 const rowIconClass = 'size-5 shrink-0 text-foreground-icon-secondary'
+
 const activeRowIconClass = 'size-5 shrink-0 text-white'
 
 function RowIcon({ icon, isActive = false }) {
   const className = isActive ? activeRowIconClass : rowIconClass
+
   if (isValidElement(icon)) {
     return cloneElement(icon, { className, 'aria-hidden': true })
   }
+
   return <AtSignIcon className={className} aria-hidden />
 }
 
@@ -29,6 +32,7 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
   const pathname = usePathname()
 
   const isInternal = href.startsWith('/')
+
   if (!isInternal) {
     return (
       <a
@@ -48,6 +52,7 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
   }
 
   let isActive = false
+
   if (pathname?.length > 0) {
     const splittedPathname = pathname.split('/')
     const currentPathname = splittedPathname[1] ?? ''
@@ -83,4 +88,5 @@ export const NavigationLink = memo(({ href, label, icon, shortcutNumber }) => {
     </Link>
   )
 })
+
 NavigationLink.displayName = 'NavigationLink'

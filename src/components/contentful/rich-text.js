@@ -6,8 +6,11 @@ import { Link } from '@/components/link'
 import { ShowInView } from '@/components/show-in-view'
 
 const TweetCard = dynamic(() => import('@/components/tweet-card/tweet-card').then((mod) => mod.TweetCard))
+
 const CodeBlock = dynamic(() => import('@/components/contentful/code-block').then((mod) => mod.CodeBlock))
+
 const DynamicIframe = dynamic(() => import('@/components/contentful/iframe').then((mod) => mod.Iframe))
+
 import { dasherize } from '@/lib/utils'
 
 function options(links) {
@@ -24,6 +27,7 @@ function options(links) {
       [BLOCKS.HEADING_2]: (_, children) => {
         const id = dasherize(children)
         const url = `h2-${id}`
+
         return (
           <h2
             id={url}
@@ -38,6 +42,7 @@ function options(links) {
       [BLOCKS.HEADING_3]: (_, children) => {
         const id = dasherize(children)
         const url = `h3-${id}`
+
         return (
           <h3
             id={url}
@@ -65,6 +70,7 @@ function options(links) {
       ),
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const asset = findAsset(node.data.target.sys.id)
+
         if (!asset) return null
         const isEagerLoading = asset.contentfulMetadata?.tags?.some((tag) => tag.name === 'Eager Loading')
 
@@ -114,24 +120,32 @@ function options(links) {
                   </ShowInView>
                 )
               }
+
               case 'SoundCloud': {
                 return <DynamicIframe embedUrl={embedUrl} title={title} scrolling="no" className="h-[166px]" />
               }
+
               default:
                 return null
             }
           }
+
           case 'CodeBlock': {
             return <CodeBlock {...entry} />
           }
+
           case 'Tweet': {
             const { id } = entry
+
             return <TweetCard id={id} />
           }
+
           case 'Carousel': {
             const Carousel = await import('@/components/contentful/carousel').then((mod) => mod.Carousel)
+
             return <Carousel images={entry.imagesCollection?.items} />
           }
+
           default:
             return null
         }
@@ -142,5 +156,6 @@ function options(links) {
 
 export const RichText = ({ content }) => {
   if (!content) return null
+
   return documentToReactComponents(content.json, options(content.links))
 }

@@ -6,6 +6,7 @@ const USER_AGENT = 'OpenAI File Downloader, XaiImageApiFetch/1.0'
 
 export async function GET(request) {
   const value = new URL(request.url).searchParams.get('url')
+
   if (!value || value.length > 2048 || !isValidWebsiteUrl(value)) {
     return NextResponse.json({ error: 'Invalid URL.' }, { status: 400 })
   }
@@ -16,6 +17,7 @@ export async function GET(request) {
 
   try {
     const headers = { 'User-Agent': USER_AGENT }
+
     if (process.env.MICROLINK_API_KEY) headers['x-api-key'] = process.env.MICROLINK_API_KEY
 
     const response = await fetch(endpoint, {
@@ -23,6 +25,7 @@ export async function GET(request) {
       next: { revalidate: 60 * 60 * 24 },
       signal: AbortSignal.timeout(15000)
     })
+
     const payload = await response.json()
 
     if (!response.ok || payload.status !== 'success') {

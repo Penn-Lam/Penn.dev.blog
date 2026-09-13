@@ -9,6 +9,7 @@ import { sortByProperty } from '@/lib/utils'
 async function fetchData() {
   const bookmarks = await getBookmarks()
   const sortedBookmarks = sortByProperty(bookmarks, 'title')
+
   return { bookmarks: sortedBookmarks }
 }
 

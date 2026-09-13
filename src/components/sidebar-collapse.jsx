@@ -13,6 +13,7 @@ const SidebarCollapseContext = createContext({ collapsed: false, setCollapsed: (
 
 export const SidebarCollapseProvider = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
+
   return (
     <SidebarCollapseContext.Provider value={{ collapsed, setCollapsed }}>{children}</SidebarCollapseContext.Provider>
   )

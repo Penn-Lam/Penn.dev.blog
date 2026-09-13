@@ -46,6 +46,7 @@ export function TabSelector({ mediaType, sourceType, showAll, onFilterChange }) 
   // 获取当前选中的过滤器
   const getCurrentFilter = () => {
     if (showAll) return 'all'
+
     return `${sourceType}-${mediaType}`
   }
 

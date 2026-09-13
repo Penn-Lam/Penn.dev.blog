@@ -25,6 +25,7 @@ export function cn(...args) {
  */
 export const isExternalLink = (href) => {
   if (!href) return false
+
   return !href.startsWith('/') && !href.startsWith('#')
 }
 
@@ -38,6 +39,7 @@ export const isExternalLink = (href) => {
  */
 export const getDateTimeFormat = (date) => {
   const dateObj = new Date(date)
+
   return Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
@@ -97,6 +99,7 @@ export const getSortedPosts = cache((posts) => {
   return posts.sort((a, b) => {
     const dateA = a.date || a.sys.firstPublishedAt
     const dateB = b.date || b.sys.firstPublishedAt
+
     return new Date(dateB) - new Date(dateA)
   })
 })
@@ -144,6 +147,7 @@ export const getItemsByYear = (items) => {
   return items.reduce((acc, item) => {
     const year = new Date(item.date || item.sys.firstPublishedAt).getFullYear()
     const yearArr = acc.find((item) => item[0] === year)
+
     if (!yearArr) {
       acc.push([year, [item]])
     } else {

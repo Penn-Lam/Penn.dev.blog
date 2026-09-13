@@ -13,9 +13,11 @@ export default function rateLimit(options) {
       }
 
       const tokenCount = tokenCache.get(token) || [0]
+
       if (tokenCount[0] === 0) {
         tokenCache.set(token, tokenCount)
       }
+
       tokenCount[0] += 1
 
       const currentUsage = tokenCount[0]

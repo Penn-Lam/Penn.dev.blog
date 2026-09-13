@@ -68,6 +68,7 @@ const ViewCount = memo(function ViewCount({ count, isLoading }) {
   if (isLoading) {
     return <span className="text-text-tertiary flex animate-pulse justify-end tabular-nums">...</span>
   }
+
   if (count) {
     return (
       <span className="flex justify-end tabular-nums" title={`${count} views`}>
@@ -75,6 +76,7 @@ const ViewCount = memo(function ViewCount({ count, isLoading }) {
       </span>
     )
   }
+
   return null
 })
 
@@ -167,12 +169,14 @@ export const WritingList = memo(function WritingList({ items, header = 'Writing'
   // 视图数据 Map - 仅在 viewData 变化时重新计算
   const viewDataMap = useMemo(() => {
     if (!viewData) return new Map()
+
     return new Map(viewData.map((item) => [item.slug, item.view_count]))
   }, [viewData])
 
   // 渲染年度分组
   const renderedGroups = useMemo(() => {
     if (isEmpty) return null
+
     return items.map(([year, itemsArr]) => (
       <YearGroup key={year} year={year} items={itemsArr} viewDataMap={viewDataMap} isLoading={isLoading} />
     ))

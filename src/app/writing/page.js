@@ -10,6 +10,7 @@ import { getSortedPosts } from '@/lib/utils'
 async function fetchData() {
   const allPosts = await getAllPosts()
   const sortedPosts = getSortedPosts(allPosts)
+
   return { sortedPosts }
 }
 
@@ -28,6 +29,7 @@ export default async function Writing() {
 
 export async function generateMetadata() {
   const seoData = await getPageSeo('writing')
+
   if (!seoData) return null
 
   const seo = seoData.seo || {}

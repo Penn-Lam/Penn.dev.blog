@@ -47,13 +47,16 @@ export function QuickPostButton() {
           e.preventDefault()
         }
       }
+
       window.addEventListener('keydown', disableKeyPress)
+
       return () => window.removeEventListener('keydown', disableKeyPress)
     }
   }, [isOpen])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     if (!content.trim()) return
 
     setIsSubmitting(true)

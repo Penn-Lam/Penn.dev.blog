@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import type { ReactNode, Ref } from "react";
-import { Checkbox as AriaCheckbox } from "react-aria-components";
-import type { CheckboxProps as AriaCheckboxProps } from "react-aria-components";
-import { cx } from "@/utils/cx";
-import { CheckboxGlyph, checkboxSizes } from "./checkbox-glyph";
-import type { CheckboxSize } from "./checkbox-glyph";
+import type { ReactNode, Ref } from 'react'
+import { Checkbox as AriaCheckbox, composeRenderProps } from 'react-aria-components'
+import type { CheckboxProps as AriaCheckboxProps } from 'react-aria-components'
+import { cx } from '@/utils/cx'
+import { CheckboxGlyph, checkboxSizes } from './checkbox-glyph'
+import type { CheckboxSize } from './checkbox-glyph'
 
 /**
  * Figma source: Board UI → Checkbox (node 3699:2557 family; used in
@@ -28,36 +28,36 @@ import type { CheckboxSize } from "./checkbox-glyph";
  * indeterminate, label association when `children` is passed.
  */
 
-export interface CheckboxProps extends Omit<AriaCheckboxProps, "children"> {
-  children?: ReactNode;
-  size?: CheckboxSize;
-  ref?: Ref<HTMLLabelElement>;
+export interface CheckboxProps extends Omit<AriaCheckboxProps, 'children'> {
+  children?: ReactNode
+  size?: CheckboxSize
+  ref?: Ref<HTMLLabelElement>
 }
 
-export function Checkbox({ className, children, size = "md", ref, ...props }: CheckboxProps) {
-  const s = checkboxSizes[size];
+export function Checkbox({ className, children, size = 'md', ref, ...props }: CheckboxProps) {
+  const s = checkboxSizes[size]
 
   return (
     <AriaCheckbox
       ref={ref}
       {...props}
-      className={(state) =>
+      className={composeRenderProps(className, (className, state) =>
         cx(
-          "group inline-flex items-center select-none",
+          'group inline-flex items-center select-none',
           s.gap,
-          state.isDisabled ? "cursor-not-allowed" : "cursor-pointer",
-          typeof className === "function" ? className(state) : className,
+          state.isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
+          className
         )
-      }
+      )}
     >
       {(state) => (
         <>
           <CheckboxGlyph state={state} size={size} />
           {children !== undefined && children !== null && (
-            <span className={cx(s.label, "text-text-primary")}>{children}</span>
+            <span className={cx(s.label, 'text-text-primary')}>{children}</span>
           )}
         </>
       )}
     </AriaCheckbox>
-  );
+  )
 }

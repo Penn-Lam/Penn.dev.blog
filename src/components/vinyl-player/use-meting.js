@@ -8,11 +8,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 export const PLAYLIST_ID = process.env.NEXT_PUBLIC_NETEASE_PLAYLIST_ID || '450272643'
+
 const MAX_POLL_ATTEMPTS = 50 // 15s 超时（50 × 300ms）
 
 /** 从 APlayer audios 数组提取 track 信息 */
 const extractTrack = (audios, index) => {
   const t = audios?.[index]
+
   return t ? { name: t.name, artist: t.artist, cover: t.cover } : null
 }
 
@@ -27,16 +29,20 @@ export function useMeting() {
     if (!containerRef.current) return
 
     const metingEl = containerRef.current.querySelector('meting-js')
+
     if (!metingEl) return
 
     let attempts = 0
+
     const poll = setInterval(() => {
       if (++attempts > MAX_POLL_ATTEMPTS) {
         clearInterval(poll)
+
         return
       }
 
       const ap = metingEl.aplayer
+
       if (!ap) return
 
       clearInterval(poll)
@@ -60,7 +66,8 @@ export function useMeting() {
     return () => {
       clearInterval(poll)
       const ap = aplayerRef.current
-      if (ap && typeof ap.off === 'function') {
+
+      if (ap) {
         ap.off('play')
         ap.off('pause')
         ap.off('listswitch')

@@ -21,6 +21,7 @@ const FormField = memo(({ ...props }) => {
     </FormFieldContext.Provider>
   )
 })
+
 FormField.displayName = 'FormField'
 
 const useFormField = () => {
@@ -58,6 +59,7 @@ const FormItem = memo(({ className, children }) => {
     </FormItemContext.Provider>
   )
 })
+
 FormItem.displayName = 'FormItem'
 
 const FormLabel = memo(({ className, ...props }) => {
@@ -71,6 +73,7 @@ const FormLabel = memo(({ className, ...props }) => {
     />
   )
 })
+
 FormLabel.displayName = 'FormLabel'
 
 const FormControl = memo(({ ...props }) => {
@@ -85,6 +88,7 @@ const FormControl = memo(({ ...props }) => {
     />
   )
 })
+
 FormControl.displayName = 'FormControl'
 
 const FormDescription = memo(({ className, ...props }) => {
@@ -92,6 +96,7 @@ const FormDescription = memo(({ className, ...props }) => {
 
   return <p id={formDescriptionId} className={cn('text-caption-1-medium text-text-secondary', className)} {...props} />
 })
+
 FormDescription.displayName = 'FormDescription'
 
 const FormMessage = memo(({ className, children, ...props }) => {
@@ -108,6 +113,7 @@ const FormMessage = memo(({ className, children, ...props }) => {
     </p>
   )
 })
+
 FormMessage.displayName = 'FormMessage'
 
 export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, useFormField }

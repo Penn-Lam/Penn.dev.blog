@@ -40,9 +40,7 @@ export function Carousel({ images = [] }) {
 
     // Cleanup the event listener on unmount or when dependencies change
     return () => {
-      if (typeof api.off === 'function') {
-        api.off('select', handleSelect)
-      }
+      api.off('select', handleSelect)
     }
   }, [api, handleSelect, images])
 

@@ -35,6 +35,7 @@ export class KonamiListener {
     // 检查是否匹配
     if (this.sequence.length === KONAMI_CODE.length) {
       const isMatch = this.sequence.every((key, index) => key === KONAMI_CODE[index])
+
       if (isMatch) {
         this.onComplete()
         this.sequence = [] // 重置序列

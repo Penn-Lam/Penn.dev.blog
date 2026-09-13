@@ -21,8 +21,10 @@ const limiter = rateLimit({
 export async function POST(req) {
   const json = await req.json()
   const data = await formSchema.safeParse(json)
+
   if (!data.success) {
     const { error } = data
+
     return NextResponse.json({ error }, { status: 400 })
   }
 
@@ -41,15 +43,18 @@ export async function POST(req) {
   try {
     const { url, email, type } = data.data
     const token = await getLarkTenantToken()
+
     const res = await createBitableRecord(token, {
       URL: { link: url, text: url },
       Email: email,
       Date: Date.now(),
       Type: type || 'Other'
     })
+
     return NextResponse.json({ res })
   } catch (error) {
     console.info(error)
+
     return NextResponse.json({ error: 'Error submitting bookmark.' }, { status: 500 })
   }
 }

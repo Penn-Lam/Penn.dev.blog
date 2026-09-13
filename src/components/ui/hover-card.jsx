@@ -5,6 +5,7 @@ import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
 import { cn } from '@/lib/utils'
 
 export const HoverCard = HoverCardPrimitive.Root
+
 export const HoverCardTrigger = HoverCardPrimitive.Trigger
 
 export function HoverCardContent({ className, align = 'center', sideOffset = 4, ref, ...props }) {

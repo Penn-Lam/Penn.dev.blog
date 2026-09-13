@@ -11,6 +11,7 @@ import { sortByProperty } from '@/lib/utils'
 async function fetchData() {
   const bookmarks = await getBookmarks()
   const sortedBookmarks = sortByProperty(bookmarks, 'title')
+
   return { bookmarks: sortedBookmarks }
 }
 
@@ -40,6 +41,7 @@ export default async function Writing() {
 
 export async function generateMetadata() {
   const seoData = await getPageSeo('bookmarks')
+
   if (!seoData) return null
 
   const seo = seoData.seo || {}

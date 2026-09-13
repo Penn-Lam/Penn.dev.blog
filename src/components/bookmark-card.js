@@ -4,6 +4,7 @@ import { Chip } from '@/components/base/badges/chip'
 import { Link02Icon, Tag01Icon } from '@/components/icons'
 
 const TweetCard = dynamic(() => import('@/components/tweet-card/tweet-card').then((mod) => mod.TweetCard))
+
 import { TWEETS_COLLECTION_IDS } from '@/lib/constants'
 
 /**
@@ -20,10 +21,12 @@ import { TWEETS_COLLECTION_IDS } from '@/lib/constants'
  */
 function getImageAlt(bookmark) {
   const { title, domain, excerpt } = bookmark
+
   if (excerpt) {
     // 使用摘要作为 alt 文本（最多 125 字符以避免过长）
     return `${title} - ${excerpt}`.slice(0, 125)
   }
+
   return `Cover image for ${title} from ${domain}`
 }
 
@@ -34,9 +37,11 @@ function getImageAlt(bookmark) {
  */
 function getAriaLabel(bookmark) {
   const parts = [bookmark.title, `from ${bookmark.domain}`]
+
   if (bookmark.tags?.length > 0) {
     parts.push(`tagged ${bookmark.tags.join(', ')}`)
   }
+
   return parts.join(', ')
 }
 
@@ -44,6 +49,7 @@ export const BookmarkCard = ({ bookmark, order }) => {
   if (bookmark.link && TWEETS_COLLECTION_IDS.includes(bookmark.collectionId)) {
     const match = bookmark.link.match(/\/status\/(\d+)/) ?? []
     const tweetId = match[1]
+
     return <TweetCard id={tweetId} />
   }
 

@@ -19,9 +19,11 @@ export async function getLarkTenantToken() {
   })
 
   const data = await res.json()
+
   if (data.code !== 0) {
     throw new Error(`Lark auth failed: ${data.msg}`)
   }
+
   return data.tenant_access_token
 }
 
@@ -40,8 +42,10 @@ export async function createBitableRecord(token, fields, { tableId } = {}) {
   })
 
   const data = await res.json()
+
   if (data.code !== 0) {
     throw new Error(`Lark bitable write failed: ${data.msg}`)
   }
+
   return data.data
 }

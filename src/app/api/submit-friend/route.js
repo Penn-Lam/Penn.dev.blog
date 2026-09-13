@@ -15,6 +15,7 @@ import rateLimit from '@/lib/rate-limit'
 import { addDefaultProtocol } from '@/lib/url'
 
 const urlSchema = z.preprocess(addDefaultProtocol, z.string().url())
+
 const optionalUrlSchema = z.preprocess(addDefaultProtocol, z.string().url().or(z.literal('')).optional())
 
 const formSchema = z.object({
@@ -37,6 +38,7 @@ const limiter = rateLimit({
 export async function POST(req) {
   const json = await req.json()
   const data = await formSchema.safeParse(json)
+
   if (!data.success) {
     return NextResponse.json({ error: data.error }, { status: 400 })
   }
@@ -56,6 +58,7 @@ export async function POST(req) {
   try {
     const { name, url, avatar, github, signature, email } = data.data
     const token = await getLarkTenantToken()
+
     const res = await createBitableRecord(
       token,
       {
@@ -69,9 +72,11 @@ export async function POST(req) {
       },
       { tableId: process.env.LARK_FRIENDS_TABLE_ID }
     )
+
     return NextResponse.json({ res })
   } catch (error) {
     console.info(error)
+
     return NextResponse.json({ error: 'Error submitting friend link.' }, { status: 500 })
   }
 }

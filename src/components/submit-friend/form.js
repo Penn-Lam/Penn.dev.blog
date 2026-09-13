@@ -24,6 +24,7 @@ import { addDefaultProtocol } from '@/lib/url'
 import { cn } from '@/lib/utils'
 
 const urlSchema = z.preprocess(addDefaultProtocol, z.string().url({ message: 'Invalid URL.' }))
+
 const optionalUrlSchema = z.preprocess(
   addDefaultProtocol,
   z.string().url({ message: 'Invalid URL.' }).or(z.literal('')).optional()
@@ -75,6 +76,7 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
           if (response.status === 429) {
             throw new Error('Rate limit exceeded. Please wait before submitting again.')
           }
+
           throw new Error(data.error || 'Submission failed')
         }
 
@@ -160,4 +162,5 @@ export const SubmitFriendForm = memo(({ className, setFormOpen }) => {
     </Form>
   )
 })
+
 SubmitFriendForm.displayName = 'SubmitFriendForm'

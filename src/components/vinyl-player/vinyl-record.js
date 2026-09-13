@@ -25,4 +25,5 @@ export const VinylRecord = memo(({ isPlaying, coverUrl, onClick }) => {
     </div>
   )
 })
+
 VinylRecord.displayName = 'VinylRecord'

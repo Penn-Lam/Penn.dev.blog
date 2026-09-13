@@ -66,6 +66,7 @@ export const PROFILES = {
     url: 'https://nl.pinterest.com/onurschu'
   } */
 }
+
 // 支持多个 Twitter 收藏夹
 export const TWEETS_COLLECTION_IDS = [56369164]
 
@@ -134,10 +135,13 @@ export const LINKS = [
 export const PERSONAL_SPACE_SECTIONS = {}
 
 export const SCROLL_AREA_ID = 'scroll-area'
+
 export const MOBILE_SCROLL_THRESHOLD = 20
+
 export const SUPABASE_TABLE_NAME = 'pages'
 
 export const SUBMIT_BOOKMARK_FORM_TITLE = 'Submit a bookmark'
+
 export const SUBMIT_BOOKMARK_FORM_DESCRIPTION =
   "Send me a website you like and if I like it too, you'll see it in the bookmarks list. With respect, please do not submit more than 5 websites a day."
 

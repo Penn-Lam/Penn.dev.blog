@@ -19,11 +19,14 @@ async function fetchData() {
     }
 
     const dateObj = new Date(log.date)
+
     if (isNaN(dateObj.getTime())) {
       return // 跳过无效日期的条目
     }
+
     const year = dateObj.getFullYear()
     const existingYear = mappedLogbook.find((item) => item?.year === year)
+
     if (!existingYear) {
       mappedLogbook.push({ year, logs: [log] })
     } else {
@@ -81,6 +84,7 @@ export default async function Journey() {
 
 export async function generateMetadata() {
   const seoData = await getPageSeo('journey')
+
   if (!seoData) return null
 
   const seo = seoData.seo || {}

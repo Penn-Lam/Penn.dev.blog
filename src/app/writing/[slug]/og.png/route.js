@@ -16,6 +16,7 @@ export const size = {
 
 export async function generateStaticParams() {
   const allPosts = await getAllPostSlugs()
+
   return allPosts.map((post) => ({ slug: post.slug }))
 }
 

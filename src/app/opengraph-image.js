@@ -5,10 +5,12 @@ import { OpenGraphImage } from '@/components/og-image'
 import { getBoldFont, getRegularFont } from '@/lib/fonts'
 
 export const alt = sharedMetadata.title
+
 export const size = {
   width: sharedMetadata.ogImage.width,
   height: sharedMetadata.ogImage.height
 }
+
 export const contentType = sharedMetadata.ogImage.type
 
 /* export const getImage = async () => {

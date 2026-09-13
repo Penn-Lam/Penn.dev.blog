@@ -28,12 +28,15 @@ export function MediaCard({ item, isHovered, onClick }) {
         const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dirgr1bkc'
         const transformations = `w_${baseWidth},h_${calculatedHeight},c_fill,q_auto,f_jpg,so_0s`
         const thumbnailUrl = `https://res.cloudinary.com/${cloudName}/video/upload/${transformations}/${item.cloudinaryId}.jpg`
+
         return thumbnailUrl
       } catch (error) {
         console.error('Error generating video thumbnail:', error)
+
         return null
       }
     }
+
     return null
   }
 
@@ -60,6 +63,7 @@ export function MediaCard({ item, isHovered, onClick }) {
                   e.target.style.display = 'none'
                   // 显示fallback
                   const fallback = e.target.nextElementSibling
+
                   if (fallback) fallback.style.display = 'flex'
                 }}
               />

@@ -100,6 +100,7 @@ export const PageEntrance = memo(({ children, className, delay = 0 }) => {
     </motion.div>
   )
 })
+
 PageEntrance.displayName = 'PageEntrance'
 
 /**
@@ -112,6 +113,7 @@ export const HeroEntrance = memo(({ children, className }) => {
     </motion.div>
   )
 })
+
 HeroEntrance.displayName = 'HeroEntrance'
 
 /**
@@ -128,6 +130,7 @@ export const TextEntrance = memo(({ children, className, delay = 0 }) => {
     </motion.div>
   )
 })
+
 TextEntrance.displayName = 'TextEntrance'
 
 /**
@@ -146,6 +149,7 @@ export const TitleEntrance = memo(({ children, className, showBorder = false }) 
     </motion.div>
   )
 })
+
 TitleEntrance.displayName = 'TitleEntrance'
 
 /**
@@ -170,6 +174,7 @@ export const ListEntrance = memo(({ children, className, staggerDelay = 0.08 }) 
     </motion.div>
   )
 })
+
 ListEntrance.displayName = 'ListEntrance'
 
 /**
@@ -195,6 +200,7 @@ export const ListItemEntrance = memo(({ children, className }) => {
     </motion.div>
   )
 })
+
 ListItemEntrance.displayName = 'ListItemEntrance'
 
 /**
@@ -221,6 +227,7 @@ export const ScaleEntrance = memo(({ children, className, delay = 0, scale = 0.9
     </motion.div>
   )
 })
+
 ScaleEntrance.displayName = 'ScaleEntrance'
 
 /**
@@ -246,4 +253,5 @@ export const FadeEntrance = memo(({ children, className, delay = 0, duration = 0
     </motion.div>
   )
 })
+
 FadeEntrance.displayName = 'FadeEntrance'

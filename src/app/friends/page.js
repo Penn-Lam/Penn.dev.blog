@@ -41,6 +41,7 @@ export default function FriendsPage() {
 
 export async function generateMetadata() {
   const seoData = await getPageSeo('friends')
+
   const fallback = {
     title: 'Friends',
     description: '互联网上志同道合的朋友们'

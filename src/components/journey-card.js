@@ -52,4 +52,5 @@ export const JourneyCard = memo(({ title, description, image, index }) => {
     </div>
   )
 })
+
 JourneyCard.displayName = 'JourneyCard'
