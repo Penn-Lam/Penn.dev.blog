@@ -1,6 +1,5 @@
 'use client'
 
-import { domAnimation, LazyMotion } from 'framer-motion'
 import Link from 'next/link'
 import { memo, useMemo } from 'react'
 
@@ -185,23 +184,19 @@ export const WritingList = memo(function WritingList({ items, header = 'Writing'
   // 早期返回空状态
   if (isEmpty && !isLoading) {
     return (
-      <LazyMotion features={domAnimation}>
-        <div className="text-body-regular" aria-label={`${header} list`}>
-          <ListHeader />
-          <EmptyState />
-        </div>
-      </LazyMotion>
+      <div className="text-body-regular" aria-label={`${header} list`}>
+        <ListHeader />
+        <EmptyState />
+      </div>
     )
   }
 
   // 主渲染
   return (
-    <LazyMotion features={domAnimation}>
-      <div className="text-body-regular" aria-label={`${header} list`}>
-        {error && <ErrorState error={error} onRetry={refetch} />}
-        <ListHeader />
-        {isEmpty ? <LoadingState /> : <div className="group/list-wrapper">{renderedGroups}</div>}
-      </div>
-    </LazyMotion>
+    <div className="text-body-regular" aria-label={`${header} list`}>
+      {error && <ErrorState error={error} onRetry={refetch} />}
+      <ListHeader />
+      {isEmpty ? <LoadingState /> : <div className="group/list-wrapper">{renderedGroups}</div>}
+    </div>
   )
 })

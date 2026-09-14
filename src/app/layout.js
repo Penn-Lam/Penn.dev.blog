@@ -34,7 +34,7 @@ const iaWriterQuattroS = localFont({
     { path: '../assets/fonts/iAWriterQuattroSBoldItalic.ttf', weight: '700', style: 'italic' }
   ],
   variable: '--font-ia-writer-quattro-s',
-  display: 'swap',
+  display: 'optional',
   preload: false
 })
 
