@@ -1,5 +1,3 @@
-'use client'
-
 import { ToolCard } from './tool-card'
 
 /**

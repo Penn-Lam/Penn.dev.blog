@@ -1,7 +1,3 @@
-'use client'
-
-import { memo } from 'react'
-
 import { NotionMentionLink } from '@/components/notion-mention-link'
 
 /**
@@ -33,7 +29,7 @@ const TAG_COLORS = {
   'AI IDE': 'bg-purple-50 text-purple-600'
 }
 
-export const ToolCard = memo(function ToolCard({ tool }) {
+export function ToolCard({ tool }) {
   return (
     <article className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group relative flex flex-col overflow-hidden rounded-2xl border p-5 transition-[border-color,box-shadow] duration-300">
       <div className="mb-3">
@@ -65,4 +61,4 @@ export const ToolCard = memo(function ToolCard({ tool }) {
       )}
     </article>
   )
-})
+}
