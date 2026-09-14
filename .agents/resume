@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# This project has no local services or per-thread authentication to restore.
-printf 'No orb resume work required.\n'
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+vercel_config_dir="${XDG_DATA_HOME:-$HOME/.local/share}/com.vercel.cli"
+
+if [[ -z "${VERCEL_AUTH_JSON:-}" ]]; then
+  printf 'VERCEL_AUTH_JSON is unavailable; Vercel CLI cannot be authenticated.\n' >&2
+  exit 1
+fi
+
+mkdir -p "$vercel_config_dir"
+printf '%s' "$VERCEL_AUTH_JSON" >"$vercel_config_dir/auth.json"
+chmod 600 "$vercel_config_dir/auth.json"
+
+mkdir -p "$repo_root/.vercel"
+cat >"$repo_root/.vercel/project.json" <<'EOF'
+{"orgId":"team_AzlKp55rKJuwAB8YCv8fosql","projectId":"prj_zNDPeKGRhVecvA1C84pk8IRxEmuI","projectName":"penn-dev-blog"}
+EOF
+
+printf 'Vercel CLI authentication and project link restored.\n'
