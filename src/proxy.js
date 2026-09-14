@@ -16,7 +16,8 @@ export function proxy(request, event) {
       const res = await fetch(`${URL}?slug=${writingSlug}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'User-Agent': userAgent
         },
         signal: AbortSignal.timeout(5000)
       })
