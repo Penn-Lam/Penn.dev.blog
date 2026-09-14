@@ -1,3 +1,5 @@
+import { ImageResponse } from 'next/og'
+
 import { OpenGraphImage } from '@/components/og-image'
 import { getPageSeo } from '@/lib/contentful'
 
@@ -22,10 +24,13 @@ export default async function OpengraphImage() {
     console.error('Error loading Stack SEO data:', error)
   }
 
-  return OpenGraphImage({
-    title,
-    description,
-    icon: <span style={{ fontSize: '3rem' }}>🛠️</span>,
-    url: 'stack'
-  })
+  return new ImageResponse(
+    <OpenGraphImage
+      title={title}
+      description={description}
+      icon={<span style={{ fontSize: '3rem' }}>🛠️</span>}
+      url="stack"
+    />,
+    size
+  )
 }
