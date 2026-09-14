@@ -15,9 +15,11 @@ opengraph-image.js: 默认 OG 图；各子路由可覆盖
 page.js: 首页
 not-found.js: 全局 404
 robots.js / sitemap.js: 爬虫入口
+llms.txt/: AI agent 使用与发现入口
 
 ## 路由
-[slug]/: 动态页
+[slug]/: 构建时已知的 Contentful 动态页；未知 slug 必须保持真实 404
+about/ contact/ privacy/: 静态信任页
 writing/ bookmarks/ journey/ stack/ workspace/ visual/ friends/ musings/: 内容分区
 sign-in/: 登录
 api/: Route Handlers（auth、comments、draft、revalidate、提交表单等）

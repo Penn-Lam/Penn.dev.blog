@@ -11,6 +11,8 @@ import { ScrollArea } from '@/components/scroll-area'
 import { getAllPageSlugs, getPage, getPageSeo } from '@/lib/contentful'
 import { isDevelopment } from '@/lib/utils'
 
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   const allPages = await getAllPageSlugs()
 

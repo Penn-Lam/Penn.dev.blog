@@ -1,11 +1,12 @@
 /**
  * [INPUT]: 无运行时依赖；图标文件来自 public/ 与 src/app/favicon.ico
- * [OUTPUT]: 对外提供 sharedMetadata（标题、描述、OG、icons），供 layout 与 manifest 共用
+ * [OUTPUT]: 对外提供 sharedMetadata（站点名、标题、描述、OG、icons），供 layout 与 manifest 共用
  * [POS]: app 根契约常量，站点名与图标清单的单一来源
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 export const sharedMetadata = {
-  title: 'Penn Lam',
+  name: 'Penn Lam',
+  title: 'Penn Lam — AI Agent Developer & Technical Founder',
   description:
     'Shenzhen-based AI Infra Developer & technical founder, building agent memory infrastructure and next-gen AI-first social platforms with a hacker’s mindset.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://pennlam.com',

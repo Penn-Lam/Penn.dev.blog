@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
 import { authClient } from '@/lib/auth-client'
 
@@ -9,7 +9,7 @@ const ERROR_MESSAGES = {
   github: 'GitHub sign-in failed. Check BETTER_AUTH_URL and your GitHub OAuth callback settings.'
 }
 
-export default function SignInPage() {
+function SignInContent() {
   const searchParams = useSearchParams()
   const callbackURL = searchParams.get('callback') || '/'
   const providerError = searchParams.get('error')
@@ -64,5 +64,13 @@ export default function SignInPage() {
         {error ? <p className="text-body-regular text-text-error-primary mt-4">{error}</p> : null}
       </div>
     </div>
+  )
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignInContent />
+    </Suspense>
   )
 }
