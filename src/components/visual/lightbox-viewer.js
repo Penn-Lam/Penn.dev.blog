@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { CldImage, getCldVideoUrl } from 'next-cloudinary'
 import { useCallback, useEffect } from 'react'
 
@@ -115,7 +115,7 @@ function MediaInfo({ media }) {
   )
 }
 
-export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate }) {
+export function LightboxViewer({ media, allMedia, onClose, onNavigate }) {
   const navigatePrevious = useCallback(() => {
     if (!media || !allMedia) return
     const currentIndex = allMedia.findIndex((item) => item.id === media.id)
@@ -132,8 +132,6 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (!isOpen) return
-
       if (e.key === 'Escape') {
         onClose()
       } else if (e.key === 'ArrowLeft') {
@@ -146,33 +144,29 @@ export function LightboxViewer({ isOpen, media, allMedia, onClose, onNavigate })
     document.addEventListener('keydown', handleKeyPress)
 
     return () => document.removeEventListener('keydown', handleKeyPress)
-  }, [isOpen, onClose, navigateNext, navigatePrevious])
-
-  if (!isOpen || !media) return null
+  }, [onClose, navigateNext, navigatePrevious])
 
   const videoUrl = getVideoUrl(media)
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="bg-background-primary-default/95 fixed inset-0 z-50 flex items-center justify-center"
-        onClick={onClose}
-      >
-        {/* Close Button */}
-        <CloseButton size="md" aria-label="Close" onClick={onClose} className="absolute top-4 right-4 z-10 shadow-lg" />
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="bg-background-primary-default/95 fixed inset-0 z-50 flex items-center justify-center"
+      onClick={onClose}
+    >
+      {/* Close Button */}
+      <CloseButton size="md" aria-label="Close" onClick={onClose} className="absolute top-4 right-4 z-10 shadow-lg" />
 
-        <NavigationButtons allMedia={allMedia} onPrevious={navigatePrevious} onNext={navigateNext} />
+      <NavigationButtons allMedia={allMedia} onPrevious={navigatePrevious} onNext={navigateNext} />
 
-        {/* Media Content */}
-        <div className="max-h-[90vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
-          <LightboxMedia media={media} videoUrl={videoUrl} />
-        </div>
+      {/* Media Content */}
+      <div className="max-h-[90vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
+        <LightboxMedia media={media} videoUrl={videoUrl} />
+      </div>
 
-        <MediaInfo media={media} />
-      </motion.div>
-    </AnimatePresence>
+      <MediaInfo media={media} />
+    </motion.div>
   )
 }

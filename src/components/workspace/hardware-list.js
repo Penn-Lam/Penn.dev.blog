@@ -1,9 +1,7 @@
-'use client'
-
-import { CldImage } from 'next-cloudinary'
+import { DeskSetupImage } from './desk-setup-image'
 
 /**
- * [INPUT]: 依赖 next-cloudinary 的 CldImage 组件
+ * [INPUT]: 依赖 ./desk-setup-image 的 DeskSetupImage 客户端图片岛
  * [OUTPUT]: 对外提供 HardwareList 组件，展示硬件设备列表
  * [POS]: components/workspace/ 的硬件展示组件
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -25,18 +23,7 @@ export function HardwareList({ items }) {
       {/* Desk Setup Photo */}
       <div className="border-separator-border bg-background-primary-default overflow-hidden rounded-2xl border p-2">
         <div className="bg-background-secondary-default relative aspect-[16/10] w-full overflow-hidden rounded-xl">
-          <CldImage
-            src="IMG_0282_kitech"
-            alt="My Desk Setup"
-            width={1200}
-            height={750}
-            quality="auto"
-            format="auto"
-            sizes="(max-width: 768px) 100vw, 800px"
-            className="h-full w-full object-cover"
-            crop="fill"
-            gravity="center"
-          />
+          <DeskSetupImage />
         </div>
       </div>
 

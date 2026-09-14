@@ -1,13 +1,17 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { useVisualData } from '@/hooks/use-visual-data'
 
 import { Gallery } from './gallery'
-import { LightboxViewer } from './lightbox-viewer'
 import { TabSelector } from './tab-selector'
+
+const LightboxViewer = dynamic(() => import('./lightbox-viewer').then((module) => module.LightboxViewer), {
+  ssr: false
+})
 
 function VisualError({ error }) {
   return (
@@ -50,7 +54,6 @@ export function VisualExplorer() {
   const [mediaType, setMediaType] = useState('image')
   const [sourceType, setSourceType] = useState('photography')
   const [selectedMedia, setSelectedMedia] = useState(null)
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [showAll, setShowAll] = useState(false)
 
   const { data: visualData, isLoading, error } = useVisualData()
@@ -61,11 +64,9 @@ export function VisualExplorer() {
 
   const handleMediaClick = (media, index) => {
     setSelectedMedia({ ...media, index })
-    setIsLightboxOpen(true)
   }
 
   const closeLightbox = () => {
-    setIsLightboxOpen(false)
     setSelectedMedia(null)
   }
 
@@ -110,13 +111,14 @@ export function VisualExplorer() {
         </motion.div>
       </AnimatePresence>
 
-      <LightboxViewer
-        isOpen={isLightboxOpen}
-        media={selectedMedia}
-        allMedia={filteredData}
-        onClose={closeLightbox}
-        onNavigate={setSelectedMedia}
-      />
+      {selectedMedia ? (
+        <LightboxViewer
+          media={selectedMedia}
+          allMedia={filteredData}
+          onClose={closeLightbox}
+          onNavigate={setSelectedMedia}
+        />
+      ) : null}
     </div>
   )
 }
