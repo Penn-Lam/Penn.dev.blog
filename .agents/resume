@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# This project has no local services or per-thread authentication to restore.
+printf 'No orb resume work required.\n'

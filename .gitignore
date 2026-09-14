@@ -228,3 +228,6 @@ workbox-*.js
 
 #Tinybird
 /tinybird
+
+# Amp orb runtime files
+/.amp/portals/
