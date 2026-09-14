@@ -200,7 +200,7 @@ export const WritingList = memo(function WritingList({ items, header = 'Writing'
       <div className="text-body-regular" aria-label={`${header} list`}>
         {error && <ErrorState error={error} onRetry={refetch} />}
         <ListHeader />
-        {isLoading ? <LoadingState /> : <div className="group/list-wrapper">{renderedGroups}</div>}
+        {isEmpty ? <LoadingState /> : <div className="group/list-wrapper">{renderedGroups}</div>}
       </div>
     </LazyMotion>
   )

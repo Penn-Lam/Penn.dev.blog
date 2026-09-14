@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 依赖全局 APlayer + MetingJS 脚本（layout.js 中 next/script 加载）
+ * [INPUT]: 依赖调用方按需加载的全局 APlayer + MetingJS 脚本与 enabled 状态
  * [OUTPUT]: 对外提供 useMeting hook，暴露播放控制和状态
  * [POS]: vinyl-player 的音频数据层，桥接 MetingJS Web Component 与 React 状态
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -18,7 +18,7 @@ const extractTrack = (audios, index) => {
   return t ? { name: t.name, artist: t.artist, cover: t.cover } : null
 }
 
-export function useMeting() {
+export function useMeting(enabled) {
   const containerRef = useRef(null)
   const aplayerRef = useRef(null)
   const [isReady, setIsReady] = useState(false)
@@ -26,7 +26,7 @@ export function useMeting() {
   const [currentTrack, setCurrentTrack] = useState(null)
 
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!enabled || !containerRef.current) return
 
     const metingEl = containerRef.current.querySelector('meting-js')
 
@@ -77,7 +77,7 @@ export function useMeting() {
         ap.off('listswitch', onSwitch)
       }
     }
-  }, [])
+  }, [enabled])
 
   const toggle = useCallback(() => aplayerRef.current?.toggle(), [])
   const next = useCallback(() => aplayerRef.current?.skipForward(), [])
