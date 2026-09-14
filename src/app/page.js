@@ -44,8 +44,19 @@ export default async function Home() {
       <FloatingHeader scrollTitle="Penn" />
       <div className="content-wrapper">
         <div className="content">
-          <PageTitle title={HOME_CONTENT.title} className="lg:hidden" />
-          <div>
+          <PageTitle title={HOME_CONTENT.title} className="sr-only" />
+          <p aria-hidden="true">
+            Hi, I'm Penn Lam（林芃芃） 👋
+            <br />
+            AI Agent Developer, Technical Founder, and Popping Dancer 🤠
+            <br />
+            Exploring the possibilities of AIGC.
+            <br />
+            Born in China, CS undergraduate, Metaverse track, now hacking AI in Shenzhen.
+            <br />
+            Bridging GenAI × personal computing — let's connect and shape the future together.
+          </p>
+          <div className="sr-only">
             {HOME_CONTENT.introduction.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -60,17 +71,6 @@ export default async function Home() {
           <Suspense fallback={<ScreenLoadingSpinner />}>
             <WritingList items={items} header="Writing" />
           </Suspense>
-          <nav aria-label="Site information" className="mt-8 flex flex-wrap gap-4">
-            <Link href="/about" className="text-text-primary underline-offset-4 hover:underline">
-              About
-            </Link>
-            <Link href="/contact" className="text-text-primary underline-offset-4 hover:underline">
-              Contact
-            </Link>
-            <Link href="/privacy" className="text-text-primary underline-offset-4 hover:underline">
-              Privacy
-            </Link>
-          </nav>
           <ClientOnly>
             <PenflowSignature />
           </ClientOnly>

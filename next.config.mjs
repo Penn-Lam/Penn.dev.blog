@@ -118,6 +118,7 @@ const nextConfig = {
     ]
   },
   experimental: {
+    inlineCss: true,
     optimizePackageImports: ['framer-motion', '@supabase/supabase-js', 'react-tweet'],
     webVitalsAttribution: ['FCP', 'LCP', 'CLS', 'FID', 'TTFB', 'INP']
   },
