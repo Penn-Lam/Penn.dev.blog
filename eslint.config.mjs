@@ -1,61 +1,17 @@
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat'
-import { FlatCompat } from '@eslint/eslintrc'
-import eslint from '@eslint/js'
-import _import from 'eslint-plugin-import'
-import prettier from 'eslint-plugin-prettier'
-import react from 'eslint-plugin-react'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import prettierRecommended from 'eslint-plugin-prettier/recommended'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import globals from 'globals'
-import path from 'path'
-import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url)
-
-const __dirname = path.dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: eslint.configs.recommended,
-  allConfig: eslint.configs.all
-})
-
-const patchedConfig = [
-  ...fixupConfigRules(
-    compat.extends(
-      'next',
-      'next/core-web-vitals',
-      'eslint:recommended',
-      'plugin:react/recommended',
-      'plugin:prettier/recommended',
-      'plugin:import/recommended'
-    )
-  ),
+const config = defineConfig([
+  ...nextVitals,
+  prettierRecommended,
   {
     files: ['**/*.js?(x)'],
     plugins: {
-      react: fixupPluginRules(react),
-      'simple-import-sort': simpleImportSort,
-      import: fixupPluginRules(_import),
-      prettier: fixupPluginRules(prettier)
-    },
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.commonjs,
-        ...globals.node
-      },
-      ecmaVersion: 6,
-      sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true
-        }
-      }
+      'simple-import-sort': simpleImportSort
     },
     settings: {
-      react: {
-        version: 'detect'
-      },
       'import/resolver': {
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -77,7 +33,10 @@ const patchedConfig = [
       'import/newline-after-import': 'error',
       'import/no-duplicates': 'error',
       '@next/next/no-img-element': 0,
-      'import/no-named-as-default': 0
+      'import/no-named-as-default': 0,
+      // Preserve existing runtime behavior while adopting Next.js 16's expanded React Hooks rules.
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/static-components': 'off'
     }
   },
   {
@@ -92,20 +51,15 @@ const patchedConfig = [
       // Geist declares this subpath through an ambient module that eslint-plugin-import cannot resolve.
       'import/named': 'off'
     }
-  }
-]
-
-const config = [
-  ...patchedConfig,
-  {
-    ignores: [
-      '.next/*',
-      'src/components/base/**',
-      'src/components/application/**',
-      'src/components/foundations/**',
-      'tools/oxlint/anti-slop/**'
-    ]
-  }
-]
+  },
+  globalIgnores([
+    '.next/**',
+    '.agents/**',
+    'src/components/base/**',
+    'src/components/application/**',
+    'src/components/foundations/**',
+    'tools/oxlint/anti-slop/**'
+  ])
+])
 
 export default config

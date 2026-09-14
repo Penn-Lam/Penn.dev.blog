@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Balancer from 'react-wrap-balancer'
 
 import { ButtonLink } from '@/components/base/buttons/button'
 import { ArrowLeft01Icon, RssIcon } from '@/components/icons'
@@ -122,12 +121,7 @@ export const FloatingHeader = memo(({ scrollTitle, title, goBackLink, bookmarks,
             )}
             <div className="flex flex-1 items-center justify-between">
               {titleElement}
-              {/* Balancer 仅在 title 存在时渲染 */}
-              {title && (
-                <Balancer ratio={0.35}>
-                  <span className="text-body-semibold line-clamp-2">{title}</span>
-                </Balancer>
-              )}
+              {title && <span className="text-body-semibold line-clamp-2 text-balance">{title}</span>}
               <div className="flex items-center gap-2">
                 {(isWritingIndexPage || isBookmarksIndexPage) && (
                   <ButtonLink

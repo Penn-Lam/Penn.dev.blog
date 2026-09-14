@@ -1,8 +1,6 @@
 import { OpenGraphImage } from '@/components/og-image'
 import { getPageSeo } from '@/lib/contentful'
 
-export const runtime = 'edge'
-
 export const alt = '工具集'
 
 export const size = { width: 1200, height: 630 }

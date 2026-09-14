@@ -121,9 +121,6 @@ const nextConfig = {
     optimizePackageImports: ['framer-motion', '@supabase/supabase-js', 'react-tweet'],
     webVitalsAttribution: ['FCP', 'LCP', 'CLS', 'FID', 'TTFB', 'INP']
   },
-  eslint: {
-    ignoreDuringBuilds: true
-  },
   transpilePackages: ['geist']
 }
 
