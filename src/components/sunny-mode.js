@@ -82,24 +82,29 @@ export function SunnyToggle() {
    ======================================================================== */
 const BGM_SRC = '/assets/summer-garden-ambience.mp3'
 
+export function syncSunnyAudio(active, audio, createAudio = () => new Audio(BGM_SRC)) {
+  if (!active) {
+    audio?.pause()
+
+    if (audio) audio.currentTime = 0
+
+    return audio
+  }
+
+  const nextAudio = audio ?? createAudio()
+  nextAudio.loop = true
+  nextAudio.volume = 0.4
+  nextAudio.play().catch(() => {})
+
+  return nextAudio
+}
+
 export function SunnyOverlay() {
   const { active } = useSunnyMode()
   const audioRef = useRef(null)
 
   useEffect(() => {
-    if (!audioRef.current) {
-      const audio = new Audio(BGM_SRC)
-      audio.loop = true
-      audio.volume = 0.4
-      audioRef.current = audio
-    }
-
-    if (active) {
-      audioRef.current.play().catch(() => {})
-    } else {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0
-    }
+    audioRef.current = syncSunnyAudio(active, audioRef.current)
   }, [active])
 
   return (
@@ -132,7 +137,7 @@ export function SunnyOverlay() {
             right: -700,
             width: 1600,
             height: 1400,
-            backgroundImage: 'url(/assets/leaves.png)',
+            backgroundImage: active ? 'url(/assets/leaves.png)' : undefined,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             filter: 'url(#sunny-wind)'

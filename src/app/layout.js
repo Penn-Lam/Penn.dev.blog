@@ -34,13 +34,15 @@ const iaWriterQuattroS = localFont({
     { path: '../assets/fonts/iAWriterQuattroSBoldItalic.ttf', weight: '700', style: 'italic' }
   ],
   variable: '--font-ia-writer-quattro-s',
-  display: 'swap'
+  display: 'swap',
+  preload: false
 })
 
 const fzPingXianYaSong = localFont({
   src: [{ path: '../assets/fonts/FZPingXianYaSong-Regular.ttf', weight: '400', style: 'normal' }],
   variable: '--font-fz-pingxian-yasong',
-  display: 'swap'
+  display: 'swap',
+  preload: false
 })
 
 export const fetchCache = 'default-cache'
@@ -59,7 +61,6 @@ export default async function RootLayout({ children }) {
       <body className="bg-background-full text-text-primary" suppressHydrationWarning>
         <ErrorBoundary>
           <DialogStateProvider>
-            {/* eslint-disable-next-line react/no-unknown-property */}
             <main vaul-drawer-wrapper="" className="bg-background-full min-h-screen">
               {isEnabled && (
                 <div className="bg-state-success-base text-body-medium text-state-success-text absolute inset-x-0 bottom-0 z-50 flex h-12 w-full items-center justify-center text-center">
@@ -83,15 +84,14 @@ export default async function RootLayout({ children }) {
         </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
-        <Script
-          src="https://unpkg.com/@tinybirdco/flock.js"
-          data-host={process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_HOST}
-          data-token={process.env.NEXT_PUBLIC_TINYBIRD_TOKEN}
-          strategy="lazyOnload"
-        />
-        {/* APlayer + MetingJS：黑胶唱片播放器的音频引擎 */}
-        <Script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" strategy="afterInteractive" />
-        <Script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" strategy="afterInteractive" />
+        {process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_HOST && process.env.NEXT_PUBLIC_TINYBIRD_TOKEN ? (
+          <Script
+            src="https://unpkg.com/@tinybirdco/flock.js"
+            data-host={process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_HOST}
+            data-token={process.env.NEXT_PUBLIC_TINYBIRD_TOKEN}
+            strategy="lazyOnload"
+          />
+        ) : null}
       </body>
     </html>
   )

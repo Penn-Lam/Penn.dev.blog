@@ -1,12 +1,13 @@
 'use client'
 
 /**
- * [INPUT]: 依赖 useMeting hook（音频控制）、VinylRecord（视觉层）
+ * [INPUT]: 依赖 next/script、useMeting hook（音频控制）、VinylRecord（视觉层）
  * [OUTPUT]: 对外提供 VinylPlayer 组件
- * [POS]: vinyl-player 的主组件，组合音频控制与唱片 UI，自带展开/收起状态
+ * [POS]: vinyl-player 的主组件，组合按需加载的音频引擎与唱片 UI，自带展开/收起状态
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
+import Script from 'next/script'
 import { memo, useCallback, useState } from 'react'
 
 import { DiscIcon, SkipBackIcon, SkipForwardIcon } from '@/components/icons'
@@ -18,15 +19,33 @@ import { VinylRecord } from './vinyl-record'
 
 export const VinylPlayer = memo(() => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isAPlayerReady, setIsAPlayerReady] = useState(false)
+  const [isMetingReady, setIsMetingReady] = useState(false)
   const toggleOpen = useCallback(() => setIsOpen((v) => !v), [])
   useKeyPress(toggleOpen, ['Digit9'])
-  const { containerRef, isReady, isPlaying, currentTrack, toggle, next, prev } = useMeting()
+  const { containerRef, isReady, isPlaying, currentTrack, toggle, next, prev } = useMeting(isOpen && isMetingReady)
 
   return (
     <div className="hidden lg:block">
-      <div ref={containerRef} className="pointer-events-none fixed -left-[9999px] opacity-0">
-        <meting-js server="netease" type="playlist" id={PLAYLIST_ID} preload="auto" />
-      </div>
+      {isOpen ? (
+        <Script
+          src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"
+          strategy="afterInteractive"
+          onReady={() => setIsAPlayerReady(true)}
+        />
+      ) : null}
+      {isOpen && isAPlayerReady ? (
+        <Script
+          src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"
+          strategy="afterInteractive"
+          onReady={() => setIsMetingReady(true)}
+        />
+      ) : null}
+      {isOpen && isMetingReady ? (
+        <div ref={containerRef} className="pointer-events-none fixed -left-[9999px] opacity-0">
+          <meting-js server="netease" type="playlist" id={PLAYLIST_ID} preload="none" />
+        </div>
+      ) : null}
       <button
         onClick={toggleOpen}
         className={cn(
