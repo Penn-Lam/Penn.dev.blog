@@ -1,17 +1,6 @@
 {
-  "mcpServers": {
-    "boardui": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "-y",
-        "boardui@latest",
-        "mcp"
-      ],
-      "env": {}
-    },
+  "amp.mcpServers": {
     "next-devtools": {
-      "type": "stdio",
       "command": "bun",
       "args": [
         "x",
