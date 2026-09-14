@@ -9,7 +9,7 @@ import { sharedMetadata } from '@/app/shared-metadata'
 
 export default function manifest() {
   return {
-    name: sharedMetadata.title,
+    name: sharedMetadata.name,
     short_name: 'Penn',
     description: sharedMetadata.description,
     start_url: '/',

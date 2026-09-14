@@ -1,3 +1,4 @@
+import { SITE_URL, TRUST_PATHS } from '@/data/site-content'
 import { getAllPageSlugs, getAllPosts } from '@/lib/contentful'
 import { getBookmarks } from '@/lib/raindrop'
 import { getSortedPosts } from '@/lib/utils'
@@ -9,7 +10,7 @@ export default async function sitemap() {
 
   const writings = sortedWritings.map((post) => {
     return {
-      url: `https://pennlam.com/writing/${post.slug}`,
+      url: `${SITE_URL}/writing/${post.slug}`,
       lastModified: post.sys.publishedAt,
       changeFrequency: 'yearly',
       priority: 0.5
@@ -18,7 +19,7 @@ export default async function sitemap() {
 
   const mappedBookmarks = bookmarks.map((bookmark) => {
     return {
-      url: `https://pennlam.com/bookmarks/${bookmark.slug}`,
+      url: `${SITE_URL}/bookmarks/${bookmark.slug}`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1
@@ -43,20 +44,28 @@ export default async function sitemap() {
     if (['bookmarks'].includes(page.slug)) priority = 1
 
     return {
-      url: `https://pennlam.com/${page.slug}`,
+      url: `${SITE_URL}/${page.slug}`,
       lastModified,
       changeFrequency,
       priority
     }
   })
 
+  const trustPages = TRUST_PATHS.map((path) => ({
+    url: `${SITE_URL}${path}`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly',
+    priority: 0.5
+  }))
+
   return [
     {
-      url: 'https://pennlam.com',
+      url: SITE_URL,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 1
     },
+    ...trustPages,
     ...pages,
     ...writings,
     ...mappedBookmarks

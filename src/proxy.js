@@ -1,6 +1,8 @@
 import { isbot } from 'isbot'
 import { NextResponse } from 'next/server'
 
+import { appendNegotiationVary, preferredRepresentation } from '@/lib/content-negotiation'
+
 export function proxy(request, event) {
   const { pathname } = request.nextUrl
   const writingSlug = pathname.match(/^\/writing\/([^/]+)$/)?.[1]
@@ -32,13 +34,41 @@ export function proxy(request, event) {
    */
   if (writingSlug && !isBotRequest) event.waitUntil(sendAnalytics())
 
-  return NextResponse.next()
+  const accept = request.headers.get('accept')
+  const representation = preferredRepresentation(accept)
+
+  if (representation === 'text/markdown') {
+    const url = request.nextUrl.clone()
+    url.pathname = `/api/markdown${pathname}`
+    const response = NextResponse.rewrite(url)
+
+    appendNegotiationVary(response.headers)
+
+    return response
+  }
+
+  if (!representation) {
+    const response = new NextResponse('Not Acceptable\n\nAvailable: text/html, text/markdown\n', {
+      status: 406,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    })
+
+    appendNegotiationVary(response.headers)
+
+    return response
+  }
+
+  const response = NextResponse.next()
+
+  appendNegotiationVary(response.headers)
+
+  return response
 }
 
 export const config = {
   matcher: [
     {
-      source: '/writing/:path*',
+      source: '/((?!api/|_next/|_vercel/|.*(?:opengraph-image)(?:/|$)|.*\\..*).*)',
       missing: [
         { type: 'header', key: 'next-router-prefetch' },
         { type: 'header', key: 'purpose', value: 'prefetch' }

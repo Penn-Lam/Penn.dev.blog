@@ -5,7 +5,6 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { Button } from '@/components/base/buttons/button'
 import { CloseButton } from '@/components/base/buttons/close-button'
 import { Textarea } from '@/components/base/textarea/textarea'
-import { ClientOnly } from '@/components/client-only'
 import { PlusSignIcon, SendIcon } from '@/components/icons'
 import { notify } from '@/lib/notifications'
 
@@ -19,11 +18,9 @@ export function DialogStateProvider({ children }) {
   const [isQuickPostOpen, setIsQuickPostOpen] = useState(false)
 
   return (
-    <ClientOnly>
-      <DialogStateContext.Provider value={{ isQuickPostOpen, setIsQuickPostOpen }}>
-        {children}
-      </DialogStateContext.Provider>
-    </ClientOnly>
+    <DialogStateContext.Provider value={{ isQuickPostOpen, setIsQuickPostOpen }}>
+      {children}
+    </DialogStateContext.Provider>
   )
 }
 

@@ -108,7 +108,12 @@ export const metadata = {
     template: `%s — ${sharedMetadata.title}`
   },
   description: sharedMetadata.description,
-  keywords: ['Penn Lam', 'pennlam.com'],
+  applicationName: sharedMetadata.name,
+  authors: [{ name: sharedMetadata.name, url: sharedMetadata.url }],
+  creator: sharedMetadata.name,
+  publisher: sharedMetadata.name,
+  category: 'technology',
+  keywords: ['Penn Lam', '林芃芃', 'AI agent developer', 'technical founder', 'pennlam.com'],
   openGraph: {
     title: {
       default: sharedMetadata.title,
@@ -118,7 +123,7 @@ export const metadata = {
     alt: sharedMetadata.title,
     type: 'website',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://pennlam.com',
-    siteName: sharedMetadata.title,
+    siteName: sharedMetadata.name,
     locale: 'en_IE',
     images: [
       {
