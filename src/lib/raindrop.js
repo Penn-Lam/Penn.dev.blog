@@ -62,7 +62,7 @@ export const getBookmarks = async () => {
   } catch (error) {
     console.error(`Failed to fetch bookmarks: ${error.message}`)
 
-    return null
+    throw error
   }
 }
 
