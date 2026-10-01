@@ -53,5 +53,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Use Bun 1.3.8 and Node 24. With mise activated, run `mise exec bun@1.3.8 -- bun …`. The global default Bun is 1.3.10 and is for other repositories in this workspace.
 - `bun dev` starts portless and Next.js. Open `https://pennlam.localhost`. The first proxy start binds port 443 and uses passwordless sudo.
-- `.env.local` is copied from `.env.example`. The homepage and `/writing` render without Contentful, Supabase, or Cloudinary. The writing list stays empty until those Contentful variables are set.
+- `.env.local` is copied from `.env.example`. The homepage imports the Supabase client while loading view counts, so `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` must be non-empty. Local placeholders let the page render; view counts stay unavailable until real Supabase credentials replace them. The writing list stays empty until the Contentful variables are set.
+- Run `bun x portless trust` once so `https://pennlam.localhost` uses the local CA. Restart the browser after trusting the CA.
 - `bun run lint` currently fails on an existing oxlint spacing finding in `src/components/home-performance.test.js`.
