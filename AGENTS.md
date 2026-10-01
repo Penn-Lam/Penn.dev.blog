@@ -38,3 +38,20 @@ This project uses BoardUI (React + Tailwind CSS v4, source-owned components unde
 
 When unsure about a token, a component's API, or working example code, ask the BoardUI MCP server: `get_theme`, `get_component`, `get_usage_examples`.
 <!-- boardui:rules:end -->
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
+
+## Cursor Cloud specific instructions
+
+- Use Bun 1.3.8 and Node 24. With mise activated, run `mise exec bun@1.3.8 -- bun …`. The global default Bun is 1.3.10 and is for other repositories in this workspace.
+- `bun dev` starts portless and Next.js. Open `https://pennlam.localhost`. The first proxy start binds port 443 and uses passwordless sudo.
+- `.env.local` is copied from `.env.example`. The homepage and `/writing` render without Contentful, Supabase, or Cloudinary. The writing list stays empty until those Contentful variables are set.
+- `bun run lint` currently fails on an existing oxlint spacing finding in `src/components/home-performance.test.js`.
