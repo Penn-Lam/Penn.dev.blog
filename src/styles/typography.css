@@ -5,10 +5,10 @@
  * text utility — `text-{name}` applies font-size + line-height + letter-spacing
  * + font-weight in one go.
  *
- * Family: Inter for the whole ramp. (The Figma export marks Large Title /
- * Regular as "Inter Display"; we map everything to Inter for consistency since
- * Inter ships a variable optical-size axis. Flag if a true Inter Display load
- * is needed.)
+ * These utilities set size, weight, line-height, and tracking, not font family.
+ * The default UI inherits iA Writer Quattro S; writing content uses FZ PingXian
+ * YaSong, and font-mono selects Paper Mono. Families are configured in
+ * app/layout.js and globals.css.
  *
  * Weight mapping (mirrors Figma variables — font/weight/*):
  *   Regular   = 400

@@ -27,7 +27,7 @@
 
 @theme {
   --font-sans: var(--font-ia-writer-quattro-s);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-paper-mono);
 
   --breakpoint-xs: 390px;
   --breakpoint-sm: 435px;
@@ -103,7 +103,7 @@
     opacity: 1;
   }
 
-  /* 为中文文本添加思源宋体 */
+  /* Use FZ PingXian YaSong for explicitly marked Chinese text. */
   :lang(zh),
   [lang='zh'],
   .chinese-text {
@@ -135,6 +135,12 @@
   .writing-content article,
   .writing-content .prose {
     font-family: var(--font-fz-pingxian-yasong), 'Source Han Serif SC', '思源宋体', serif;
+  }
+
+  /* Keep code and explicit monospace content out of the writing serif override. */
+  .writing-content :is(code, .font-mono),
+  .writing-content :is(code, .font-mono) * {
+    font-family: var(--font-paper-mono), monospace;
   }
 
   #__next {

@@ -1,3 +1,3 @@
 :root {
-  --ha-font-family-body: Geist, ui-serif, sans-serif !important;
+  --ha-font-family-body: var(--font-ia-writer-quattro-s, ui-sans-serif), sans-serif !important;
 }

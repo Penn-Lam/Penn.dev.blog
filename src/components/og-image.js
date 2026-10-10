@@ -3,6 +3,7 @@ export const OpenGraphImage = ({ title, description, icon, url }) => {
     <div
       style={{
         backgroundColor: 'white',
+        fontFamily: 'iA Writer Quattro S',
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -50,7 +51,7 @@ export const OpenGraphImage = ({ title, description, icon, url }) => {
           {icon}
           <span
             style={{
-              fontSize: '4.75rem',
+              fontSize: '4rem',
               lineHeight: 1,
               fontWeight: 600
             }}
@@ -59,7 +60,7 @@ export const OpenGraphImage = ({ title, description, icon, url }) => {
           </span>
         </div>
         {description && (
-          <span style={{ fontSize: '2.5rem', lineHeight: '3rem', marginTop: '1rem' }}>{description}</span>
+          <span style={{ fontSize: '2rem', lineHeight: '2.5rem', marginTop: '1rem' }}>{description}</span>
         )}
       </span>
     </div>

@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 @/globals.css、BoardUI 语义 token、SiteSidebar、shared-metadata、Contentful preload
- * [OUTPUT]: 对外提供 RootLayout、metadata、viewport；注入全站侧栏与主题
+ * [OUTPUT]: RootLayout, metadata, viewport; site shell, theme, and local font variables
  * [POS]: App Router 根布局，所有路由的 HTML 壳
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
@@ -9,7 +9,6 @@ import '@/globals.css'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import classix from 'classix'
-import { GeistMono } from 'geist/font/mono'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import Script from 'next/script'
@@ -25,6 +24,13 @@ import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ErrorBoundary } from '@/components/ui/error-boundary'
 import { PROFILES } from '@/lib/constants'
 import { preloadGetAllPosts } from '@/lib/contentful'
+
+const paperMono = localFont({
+  src: [{ path: '../assets/fonts/PaperMono-Variable.woff2', weight: '100 800', style: 'normal' }],
+  variable: '--font-paper-mono',
+  display: 'swap',
+  preload: false
+})
 
 const iaWriterQuattroS = localFont({
   src: [
@@ -55,7 +61,7 @@ export default async function RootLayout({ children }) {
     <html
       lang="en"
       data-theme="light"
-      className={classix(GeistMono.variable, iaWriterQuattroS.variable, fzPingXianYaSong.variable)}
+      className={classix(paperMono.variable, iaWriterQuattroS.variable, fzPingXianYaSong.variable)}
       suppressHydrationWarning
     >
       <body className="bg-background-full text-text-primary" suppressHydrationWarning>

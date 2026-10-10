@@ -4,7 +4,7 @@ import { sharedMetadata } from '@/app/shared-metadata'
 import { OpenGraphImage } from '@/components/og-image'
 import { getBoldFont, getRegularFont } from '@/lib/fonts'
 
-export const alt = sharedMetadata.title
+export const alt = sharedMetadata.name
 
 export const size = {
   width: sharedMetadata.ogImage.width,
@@ -24,7 +24,7 @@ export default async function Image() {
 
   return new ImageResponse(
     <OpenGraphImage
-      title={sharedMetadata.title}
+      title={sharedMetadata.name}
       description={sharedMetadata.description}
       icon={
         <svg
@@ -50,16 +50,16 @@ export default async function Image() {
       ...size,
       fonts: [
         {
-          name: 'Geist Sans',
+          name: 'iA Writer Quattro S',
           data: regularFontData,
           style: 'normal',
           weight: 400
         },
         {
-          name: 'Geist Sans',
+          name: 'iA Writer Quattro S',
           data: boldFontData,
           style: 'normal',
-          weight: 500
+          weight: 700
         }
       ]
     }

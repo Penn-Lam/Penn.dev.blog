@@ -45,13 +45,6 @@ const config = defineConfig([
       'import/no-anonymous-default-export': 'off'
     }
   },
-  {
-    files: ['src/app/layout.js'],
-    rules: {
-      // Geist declares this subpath through an ambient module that eslint-plugin-import cannot resolve.
-      'import/named': 'off'
-    }
-  },
   globalIgnores([
     '.next/**',
     '.agents/**',

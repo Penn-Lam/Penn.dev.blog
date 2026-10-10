@@ -121,8 +121,7 @@ const nextConfig = {
     inlineCss: true,
     optimizePackageImports: ['framer-motion', '@supabase/supabase-js', 'react-tweet'],
     webVitalsAttribution: ['FCP', 'LCP', 'CLS', 'FID', 'TTFB', 'INP']
-  },
-  transpilePackages: ['geist']
+  }
 }
 
 // Force cache invalidation - 2025-01-07 14:20

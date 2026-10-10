@@ -77,16 +77,16 @@ export async function GET(_, props) {
       ...size,
       fonts: [
         {
-          name: 'Geist Sans',
+          name: 'iA Writer Quattro S',
           data: regularFontData,
           style: 'normal',
           weight: 400
         },
         {
-          name: 'Geist Sans',
+          name: 'iA Writer Quattro S',
           data: boldFontData,
           style: 'normal',
-          weight: 500
+          weight: 700
         }
       ]
     }

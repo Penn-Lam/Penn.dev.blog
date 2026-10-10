@@ -1,5 +1,7 @@
 import { ImageResponse } from 'next/og'
 
+import { getBoldFont, getRegularFont } from '@/lib/fonts'
+
 export const alt = 'Visual - Photography & AI Generated Art'
 
 export const size = {
@@ -10,9 +12,12 @@ export const size = {
 export const contentType = 'image/png'
 
 export default async function Image() {
+  const [regularFontData, boldFontData] = await Promise.all([getRegularFont(), getBoldFont()])
+
   return new ImageResponse(
     <div
       style={{
+        fontFamily: 'iA Writer Quattro S',
         height: '100%',
         width: '100%',
         display: 'flex',
@@ -60,7 +65,11 @@ export default async function Image() {
       </div>
     </div>,
     {
-      ...size
+      ...size,
+      fonts: [
+        { name: 'iA Writer Quattro S', data: regularFontData, style: 'normal', weight: 400 },
+        { name: 'iA Writer Quattro S', data: boldFontData, style: 'normal', weight: 700 }
+      ]
     }
   )
 }
