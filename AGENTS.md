@@ -38,3 +38,21 @@ This project uses BoardUI (React + Tailwind CSS v4, source-owned components unde
 
 When unsure about a token, a component's API, or working example code, ask the BoardUI MCP server: `get_theme`, `get_component`, `get_usage_examples`.
 <!-- boardui:rules:end -->
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
+
+## Cursor Cloud specific instructions
+
+- Use Bun 1.3.8 and Node 24. With mise activated, run `mise exec bun@1.3.8 -- bun …`. The global default Bun is 1.3.10 and is for other repositories in this workspace.
+- `bun dev` starts portless and Next.js. Open `https://pennlam.localhost`. The first proxy start binds port 443 and uses passwordless sudo. A non-interactive shell cannot prompt for that sudo, so start the proxy first with `sudo -n ./node_modules/.bin/portless proxy start --https`.
+- `.env.local` is copied from `.env.example`. The homepage imports the Supabase client while loading view counts, so `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` must be non-empty. Local placeholders let the page render; view counts stay unavailable until real Supabase credentials replace them. The writing list stays empty until the Contentful variables are set.
+- Run `bun x portless trust` once so `https://pennlam.localhost` uses the local CA. Chrome on Linux also needs that CA in `~/.pki/nssdb` (`certutil -A -t "C,," -n portless-local -i ~/.portless/ca.pem`). Restart the browser after trusting the CA.
+- `bun run lint` currently fails on an existing oxlint spacing finding in `src/components/home-performance.test.js`.
