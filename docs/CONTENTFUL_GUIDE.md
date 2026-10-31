@@ -78,11 +78,12 @@ The following rich text formats are supported for `Logbook.description`:
 - **Embedded Assets:** Images (with alt, description, width, height, lazy loading)
 - **Embedded Entries:**
   - `ContentEmbed` (YouTube video, SoundCloud audio only)
+  - `HtmlEmbed` (same-origin standalone HTML in a sandboxed iframe)
   - `CodeBlock` (title, code)
   - `Tweet` (tweet card, by id)
   - `Carousel` (image gallery)
 
-> Other rich text features (such as tables, H1/H4/H5/H6, underline, strikethrough, custom colors, etc.) are **not supported** by the current frontend implementation.
+> Tables are styled by the frontend; native headings and marks use Contentful renderer defaults unless overridden. Custom colors are not supported.
 
 ### 3. Page Content Model
 
@@ -147,6 +148,17 @@ The following rich text formats are supported for `Logbook.description`:
 >
 > Other platforms/types (e.g. Vimeo, Bilibili, Figma, Notion, etc.) are NOT supported unless you extend the codebase.
 
+
+#### HtmlEmbed Content Model
+
+**Content Type ID**: `htmlEmbed`
+
+| Field Name | Field ID  | Type       | Description                          |
+| ---------- | --------- | ---------- | ------------------------------------ |
+| Title      | `title`   | Short text | Required iframe title and caption   |
+| HTML URL   | `htmlUrl` | Short text | Required `/embeds/<name>.html` path |
+
+Embed this entry as a block in a Post's `Content` field. Put the standalone HTML file in `public/embeds/`; the iframe allows scripts without same-origin access.
 
 #### Carousel Content Model
 

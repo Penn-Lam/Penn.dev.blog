@@ -120,6 +120,16 @@ export const getPost = cache(async (slug, preview = isDevelopment) => {
                   }
                 }
                 entries {
+                  block {
+                    sys {
+                      id
+                    }
+                    __typename
+                    ... on HtmlEmbed {
+                      title
+                      htmlUrl
+                    }
+                  }
                   inline {
                     sys {
                       id

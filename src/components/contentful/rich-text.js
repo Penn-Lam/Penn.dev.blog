@@ -2,6 +2,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types'
 import dynamic from 'next/dynamic'
 
+import { LatexText } from '@/components/contentful/latex-text'
 import { Link } from '@/components/link'
 import { ShowInView } from '@/components/show-in-view'
 
@@ -15,15 +16,41 @@ import { dasherize } from '@/lib/utils'
 
 function options(links) {
   const findAsset = (id) => links?.assets?.block?.find((item) => item.sys.id === id)
+  const findBlockEntry = (id) => links?.entries?.block?.find((item) => item.sys.id === id)
   const findInlineEntry = (id) => links?.entries?.inline?.find((item) => item.sys.id === id)
 
   return {
+    renderText: (text) => (/\$|\\[([)]/.test(text) ? <LatexText text={text} /> : text),
     renderMark: {
       [MARKS.BOLD]: (text) => <span className="text-text-primary font-semibold">{text}</span>,
       [MARKS.ITALIC]: (text) => <span className="italic">{text}</span>,
-      [MARKS.CODE]: (text) => <code className="inline-code">{text}</code>
+      [MARKS.CODE]: (text) => <code className="inline-code">{text.props?.text ?? text}</code>
     },
     renderNode: {
+      [BLOCKS.TABLE]: (_, children) => (
+        <div
+          role="region"
+          aria-label="表格"
+          tabIndex={0}
+          className="focus-visible:ring-border-focus-ring mb-6 max-w-full overflow-x-auto focus-visible:ring-2 focus-visible:outline-none"
+        >
+          <table className="text-body-2-regular w-full min-w-96 border-collapse">
+            <tbody>{children}</tbody>
+          </table>
+        </div>
+      ),
+      [BLOCKS.TABLE_ROW]: (_, children) => <tr>{children}</tr>,
+      [BLOCKS.TABLE_HEADER_CELL]: (_, children) => (
+        <th
+          scope="col"
+          className="border-border-table bg-background-secondary-default border px-3 py-2 text-left align-top"
+        >
+          {children}
+        </th>
+      ),
+      [BLOCKS.TABLE_CELL]: (_, children) => (
+        <td className="border-border-table border px-3 py-2 align-top">{children}</td>
+      ),
       [BLOCKS.HEADING_2]: (_, children) => {
         const id = dasherize(children)
         const url = `h2-${id}`
@@ -75,14 +102,14 @@ function options(links) {
         const isEagerLoading = asset.contentfulMetadata?.tags?.some((tag) => tag.name === 'Eager Loading')
 
         return (
-          <figure className="mb-6 flex flex-col gap-2 overflow-hidden rounded-xl">
+          <figure className="mb-6 flex flex-col items-center gap-2 overflow-hidden rounded-xl">
             <img
               src={asset.url}
               width={asset.width || 400}
               height={asset.height || 300}
               alt={asset.description || asset.title}
               loading={isEagerLoading ? 'eager' : 'lazy'}
-              className="animate-reveal"
+              className="animate-reveal h-auto max-w-full"
               // eslint-disable-next-line react/no-unknown-property
               nopin="nopin"
             />
@@ -92,6 +119,21 @@ function options(links) {
               </figcaption>
             )}
           </figure>
+        )
+      },
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+        const entry = findBlockEntry(node.data.target.sys.id)
+
+        if (entry?.__typename !== 'HtmlEmbed' || !/^\/embeds\/[a-z0-9-]+\.html$/.test(entry.htmlUrl)) return null
+
+        return (
+          <DynamicIframe
+            embedUrl={entry.htmlUrl}
+            title={entry.title}
+            sandbox="allow-scripts"
+            referrerPolicy="no-referrer"
+            className="h-[70vh] min-h-96"
+          />
         )
       },
       [BLOCKS.HR]: () => <hr className="my-12" />,

@@ -10,6 +10,7 @@ test('keeps non-critical homepage rendering work off the initial path', async ()
     readSource('./writing-list.js'),
     readSource('../../next.config.mjs')
   ])
+
   const primaryFont = layout.slice(layout.indexOf('const iaWriterQuattroS'), layout.indexOf('const fzPingXianYaSong'))
 
   expect(primaryFont).toContain("display: 'optional'")
