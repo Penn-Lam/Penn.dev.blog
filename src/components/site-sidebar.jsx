@@ -7,12 +7,11 @@ import { Collapsible, Sidebar } from '@/components/application/dashboard/dashboa
 import { NavigationLink } from '@/components/navigation-link'
 import { useDialogState } from '@/components/quick-post-button'
 import { useSidebarCollapse } from '@/components/sidebar-collapse'
-import { VinylPlayer } from '@/components/vinyl-player'
 import { useKeyPress } from '@/hooks/useKeyPress'
 import { LINKS, PROFILES } from '@/lib/constants'
 
 /**
- * [INPUT]: 依赖 BoardUI Sidebar、NavigationLink、VinylPlayer、LINKS/PROFILES 常量
+ * [INPUT]: 依赖 BoardUI Sidebar、NavigationLink、LINKS/PROFILES 常量
  * [OUTPUT]: 对外提供 SiteSidebar 组件，桌面端左侧导航（lg+）
  * [POS]: app/layout.js 的全局侧边栏，替换原 SideMenu + MenuContent 组合
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -39,7 +38,6 @@ function SidebarIdentity({ collapsed }) {
         height={32}
         loading="lazy"
         className="size-8 shrink-0 rounded-full border shadow-xs"
-        // eslint-disable-next-line react/no-unknown-property
         nopin="nopin"
       />
       <Collapsible collapsed={collapsed} className="flex-col items-start gap-0">
@@ -87,7 +85,6 @@ export const SiteSidebar = () => {
         footer={(collapsed) =>
           collapsed ? null : (
             <div className="flex flex-col gap-1 px-0.5">
-              <VinylPlayer />
               <div className="flex flex-col gap-1">
                 <span className="text-caption-1-medium text-text-secondary px-1">Online</span>
                 {Object.values(PROFILES).map((profile) => (

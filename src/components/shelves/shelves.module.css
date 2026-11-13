@@ -1,0 +1,548 @@
+/**
+ * [INPUT]: 依赖调用方设置的 --tilt（画挂歪的角度）、--cloth-hue（布面封皮色相）、--sleeve-hue（素色封套色相）；依赖 PointerTilt 写在 li 上的 --px、--py；
+ *          依赖 vinyl-record.module.css 认的 --vinyl-size；依赖 globals.css 的 --ease-spring
+ * [OUTPUT]: 对外提供画廊墙（.wall 起）、书架（.bookshelf 起）、唱片架（.crate 起）三组类名
+ * [POS]: components/shelves 的全部样式。三种陈列共用一个原则：只画实物，不加卡片、标签和说明文字。
+ *        交互也按实物来：画绕钉子摆动、玻璃反光跟着指针走；书被抽出时两边的书让开；黑胶从封套里滑出来转。
+ *        木头、纸、塑料的颜色是材质本身的颜色，写成字面值；文字颜色仍用站点的语义变量。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
+/* ==========================================================================
+   画廊墙
+   ========================================================================== */
+
+.wall {
+  margin: 0;
+  padding: 12px 6px 0;
+  list-style: none;
+  columns: 2;
+  column-gap: 32px;
+}
+
+@container (min-width: 40rem) {
+  .wall {
+    columns: 3;
+    column-gap: 40px;
+  }
+}
+
+.hang {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 40px;
+  padding-top: 16px;
+  break-inside: avoid;
+}
+
+/* 挂着的那一整件：挂线、钉子和画框一起绕钉子转。静止时歪一点，指到它时摆几下后挂正 */
+.hanger {
+  position: relative;
+  display: block;
+  width: 100%;
+  transform-origin: 50% -14px;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  outline: none;
+}
+
+.hanger:hover,
+.hanger:focus-visible {
+  transform: rotate(0deg);
+  animation: swing 1.3s ease-out;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(var(--tilt, 0deg));
+  }
+
+  18% {
+    transform: rotate(2.8deg);
+  }
+
+  38% {
+    transform: rotate(-1.9deg);
+  }
+
+  58% {
+    transform: rotate(1.1deg);
+  }
+
+  78% {
+    transform: rotate(-0.45deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* 挂线：从画框上沿两点拉到钉子，呈人字形 */
+.hanger::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 22%;
+  right: 22%;
+  height: 14px;
+  background:
+    linear-gradient(
+        to top right,
+        transparent calc(50% - 0.6px),
+        #8c877b calc(50% - 0.6px) calc(50% + 0.6px),
+        transparent calc(50% + 0.6px)
+      )
+      left / 50% 100% no-repeat,
+    linear-gradient(
+        to top left,
+        transparent calc(50% - 0.6px),
+        #8c877b calc(50% - 0.6px) calc(50% + 0.6px),
+        transparent calc(50% + 0.6px)
+      )
+      right / 50% 100% no-repeat;
+}
+
+/* 钉子 */
+.hanger::after {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: calc(50% - 3.5px);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f4f2ee, #8e8a80);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.35);
+}
+
+/* 画框跟着指针略微转向，影子往反方向移 */
+.frame {
+  display: block;
+  padding: 9px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, var(--frame-light), var(--frame) 45%, var(--frame-dark));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 0 0 1px rgb(0 0 0 / 0.22),
+    0 1px 1px rgb(0 0 0 / 0.22),
+    calc(var(--px, 0) * -8px) calc(12px + var(--py, 0) * -6px) 18px -8px rgb(0 0 0 / 0.3),
+    calc(var(--px, 0) * -14px) calc(28px + var(--py, 0) * -10px) 32px -20px rgb(0 0 0 / 0.26);
+  transform: perspective(900px) rotateX(calc(var(--py, 0) * -5deg)) rotateY(calc(var(--px, 0) * 7deg));
+}
+
+.hanger:focus-visible .frame {
+  outline: 2px solid var(--color-border-focus-ring);
+  outline-offset: 4px;
+}
+
+.walnut {
+  --frame: #5b3d28;
+  --frame-light: #7a563a;
+  --frame-dark: #3c2718;
+}
+
+.black {
+  --frame: #1f1f1f;
+  --frame-light: #3a3a3a;
+  --frame-dark: #0c0c0c;
+}
+
+.oak {
+  --frame: #c39a63;
+  --frame-light: #dbb884;
+  --frame-dark: #9a7444;
+}
+
+.white {
+  --frame: #efece5;
+  --frame-light: #fbfaf7;
+  --frame-dark: #cfcabf;
+}
+
+/* 卡纸：内沿一道斜切的阴影 */
+.mat {
+  display: block;
+  padding: 10%;
+  background: #fbfaf6;
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.14),
+    inset 0 3px 6px rgb(0 0 0 / 0.16);
+}
+
+/* 玻璃上的反光：一道斜光，位置跟着指针走，指到画上才出现 */
+.mat {
+  position: relative;
+  overflow: hidden;
+}
+
+.mat::after {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    rgb(255 255 255 / 0.5) 49%,
+    rgb(255 255 255 / 0.14) 53%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: translate(calc(var(--px, 0) * 22%), calc(var(--py, 0) * 22%));
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.hanger:hover .mat::after {
+  opacity: 1;
+}
+
+.art,
+.blankArt {
+  display: block;
+  width: 100%;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.16),
+    0 1px 2px rgb(0 0 0 / 0.2);
+}
+
+.art {
+  height: auto;
+  /* 画芯是直角的；站点给 img 的默认圆角在这里取消 */
+  border-radius: 0;
+}
+
+.blankArt {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  padding: 12px;
+  background: #ece7dc;
+  color: #5a5348;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.plaque {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   书架
+   层板画在容器的背景上：背景按行高平铺，每一行的底部是一块板。
+   ========================================================================== */
+
+.bookshelf {
+  --book-h: 164px;
+  --plank: 14px;
+  --row: calc(var(--book-h) + var(--plank) + 34px);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  grid-auto-rows: var(--row);
+  column-gap: 10px;
+  margin: 0;
+  padding: 0 14px;
+  list-style: none;
+  background-image:
+    linear-gradient(180deg, rgb(0 0 0 / 0.1), transparent 12px),
+    linear-gradient(
+      180deg,
+      transparent calc(100% - var(--plank)),
+      #d2b48a calc(100% - var(--plank)),
+      #c4a174 calc(100% - var(--plank) + 5px),
+      #8d6a40 calc(100% - var(--plank) + 5px),
+      #7a5a35 100%
+    );
+  background-size: 100% var(--row);
+  border-radius: 3px;
+}
+
+.bookSlot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: var(--plank);
+}
+
+.book {
+  position: relative;
+  display: block;
+  height: var(--book-h);
+  aspect-ratio: 2 / 3;
+  border-radius: 2px 3px 3px 2px;
+  background: #e9e4d8;
+  /* 右侧四道是书页，最后一道是落在层板上的影子 */
+  box-shadow:
+    1.5px 0 0 #f6f2e8,
+    3px 0 0 #d6d0c2,
+    4.5px 0 0 #f6f2e8,
+    6px 0 0 #c9c2b2,
+    10px 4px 10px -2px rgb(0 0 0 / 0.3);
+  transform-origin: 0 100%;
+  transform: perspective(700px) rotateY(-16deg);
+  transition: transform 0.8s var(--ease-spring);
+  outline: none;
+}
+
+/* 抽出来：转正、抬高、稍微放大 */
+.book:hover,
+.book:focus-visible {
+  transform: perspective(700px) rotateY(0deg) translateY(-14px) scale(1.04);
+}
+
+/* 被抽出的书的左右两本各往外让一点 */
+.bookSlot:has(+ .bookSlot .book:hover) .book {
+  transform: perspective(700px) rotateY(-16deg) rotate(-2.5deg) translateX(-3px);
+}
+
+.bookSlot:has(.book:hover) + .bookSlot .book {
+  transform: perspective(700px) rotateY(-16deg) rotate(2.5deg) translateX(5px);
+}
+
+.book:focus-visible {
+  outline: 2px solid var(--color-border-focus-ring);
+  outline-offset: 3px;
+}
+
+/* 书脊一侧的高光与压痕 */
+.book::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0.3),
+    rgb(255 255 255 / 0) 3%,
+    rgb(0 0 0 / 0.2) 5.5%,
+    rgb(0 0 0 / 0) 10%,
+    transparent 90%,
+    rgb(0 0 0 / 0.1)
+  );
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.1);
+  pointer-events: none;
+}
+
+.bookCover,
+.clothCover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.bookCover {
+  object-fit: cover;
+}
+
+.clothCover {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px 12px 14px 16px;
+  background: hsl(var(--cloth-hue, 30) 28% 34%);
+  color: hsl(var(--cloth-hue, 30) 40% 92%);
+  line-height: 1.3;
+}
+
+.clothCover b {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.clothCover i {
+  overflow: hidden;
+  font-size: 10px;
+  font-style: normal;
+  opacity: 0.75;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   唱片架
+   ========================================================================== */
+
+.crate {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 48px 16px;
+  margin: 0;
+  padding: 12px 0 0;
+  list-style: none;
+}
+
+.record {
+  --sleeve-size: 168px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.jacket {
+  position: relative;
+  width: var(--sleeve-size);
+  height: var(--sleeve-size);
+}
+
+/* 黑胶在封套后面的位置；滑出多少由它管，拖拽位移由里面的 .discHandle 管 */
+.discSlot {
+  --vinyl-size: calc(var(--sleeve-size) - 10px);
+
+  position: absolute;
+  top: 5px;
+  left: 0;
+  transform: translateX(38px);
+  transition: transform 0.8s var(--ease-spring);
+}
+
+/* 站点对链接和按钮里的块级元素有 display:inline 的全局规则，这里显式还原 */
+.discSlot > *,
+.discHandle > * {
+  display: block;
+}
+
+.record:hover .discSlot,
+.record:focus-within .discSlot {
+  transform: translateX(74px);
+}
+
+/* 悬停时黑胶一直转 */
+.record:hover .discSlot > :not(.discHandle),
+.record:hover .discHandle > * {
+  animation: disc-spin 2.4s linear infinite;
+}
+
+@keyframes disc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 被拿起、在飞、或已经在转盘上：停在滑出的位置并浮到最上层，这样位移只由拖拽决定 */
+.discSlot[data-lifted] {
+  z-index: 60;
+  transform: translateX(74px);
+}
+
+.discHandle {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+
+.discHandle:active {
+  cursor: grabbing;
+}
+
+.discHandle:focus-visible {
+  outline: 2px solid var(--color-border-focus-ring);
+  outline-offset: 3px;
+}
+
+/* 封套跟着指针略微转向 */
+.sleeve {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #ddd6c8;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.14),
+    0 1px 2px rgb(0 0 0 / 0.2),
+    calc(var(--px, 0) * -8px) calc(14px + var(--py, 0) * -6px) 22px -10px rgb(0 0 0 / 0.32);
+  transform: perspective(800px) rotateX(calc(var(--py, 0) * -6deg)) rotateY(calc(var(--px, 0) * 8deg));
+  outline: none;
+}
+
+.sleeve:focus-visible {
+  outline: 2px solid var(--color-border-focus-ring);
+  outline-offset: 3px;
+}
+
+/* 纸面反光、唱片在封套上磨出的圆痕、右侧开口的暗边 */
+.sleeve::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 43%, rgb(255 255 255 / 0.1) 45%, transparent 48%),
+    linear-gradient(105deg, rgb(255 255 255 / 0.2), transparent 30%, transparent 78%, rgb(0 0 0 / 0.14)),
+    linear-gradient(270deg, rgb(0 0 0 / 0.22), transparent 3%);
+  pointer-events: none;
+}
+
+.sleeveArt,
+.plainSleeve {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sleeveArt {
+  border-radius: 0;
+  object-fit: cover;
+}
+
+.plainSleeve {
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  background: hsl(var(--sleeve-hue, 30) 30% 86%);
+  color: hsl(var(--sleeve-hue, 30) 35% 24%);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.recordTitle {
+  max-width: var(--sleeve-size);
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hanger,
+  .book,
+  .discSlot {
+    transition: none;
+  }
+
+  .hanger:hover,
+  .hanger:focus-visible,
+  .record:hover .discSlot > :not(.discHandle),
+  .record:hover .discHandle > * {
+    animation: none;
+  }
+}

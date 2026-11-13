@@ -1,0 +1,21 @@
+/**
+ * [INPUT]: 依赖 desk-computer.css 里的 .pdesk 与 .pdesk__stage（第三方样式，不改原文件）
+ * [OUTPUT]: 对外提供 .stage
+ * [POS]: components/workspace 给桌面电脑定的摆放方式：不要底色和边框，直接放在页面上；宽度铺满所在的宽栏。
+ *        第三方样式给画面留了一圈为它自己的展示页准备的余量，这里收回来，画面才能放大。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
+.stage {
+  /* 画面四周本身留白很多，上下各收回一点，和正文靠得近些 */
+  margin-block: -3% -2%;
+}
+
+.stage :global(.pdesk) {
+  max-height: none;
+  background: transparent;
+}
+
+.stage :global(.pdesk__stage) {
+  width: min(1280px, 100cqw);
+}

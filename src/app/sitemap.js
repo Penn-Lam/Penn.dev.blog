@@ -1,10 +1,14 @@
 import { SITE_URL, TRUST_PATHS } from '@/data/site-content'
+import { getBookmarkCollections } from '@/lib/bookmark-collections'
 import { getAllPageSlugs, getAllPosts } from '@/lib/contentful'
-import { getBookmarks } from '@/lib/raindrop'
 import { getSortedPosts } from '@/lib/utils'
 
 export default async function sitemap() {
-  const [allPosts, bookmarks, allPages] = await Promise.all([getAllPosts(), getBookmarks(), getAllPageSlugs()])
+  const [allPosts, bookmarks, allPages] = await Promise.all([
+    getAllPosts(),
+    getBookmarkCollections(),
+    getAllPageSlugs()
+  ])
 
   const sortedWritings = getSortedPosts(allPosts)
 

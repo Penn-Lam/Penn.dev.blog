@@ -59,6 +59,7 @@ pnpm dev
 ### 部署环境
 - 生产环境使用 Vercel
 - 需要环境变量: `MUSING_CODE`, `GITHUB_PAT`, `GITHUB_REPO`
+- 可选环境变量: `WEREAD_API_KEY`（/bookmarks/books 的微信读书书架，服务端变量；未配置时回退到 Raindrop 的 books 收藏夹）
 - 确保 Vercel 配置使用正确的构建命令
 
 ## 技术栈

@@ -10,7 +10,9 @@
           "desc": "Conversational AI assistant",
           "url": "https://chat.openai.com",
           "tags": ["AI"],
-          "tip": "⌥ + Space to trigger workflow"
+          "tip": "⌥ + Space to trigger workflow",
+          "shell": "#a8b99a",
+          "label": "/stack/labels/chatgpt.webp"
         },
         {
           "slug": "gemini",
@@ -18,7 +20,9 @@
           "desc": "Google's multimodal AI",
           "url": "https://gemini.google.com",
           "tags": ["AI"],
-          "tip": "Try image + text prompts"
+          "tip": "Try image + text prompts",
+          "shell": "#3a3f8f",
+          "label": "/stack/labels/gemini.webp"
         },
         {
           "slug": "notion",
@@ -26,7 +30,55 @@
           "desc": "Structured note workspace",
           "url": "https://www.notion.so/",
           "tags": ["Notes"],
-          "tip": "Ctrl/Cmd + Shift+ L: Quickly switch between dark/bright mode"
+          "tip": "Ctrl/Cmd + Shift+ L: Quickly switch between dark/bright mode",
+          "shell": "#e6e0d2",
+          "label": "/stack/labels/notion.webp"
+        },
+        {
+          "slug": "paper",
+          "name": "Paper",
+          "desc": "Design canvas that coding agents can work in",
+          "url": "https://paper.design",
+          "tags": ["Design"],
+          "tip": "",
+          "shell": "#f2eee6",
+          "label": "/stack/labels/paper.webp"
+        }
+      ]
+    },
+    {
+      "id": "coding-agents",
+      "name": "Coding Agents",
+      "tools": [
+        {
+          "slug": "claude-code",
+          "name": "Claude Code",
+          "desc": "Anthropic's coding agent for the terminal",
+          "url": "https://www.anthropic.com/claude-code",
+          "tags": ["AI", "Dev"],
+          "tip": "",
+          "shell": "#c96442",
+          "label": "/stack/labels/claude-code.webp"
+        },
+        {
+          "slug": "amp",
+          "name": "Amp",
+          "desc": "Coding agent for the terminal and the editor",
+          "url": "https://ampcode.com",
+          "tags": ["AI", "Dev"],
+          "tip": "",
+          "shell": "#2a2a2a",
+          "label": "/stack/labels/amp.webp"
+        },
+        {
+          "slug": "zed",
+          "name": "Zed",
+          "desc": "Minimal code editor crafted for speed",
+          "url": "https://zed.dev/",
+          "tags": ["Dev", "AI IDE"],
+          "tip": "Use ACP to unify the frontend of SWE agents",
+          "shell": "#1f4fbf",
+          "label": "/stack/labels/zed.webp"
         }
       ]
     },
@@ -35,20 +87,14 @@
       "name": "Dev & Infra",
       "tools": [
         {
-          "slug": "zed",
-          "name": "Zed",
-          "desc": "Minimal code editor crafted for speed",
-          "url": "https://zed.dev/",
-          "tags": ["Dev", "AI IDE"],
-          "tip": "Use ACP to unify the frontend of SWE agents"
-        },
-        {
-          "slug": "orbstack",
-          "name": "OrbStack",
-          "desc": "Lightweight macOS container",
-          "url": "https://orbstack.dev",
-          "tags": ["Infra", "Dev"],
-          "tip": "Provide free k8s"
+          "slug": "rex",
+          "name": "Rex",
+          "desc": "Terminal with persistent sessions and fast remote connections",
+          "url": "https://www.superlogical.com/rex/docs/installation",
+          "tags": ["Dev"],
+          "tip": "",
+          "shell": "#3f4a3a",
+          "label": "/stack/labels/rex.webp"
         },
         {
           "slug": "ghostty",
@@ -56,7 +102,29 @@
           "desc": "A fast terminal emulator",
           "url": "https://ghostty.org/",
           "tags": ["Dev"],
-          "tip": ""
+          "tip": "",
+          "shell": "#27324b",
+          "label": "/stack/labels/ghostty.webp"
+        },
+        {
+          "slug": "tailscale",
+          "name": "Tailscale",
+          "desc": "Private mesh network across all my devices",
+          "url": "https://tailscale.com",
+          "tags": ["Infra"],
+          "tip": "",
+          "shell": "#a79f8d",
+          "label": "/stack/labels/tailscale.webp"
+        },
+        {
+          "slug": "orbstack",
+          "name": "OrbStack",
+          "desc": "Lightweight macOS container",
+          "url": "https://orbstack.dev",
+          "tags": ["Infra", "Dev"],
+          "tip": "Provide free k8s",
+          "shell": "#6b4fb3",
+          "label": "/stack/labels/orbstack.webp"
         },
         {
           "slug": "fork",
@@ -64,7 +132,9 @@
           "desc": "A fast git client",
           "url": "https://git-fork.com/",
           "tags": ["Dev", "Git"],
-          "tip": "Drag-and-drop interactive rebase"
+          "tip": "Drag-and-drop interactive rebase",
+          "shell": "#708aa2",
+          "label": "/stack/labels/fork.webp"
         }
       ]
     }

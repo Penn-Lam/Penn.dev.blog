@@ -2,8 +2,9 @@
 
 .record {
   position: relative;
-  width: 140px;
-  height: 140px;
+  /* 调用方可用 --vinyl-size 改尺寸，默认 140px */
+  width: var(--vinyl-size, 140px);
+  height: var(--vinyl-size, 140px);
   border-radius: 50%;
   background: linear-gradient(45deg, #333, black, #555, black, #333);
   cursor: default;

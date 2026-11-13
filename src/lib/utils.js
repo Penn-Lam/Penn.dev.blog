@@ -58,6 +58,19 @@ export const getDateTimeFormat = (date) => {
 export const dasherize = (text) => String(text).replace(/ +/g, '-').toLowerCase()
 
 /**
+ * 把字符串折算成稳定的非负整数。服务端与客户端结果一致，用来给实物陈列的条目派生固定的倾角、颜色等外观。
+ * @param {string} text
+ * @returns {number}
+ */
+export const hashString = (text) => {
+  let hash = 0
+
+  for (const char of String(text)) hash = (hash * 31 + char.charCodeAt(0)) | 0
+
+  return Math.abs(hash)
+}
+
+/**
  * Checks if the current environment is set to development mode.
  * The function compares the value of the `NODE_ENV` environment variable with 'development'.
  * @returns A boolean value indicating whether the current environment is set to development mode.

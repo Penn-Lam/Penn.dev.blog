@@ -3,11 +3,11 @@ import { Suspense } from 'react'
 import { ListItem } from '@/components/list-item'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { SideMenu } from '@/components/side-menu'
-import { getBookmarks } from '@/lib/raindrop'
+import { getBookmarkCollections } from '@/lib/bookmark-collections'
 import { sortByProperty } from '@/lib/utils'
 
 async function fetchData() {
-  const bookmarks = await getBookmarks()
+  const bookmarks = await getBookmarkCollections()
   const sortedBookmarks = sortByProperty(bookmarks, 'title')
 
   return { bookmarks: sortedBookmarks }

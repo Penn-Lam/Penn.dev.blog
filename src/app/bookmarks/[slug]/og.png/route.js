@@ -2,8 +2,8 @@ import { ImageResponse } from 'next/og'
 
 import { sharedMetadata } from '@/app/shared-metadata'
 import { OpenGraphImage } from '@/components/og-image'
+import { getBookmarkCollections } from '@/lib/bookmark-collections'
 import { getBoldFont, getRegularFont } from '@/lib/fonts'
-import { getBookmarks } from '@/lib/raindrop'
 
 export const dynamic = 'force-static'
 
@@ -13,7 +13,7 @@ export const size = {
 }
 
 export async function generateStaticParams() {
-  const bookmarks = await getBookmarks()
+  const bookmarks = await getBookmarkCollections()
 
   if (!bookmarks || bookmarks.length === 0) {
     return []
@@ -28,7 +28,7 @@ export async function GET(_, props) {
 
   try {
     const [bookmarks, regularFontData, boldFontData] = await Promise.all([
-      getBookmarks(),
+      getBookmarkCollections(),
       getRegularFont(),
       getBoldFont()
     ])

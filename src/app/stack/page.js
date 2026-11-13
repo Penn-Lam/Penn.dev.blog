@@ -1,9 +1,15 @@
-import { CategorySection } from '@/components/category-section'
+/**
+ * [INPUT]: 依赖 @/components/stack/cartridge-rack 的 CartridgeRack；依赖 @/components/easter-egg 的 EasterEgg；依赖 @/data/tools.json；依赖 @/lib/contentful 的 getPageSeo
+ * [OUTPUT]: 默认导出 StackPage 页面、generateMetadata
+ * [POS]: /stack 路由。每个工具分类渲染成一个 CartridgeRack（清单 + 一摞卡带）。工具数据只在 tools.json 维护，卡带贴纸在 public/stack/labels。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
 import { EasterEgg } from '@/components/easter-egg'
 import { FloatingHeader } from '@/components/floating-header'
 import { GradientBg4 } from '@/components/gradient-bg'
 import { PageTitle } from '@/components/page-title'
 import { ScrollArea } from '@/components/scroll-area'
+import { CartridgeRack } from '@/components/stack/cartridge-rack'
 import toolsData from '@/data/tools.json'
 import { getPageSeo } from '@/lib/contentful'
 
@@ -17,17 +23,16 @@ export default async function StackPage() {
           <PageTitle title="Stack" />
 
           <p className="text-text-secondary mb-2 leading-relaxed">
-            Here's my curated collection of daily tools, from development essentials to productivity boosters. Each tool
-            has been battle-tested in real workflows and genuinely improves my output.
+            The tools I plug in every day. Each one has been battle-tested in real workflows. Pick up a cartridge to
+            look at it.
           </p>
 
-          {/* Pro tip */}
-          <p className="text-body-regular text-text-tertiary mb-10">
-            💡 Try the <span className="text-caption-1-regular font-mono">↑ ↑ ↓ ↓ ← → ← →</span> sequence
+          <p className="text-body-regular text-text-tertiary mb-12">
+            Try the <span className="text-caption-1-regular font-mono">↑ ↑ ↓ ↓ ← → ← →</span> sequence
           </p>
 
           {toolsData.categories.map((category) => (
-            <CategorySection key={category.id} id={category.id} name={category.name} tools={category.tools} />
+            <CartridgeRack key={category.id} category={category} />
           ))}
 
           <EasterEgg tools={toolsData.categories} />
@@ -72,5 +77,3 @@ export async function generateMetadata() {
     }
   }
 }
-
-// Force cache refresh - 2025-01-07

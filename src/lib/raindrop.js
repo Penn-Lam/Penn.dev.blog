@@ -48,6 +48,30 @@ export const getBookmarkItems = async (id, pageIndex = 0) => {
   }
 }
 
+const MAX_COLLECTION_PAGES = 10
+
+/**
+ * 取一个收藏夹的全部条目，供实物陈列一次铺开。接口每页 50 条，最多翻 MAX_COLLECTION_PAGES 页。
+ * 第一页失败时返回 null；后续页失败时返回已取到的部分。
+ */
+export const getAllBookmarkItems = async (id) => {
+  const firstPage = await getBookmarkItems(id, 0)
+
+  if (!firstPage?.result) return null
+
+  const items = [...firstPage.items]
+
+  for (let pageIndex = 1; items.length < firstPage.count && pageIndex < MAX_COLLECTION_PAGES; pageIndex++) {
+    const page = await getBookmarkItems(id, pageIndex)
+
+    if (!page?.result || page.items.length === 0) break
+
+    items.push(...page.items)
+  }
+
+  return items
+}
+
 export const getBookmarks = async () => {
   try {
     const response = await fetch(`${RAINDROP_API_URL}/collections`, options)

@@ -1,14 +1,34 @@
 import Image from 'next/image'
-import { memo } from 'react'
+import { Fragment, memo } from 'react'
 
 import { RichText } from '@/components/contentful/rich-text'
+import { Link } from '@/components/link'
+import { splitTextByUrls } from '@/lib/url'
 
 /**
- * [INPUT]: 依赖 Contentful RichText 渲染器和 next/image
+ * [INPUT]: 依赖 @/components/contentful/rich-text 的 RichText（开启 autoLink）；依赖 @/components/link 的 Link；依赖 @/lib/url 的 splitTextByUrls；依赖 next/image
  * [OUTPUT]: 对外提供 JourneyCard 组件，展示旅程卡片
- * [POS]: components/journey 的核心卡片组件
+ * [POS]: /journey 时间线的单条卡片。Logbook 的标题是纯文本、描述是富文本，两处里的网址都渲染成 NotionMentionLink 外链卡片。
+ *        外链卡片去掉上下内边距，高度不超过正文行高，避免撑高时间线的行。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
+
+const JOURNEY_LINK_CLASSNAME = 'py-0'
+
+// Logbook 标题是 Contentful Short text，没有超链接节点，只能在渲染时切出网址
+function renderTitle(title) {
+  return splitTextByUrls(title).map((segment, index) => (
+    <Fragment key={index}>
+      {segment.type === 'url' ? (
+        <Link href={segment.href} className={JOURNEY_LINK_CLASSNAME}>
+          {segment.value}
+        </Link>
+      ) : (
+        segment.value
+      )}
+    </Fragment>
+  ))
+}
 
 // ==========================================================================
 // 性能优化:
@@ -24,10 +44,10 @@ export const JourneyCard = memo(({ title, description, image, index }) => {
 
   return (
     <div className="word-break-word flex flex-col">
-      <span className="mb-px font-semibold tracking-tight">{title}</span>
+      <span className="mb-px font-semibold tracking-tight">{renderTitle(title)}</span>
       {description?.json && (
         <div className="rich-text-journey text-body-regular">
-          <RichText content={description} />
+          <RichText content={description} autoLink linkClassName={JOURNEY_LINK_CLASSNAME} />
         </div>
       )}
       {image?.url && (

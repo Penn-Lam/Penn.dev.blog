@@ -1,0 +1,33 @@
+[
+  {
+    "id": "music-for-programming",
+    "title": "musicForProgramming();",
+    "url": "https://musicforprogramming.net",
+    "cover": null,
+    "audio": {
+      "name": "Episode 79: Corticyte",
+      "artist": "Music For Programming",
+      "url": "https://datashat.net/music_for_programming_79-corticyte.mp3"
+    }
+  },
+  {
+    "id": "miyagawa-haruna",
+    "title": "宫川春菜",
+    "url": "https://tristone.co.jp/sp/actors/miyagawa/",
+    "cover": null
+  },
+  {
+    "id": "cristina-galietto",
+    "title": "L'Arte della Bellezza - Cristina Galietto",
+    "url": "https://cristinagalietto.com/",
+    "cover": "/shelves/music/cristina-galietto.webp",
+    "width": 640,
+    "height": 359
+  },
+  {
+    "id": "chen-yimiao",
+    "title": "陈依妙",
+    "url": "https://cathychen233333.wixsite.com/yimiaochen",
+    "cover": null
+  }
+]

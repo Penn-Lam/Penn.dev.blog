@@ -51,6 +51,8 @@ const config = defineConfig([
     'src/components/base/**',
     'src/components/application/**',
     'src/components/foundations/**',
+    // 第三方原样引入的 Pin UI 桌面电脑组件，升级时整文件替换，不按本仓库风格改写
+    'src/components/workspace/desk-computer/**',
     'tools/oxlint/anti-slop/**'
   ])
 ])

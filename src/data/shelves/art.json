@@ -1,0 +1,66 @@
+[
+  {
+    "id": "nokia-n93i",
+    "title": "CHAZ 3D - Nokia N93i",
+    "url": "https://chaz.fun/phone/n93i/",
+    "cover": "/shelves/art/nokia-n93i.webp",
+    "width": 720,
+    "height": 480
+  },
+  {
+    "id": "nous-research-john-galt",
+    "title": "NOUS RESEARCH / JOHN GALT",
+    "url": "https://www.are.na/john-galt/nous-research-john-galt",
+    "cover": "/shelves/art/nous-research-john-galt.webp",
+    "width": 720,
+    "height": 378
+  },
+  {
+    "id": "damian-elwes",
+    "title": "Damian Elwes | Art Studio",
+    "url": "https://www.damianelwes.com/",
+    "cover": "/shelves/art/damian-elwes.webp",
+    "width": 720,
+    "height": 714
+  },
+  {
+    "id": "every-art",
+    "title": "Every Art",
+    "url": "https://everyartwork.framer.website/",
+    "cover": "/shelves/art/every-art.webp",
+    "width": 720,
+    "height": 411
+  },
+  {
+    "id": "stylites",
+    "title": "Stylites",
+    "url": "https://www.mek.gallery/project/stylites",
+    "cover": "/shelves/art/stylites.webp",
+    "width": 720,
+    "height": 394
+  },
+  {
+    "id": "sea-eo",
+    "title": "Sea-eo",
+    "url": "https://www.mek.gallery/project/sea-eo",
+    "cover": "/shelves/art/sea-eo.webp",
+    "width": 720,
+    "height": 722
+  },
+  {
+    "id": "moccamaster",
+    "title": "Moccamaster",
+    "url": "https://frederiquematti.shop/products/moccamaster-2023-31-41cm",
+    "cover": "/shelves/art/moccamaster.webp",
+    "width": 720,
+    "height": 1102
+  },
+  {
+    "id": "kamakura-mount-fuji",
+    "title": "Kamakura, Mount Fuji",
+    "url": "https://filippjenikaeart.com/products/kamakura-mount-fuji?variant=47835838120284?ref%3Donur.dev",
+    "cover": "/shelves/art/kamakura-mount-fuji.webp",
+    "width": 720,
+    "height": 450
+  }
+]

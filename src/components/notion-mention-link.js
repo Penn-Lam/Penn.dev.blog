@@ -5,10 +5,31 @@ import { Link as AriaLink } from 'react-aria-components'
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { UrlFavicon } from '@/components/url-favicon'
-import { addDefaultProtocol, getUrlHostname } from '@/lib/url'
+import { addDefaultProtocol, getUrlHostname, isValidWebsiteUrl } from '@/lib/url'
 import { cx } from '@/utils/cx'
 
+/**
+ * [INPUT]: 依赖 react-aria-components 的 Link；依赖 @/components/ui/hover-card；依赖 @/components/url-favicon 的 UrlFavicon；依赖 @/lib/url 的 addDefaultProtocol、getUrlHostname、isValidWebsiteUrl；悬停预览请求 /api/notion-mention-link
+ * [OUTPUT]: 对外提供 NotionMentionLink 组件
+ * [POS]: components/ 的外链芯片：图标、灰色站点名、带下划线的链接文字，悬停出预览卡。Link 组件把所有外链交给它，Stack 清单直接用它。
+ *        链接文字本身就是网址时（Journey 里自动识别出的裸网址），只显示一次网址，不再加站点名前缀。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
 const metadataCache = new Map()
+
+// 链接文字只有一个节点时取它的字符串形式；React 元素会变成 "[object Object]"，过不了后面的网址校验
+function getLinkText(children) {
+  const nodes = [children].flat()
+
+  return nodes.length === 1 ? String(nodes[0]) : ''
+}
+
+const stripUrlDecoration = (value) =>
+  value
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .replace(/\/$/, '')
 
 function PreviewImage({ src, height }) {
   const [failedSrc, setFailedSrc] = useState(null)
@@ -110,6 +131,9 @@ export function NotionMentionLink({
 
   if (!hostname) return children
 
+  const plainText = getLinkText(children)
+  const isUrlText = isValidWebsiteUrl(plainText) && getUrlHostname(plainText) === hostname
+
   const mention = (
     <AriaLink
       href={href}
@@ -122,9 +146,9 @@ export function NotionMentionLink({
       {...props}
     >
       <UrlFavicon value={href} className="size-[22px]" />
-      <span className="text-text-secondary min-w-0 truncate">{siteName}</span>
+      {!isUrlText && <span className="text-text-secondary min-w-0 truncate">{siteName}</span>}
       <span className="text-text-primary min-w-0 truncate font-medium underline decoration-current/35 underline-offset-3">
-        {children || hostname}
+        {isUrlText ? stripUrlDecoration(plainText) : children || hostname}
       </span>
     </AriaLink>
   )

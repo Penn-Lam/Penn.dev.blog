@@ -1,58 +1,41 @@
-import { DeskSetupImage } from './desk-setup-image'
+import { DesktopIcon, DeviceMobileIcon, EyeglassesIcon, KeyboardIcon, LaptopIcon, MouseIcon } from '@/components/icons'
 
 /**
- * [INPUT]: 依赖 ./desk-setup-image 的 DeskSetupImage 客户端图片岛
- * [OUTPUT]: 对外提供 HardwareList 组件，展示硬件设备列表
- * [POS]: components/workspace/ 的硬件展示组件
+ * [INPUT]: 依赖 @/components/icons 的设备图标；接收 src/data/workspace/hardware.json 的条目数组
+ * [OUTPUT]: 对外提供 HardwareList 组件
+ * [POS]: components/workspace 的设备清单。/workspace 页面在桌面电脑主视觉下方调用它。每行一台设备：图标、名称、用途、规格。
+ *        设备类别到图标的映射只在这里维护；hardware.json 新增类别时在 CATEGORY_ICONS 补一行。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
-const CATEGORY_CONFIG = {
-  laptop: { icon: '💻', label: 'Computer', color: 'bg-blue-50 text-blue-600' },
-  display: { icon: '🖥️', label: 'Display', color: 'bg-purple-50 text-purple-600' },
-  keyboard: { icon: '⌨️', label: 'Keyboard', color: 'bg-emerald-50 text-emerald-600' },
-  mouse: { icon: '🖱️', label: 'Mouse', color: 'bg-orange-50 text-orange-600' },
-  audio: { icon: '🎧', label: 'Audio', color: 'bg-pink-50 text-pink-600' },
-  lighting: { icon: '💡', label: 'Lighting', color: 'bg-amber-50 text-amber-600' },
-  xr: { icon: '👓', label: 'XR Device', color: 'bg-indigo-50 text-indigo-600' }
+const CATEGORY_ICONS = {
+  laptop: LaptopIcon,
+  desktop: DesktopIcon,
+  phone: DeviceMobileIcon,
+  keyboard: KeyboardIcon,
+  mouse: MouseIcon,
+  xr: EyeglassesIcon
 }
 
 export function HardwareList({ items }) {
   return (
-    <div className="space-y-10">
-      {/* Desk Setup Photo */}
-      <div className="border-separator-border bg-background-primary-default overflow-hidden rounded-2xl border p-2">
-        <div className="bg-background-secondary-default relative aspect-[16/10] w-full overflow-hidden rounded-xl">
-          <DeskSetupImage />
-        </div>
-      </div>
+    <ul className="divide-separator-border border-border-button-default bg-background-primary-default divide-y overflow-hidden rounded-3xl border">
+      {items.map((item) => {
+        const Icon = CATEGORY_ICONS[item.category] || DesktopIcon
 
-      {/* Hardware Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, index) => {
-          const config = CATEGORY_CONFIG[item.category] || {
-            icon: '⚙️',
-            label: 'Device',
-            color: 'bg-background-secondary-default text-text-secondary'
-          }
-
-          return (
-            <div
-              key={index}
-              className="border-separator-border bg-background-primary-default hover:border-border-button-hover hover:shadow-card group flex items-start gap-4 rounded-2xl border p-4 transition-[border-color,box-shadow] duration-300"
-            >
-              <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-lg ${config.color}`}>
-                {config.icon}
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-body-semibold text-text-primary mb-1">{item.name}</h3>
-                <p className="text-body-regular text-text-secondary mb-1">{item.detail}</p>
-                <p className="text-caption-1-regular text-text-tertiary">{item.role}</p>
-              </div>
+        return (
+          <li key={item.name} className="flex items-center gap-4 px-5 py-4">
+            <Icon className="text-foreground-icon-tertiary size-5 shrink-0" aria-hidden />
+            <div className="min-w-0 flex-1">
+              <h3 className="text-body-semibold text-text-primary">{item.name}</h3>
+              <p className="text-body-2-regular text-text-secondary">{item.role}</p>
             </div>
-          )
-        })}
-      </div>
-    </div>
+            <span className="text-caption-1-regular text-text-tertiary shrink-0 text-right font-mono">
+              {item.detail}
+            </span>
+          </li>
+        )
+      })}
+    </ul>
   )
 }

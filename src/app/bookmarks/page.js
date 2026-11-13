@@ -4,12 +4,12 @@ import { Suspense } from 'react'
 import { FloatingHeader } from '@/components/floating-header'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
+import { getBookmarkCollections } from '@/lib/bookmark-collections'
 import { getPageSeo } from '@/lib/contentful'
-import { getBookmarks } from '@/lib/raindrop'
 import { sortByProperty } from '@/lib/utils'
 
 async function fetchData() {
-  const bookmarks = await getBookmarks()
+  const bookmarks = await getBookmarkCollections()
   const sortedBookmarks = sortByProperty(bookmarks, 'title')
 
   return { bookmarks: sortedBookmarks }

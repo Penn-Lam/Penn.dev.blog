@@ -1,11 +1,20 @@
+/**
+ * [INPUT]: 依赖 @/components/workspace/desk-computer/desk-computer 的 DeskComputer 与 desk-stage.module.css；依赖 @/components/workspace 的 HardwareList、EasterEgg；依赖 @/data/workspace/hardware.json；依赖 @/lib/contentful 的 getPageSeo
+ * [OUTPUT]: 默认导出 Workspace 页面、generateMetadata
+ * [POS]: /workspace 路由。结构是标题、可交互的桌面电脑主视觉、设备清单三段。桌面电脑不加边框，宽度超出正文栏（见 desk-stage.module.css）。设备数据只在 hardware.json 维护。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
 import { FloatingHeader } from '@/components/floating-header'
 import { GradientBg4 } from '@/components/gradient-bg'
 import { PageTitle } from '@/components/page-title'
 import { ScrollArea } from '@/components/scroll-area'
+import DeskComputer from '@/components/workspace/desk-computer/desk-computer'
+import deskStyles from '@/components/workspace/desk-stage.module.css'
 import { EasterEgg } from '@/components/workspace/easter-egg'
 import { HardwareList } from '@/components/workspace/hardware-list'
 import hardwareData from '@/data/workspace/hardware.json'
 import { getPageSeo } from '@/lib/contentful'
+import { cx } from '@/utils/cx'
 
 export default async function Workspace() {
   return (
@@ -15,64 +24,25 @@ export default async function Workspace() {
       <div className="content-wrapper">
         <div className="content">
           <PageTitle title="Workspace" />
-          {/* Introduction */}
-          <div className="mb-12">
-            <p className="text-title-3-regular text-text-secondary mb-4 leading-relaxed">
-              Welcome to my digital workspace. This is where I document my journey as a developer, researcher, and
-              builder. Here you'll find insights into my current projects, work philosophy, and the tools that power my
-              daily workflow.
-            </p>
-            <p className="text-text-secondary leading-relaxed">
-              I believe in transparency, continuous learning, and sharing knowledge. Every project tells a story, every
-              tool serves a purpose, and every line of code brings us closer to solving meaningful problems.
-            </p>
-          </div>
-          {/* Current Focus */}
-          {/* <section className="mb-20">
-            <NowTag projects={nowData} />
-          </section>
-          */}
-          {/* Active Projects - 已隐藏
-          <section className="mb-20">
-            <h2 className="mb-6 text-3xl font-bold text-gray-900">Active Projects</h2>
-            <p className="mb-8 text-gray-600">
-              A collection of projects I'm currently working on, from research experiments to production applications.
-            </p>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {projectsData.map((project, index) => (
-                <ProjectCard key={index} {...project} />
-              ))}
-            </div>
-          </section>
+          <p className="text-text-secondary leading-relaxed">
+            The machines I build on. The one below is from the late nineties and still works: click it, type, drag the
+            mouse, load the CD.
+          </p>
+        </div>
 
-          {/* Work Log - 已隐藏
-          <section className="mb-20">
-            <h2 className="mb-6 text-3xl font-bold text-gray-900">Work Log</h2>
-            <p className="mb-8 text-gray-600">
-              A chronological record of my recent work, achievements, and milestones. Click on any entry to see more
-              details.
-            </p>
-            <Timeline entries={logData} />
-          </section>
-          */}
-          {/* Desk Setup */}
-          <section className="mb-20">
-            <h2 className="text-display-4-bold text-text-primary mb-6">My Desk Setup</h2>
-            <p className="text-text-secondary mb-8">
-              The hardware and tools that make up my daily development environment. Quality tools enable quality work.
-            </p>
+        {/* 桌面电脑比正文栏宽：手机上贴到屏幕两边，桌面上最宽到 64rem */}
+        <section className={cx(deskStyles.stage, '-mx-6 lg:mx-auto lg:w-full lg:max-w-5xl')}>
+          <DeskComputer theme="light" />
+        </section>
+
+        <div className="content">
+          <section>
+            <h2 className="text-title-2-bold text-text-primary mb-6">On the desk</h2>
             <HardwareList items={hardwareData} />
           </section>
-          {/* Footer note */}
-          <div className="mt-16 text-center">
-            <p className="text-body-regular text-text-tertiary">
-              🌱 This workspace evolves constantly. New projects and tools are added as the journey unfolds.
-            </p>
-          </div>
         </div>
       </div>
 
-      {/* Easter Egg */}
       <EasterEgg trigger="work hard" />
     </ScrollArea>
   )

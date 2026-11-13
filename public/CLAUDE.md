@@ -16,7 +16,10 @@ assets/logo.webp: 像素头像主稿，站点图标源图
 assets/me.avif: 侧栏头像
 assets/bookmark-fallback.webp / friends-card.png / leaves.png / summer-garden-ambience.mp3: 页面素材
 fonts/: 签名字体
-tools/: 工具页 SVG
+tools/: 旧工具页的 SVG logo。/stack 改成卡带后不再引用
+stack/labels/: /stack 卡带的贴纸图，每个工具一张 `<slug>.webp`，480×320。AI 生成：以工具的官方 logo 或吉祥物为主体，画成 80 年代日本游戏卡带标签的丝网印刷风格（四色、半调网点、粗描边），主体靠右，左侧三分之一留底色
+shelves/art/、shelves/music/: /bookmarks/art 与 /bookmarks/music 的封面，`<条目 id>.webp`。条目清单在 `src/data/shelves/`，文件名要和条目的 id 对上
+library/desk-computer.svg: /workspace 桌面电脑的等轴测图，约 480KB，组件挂载时拉取。来自 Pin UI（MIT）
 ha/: Home Assistant 相关静态 CSS
 test-musings.json: 随想测试数据
 

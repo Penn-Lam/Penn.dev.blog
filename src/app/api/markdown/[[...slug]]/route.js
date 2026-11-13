@@ -1,7 +1,7 @@
 import { HOME_CONTENT, SECTION_SUMMARIES, SITE_URL, TRUST_PAGES } from '@/data/site-content'
+import { getBookmarkCollections } from '@/lib/bookmark-collections'
 import { getAllPosts, getPage, getPost } from '@/lib/contentful'
 import { contentfulDocumentToMarkdown, trustPageToMarkdown } from '@/lib/markdown'
-import { getBookmarks } from '@/lib/raindrop'
 
 const STATIC_LINKS = [
   ['Writing', '/writing'],
@@ -73,7 +73,7 @@ async function resolveMarkdown(pathname) {
   }
 
   if (segments.length === 2 && segments[0] === 'bookmarks') {
-    const bookmarks = await getBookmarks()
+    const bookmarks = await getBookmarkCollections()
     const bookmark = bookmarks?.find((item) => item.slug === segments[1])
 
     if (!bookmark) return null

@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { LatexText } from '@/components/contentful/latex-text'
 import { Link } from '@/components/link'
 import { ShowInView } from '@/components/show-in-view'
+import { splitTextByUrls } from '@/lib/url'
 
 const TweetCard = dynamic(() => import('@/components/tweet-card/tweet-card').then((mod) => mod.TweetCard))
 
@@ -14,13 +15,75 @@ const DynamicIframe = dynamic(() => import('@/components/contentful/iframe').the
 
 import { dasherize } from '@/lib/utils'
 
-function options(links) {
+/**
+ * [INPUT]: 依赖 @contentful/rich-text-react-renderer 的 documentToReactComponents；依赖 @/components/link 的 Link；依赖 @/lib/url 的 splitTextByUrls
+ * [OUTPUT]: 对外提供 RichText 组件、autolinkDocument 纯函数
+ * [POS]: components/contentful 的唯一富文本渲染器。writing、[slug] 页面与 JourneyCard 调用它。超链接节点交给 Link，外链由 Link 渲染成 NotionMentionLink。
+ *        autoLink 默认关闭；只有 JourneyCard 打开它，把纯文本里的网址先改写成超链接节点再渲染。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
+// 含 $ 或 \( \[ 的文本走 LatexText；autolink 也跳过这类文本，避免把公式切碎
+const LATEX_PATTERN = /\$|\\[([)]/
+
+// ==========================================================================
+// 纯文本网址 → hyperlink 节点
+// 跳过：已有链接内部（防止双重包裹）、标题（标题本身渲染成锚点）、行内代码、LaTeX 文本
+// ==========================================================================
+
+const NO_AUTOLINK_NODE_TYPES = new Set([
+  INLINES.HYPERLINK,
+  INLINES.ENTRY_HYPERLINK,
+  INLINES.ASSET_HYPERLINK,
+  INLINES.RESOURCE_HYPERLINK,
+  BLOCKS.HEADING_1,
+  BLOCKS.HEADING_2,
+  BLOCKS.HEADING_3,
+  BLOCKS.HEADING_4,
+  BLOCKS.HEADING_5,
+  BLOCKS.HEADING_6
+])
+
+function autolinkTextNode(node) {
+  if (node.marks?.some((mark) => mark.type === MARKS.CODE) || LATEX_PATTERN.test(node.value)) return [node]
+
+  const segments = splitTextByUrls(node.value)
+
+  if (!segments.some((segment) => segment.type === 'url')) return [node]
+
+  return segments.map((segment) =>
+    segment.type === 'url'
+      ? { nodeType: INLINES.HYPERLINK, data: { uri: segment.href }, content: [{ ...node, value: segment.value }] }
+      : { ...node, value: segment.value }
+  )
+}
+
+function autolinkNode(node, skip) {
+  if (node.nodeType === 'text') return skip ? [node] : autolinkTextNode(node)
+
+  if (!Array.isArray(node.content)) return [node]
+
+  const skipChildren = skip || NO_AUTOLINK_NODE_TYPES.has(node.nodeType)
+
+  return [{ ...node, content: node.content.flatMap((child) => autolinkNode(child, skipChildren)) }]
+}
+
+/**
+ * 返回新的富文本文档，原文档不被修改。
+ */
+export function autolinkDocument(richTextDocument) {
+  if (!richTextDocument) return richTextDocument
+
+  return autolinkNode(richTextDocument, false)[0]
+}
+
+function options(links, { linkClassName } = {}) {
   const findAsset = (id) => links?.assets?.block?.find((item) => item.sys.id === id)
   const findBlockEntry = (id) => links?.entries?.block?.find((item) => item.sys.id === id)
   const findInlineEntry = (id) => links?.entries?.inline?.find((item) => item.sys.id === id)
 
   return {
-    renderText: (text) => (/\$|\\[([)]/.test(text) ? <LatexText text={text} /> : text),
+    renderText: (text) => (LATEX_PATTERN.test(text) ? <LatexText text={text} /> : text),
     renderMark: {
       [MARKS.BOLD]: (text) => <span className="text-text-primary font-semibold">{text}</span>,
       [MARKS.ITALIC]: (text) => <span className="italic">{text}</span>,
@@ -110,7 +173,6 @@ function options(links) {
               alt={asset.description || asset.title}
               loading={isEagerLoading ? 'eager' : 'lazy'}
               className="animate-reveal h-auto max-w-full"
-              // eslint-disable-next-line react/no-unknown-property
               nopin="nopin"
             />
             {asset.description && (
@@ -137,7 +199,11 @@ function options(links) {
         )
       },
       [BLOCKS.HR]: () => <hr className="my-12" />,
-      [INLINES.HYPERLINK]: (node, children) => <Link href={node.data.uri}>{children}</Link>,
+      [INLINES.HYPERLINK]: (node, children) => (
+        <Link href={node.data.uri} className={linkClassName}>
+          {children}
+        </Link>
+      ),
       [INLINES.EMBEDDED_ENTRY]: async (node) => {
         const entry = findInlineEntry(node.data.target.sys.id)
 
@@ -196,8 +262,10 @@ function options(links) {
   }
 }
 
-export const RichText = ({ content }) => {
+export const RichText = ({ content, autoLink = false, linkClassName }) => {
   if (!content) return null
 
-  return documentToReactComponents(content.json, options(content.links))
+  const json = autoLink ? autolinkDocument(content.json) : content.json
+
+  return documentToReactComponents(json, options(content.links, { linkClassName }))
 }

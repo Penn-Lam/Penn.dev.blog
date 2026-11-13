@@ -6,22 +6,45 @@ import { FloatingHeader } from '@/components/floating-header'
 import { PageTitle } from '@/components/page-title'
 import { ScreenLoadingSpinner } from '@/components/screen-loading-spinner'
 import { ScrollArea } from '@/components/scroll-area'
-import { getBookmarkItems, getBookmarks } from '@/lib/raindrop'
+import { BookmarkShelf } from '@/components/shelves'
+import { getBookmarkCollections } from '@/lib/bookmark-collections'
+import { getBookshelfBooks } from '@/lib/bookshelf'
+import { BOOKMARK_SHELVES } from '@/lib/constants'
+import { getLocalShelfItems } from '@/lib/local-shelves'
+import { getBookmarkItems } from '@/lib/raindrop'
 import { sortByProperty } from '@/lib/utils'
 
+/**
+ * [INPUT]: 依赖 @/lib/bookmark-collections 的 getBookmarkCollections；依赖 @/lib/local-shelves 的 getLocalShelfItems；依赖 @/lib/bookshelf 的 getBookshelfBooks；依赖 @/lib/raindrop 的 getBookmarkItems；依赖 @/lib/constants 的 BOOKMARK_SHELVES；依赖 @/components/shelves 的 BookmarkShelf 与 @/components/bookmark-list 的 BookmarkList
+ * [OUTPUT]: 默认导出 CollectionPage、generateStaticParams、generateMetadata
+ * [POS]: /bookmarks/[slug] 路由。收藏夹有三种来源：本地陈列（Art、Music，条目在 src/data/shelves）、书架（books，微信读书优先）、
+ *        其余 Raindrop 收藏夹。前两种用实物陈列，一次铺开，不带标签筛选；第三种沿用卡片列表，带标签筛选和分页。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
 export async function generateStaticParams() {
-  const bookmarks = await getBookmarks()
+  const bookmarks = await getBookmarkCollections()
 
   return bookmarks.map((bookmark) => ({ slug: bookmark.slug }))
 }
 
 async function fetchData(slug) {
-  const bookmarks = await getBookmarks()
+  const bookmarks = await getBookmarkCollections()
   const currentBookmark = bookmarks.find((bookmark) => bookmark.slug === slug)
 
   if (!currentBookmark) notFound()
 
   const sortedBookmarks = sortByProperty(bookmarks, 'title')
+  const shelfKind = currentBookmark.shelfKind ?? BOOKMARK_SHELVES[currentBookmark._id]
+
+  if (shelfKind) {
+    const shelfItems = getLocalShelfItems(slug) ?? (await getBookshelfBooks(currentBookmark._id))
+
+    if (!shelfItems) throw new Error(`Failed to fetch items for collection ${currentBookmark._id}`)
+
+    return { bookmarks: sortedBookmarks, currentBookmark, shelfKind, shelfItems }
+  }
+
   const bookmarkItems = await getBookmarkItems(currentBookmark._id)
 
   if (!bookmarkItems?.result) {
@@ -38,7 +61,7 @@ async function fetchData(slug) {
 export default async function CollectionPage(props) {
   const params = await props.params
   const { slug } = params
-  const { bookmarks, currentBookmark, bookmarkItems } = await fetchData(slug)
+  const { bookmarks, currentBookmark, bookmarkItems, shelfKind, shelfItems } = await fetchData(slug)
 
   return (
     <ScrollArea useScrollAreaId>
@@ -51,9 +74,13 @@ export default async function CollectionPage(props) {
       <div className="content-wrapper">
         <div className="content @container">
           <PageTitle title={currentBookmark.title} />
-          <Suspense fallback={<ScreenLoadingSpinner />}>
-            <BookmarkList id={currentBookmark._id} initialData={bookmarkItems} collectionSlug={slug} />
-          </Suspense>
+          {shelfKind ? (
+            <BookmarkShelf kind={shelfKind} items={shelfItems} />
+          ) : (
+            <Suspense fallback={<ScreenLoadingSpinner />}>
+              <BookmarkList id={currentBookmark._id} initialData={bookmarkItems} collectionSlug={slug} />
+            </Suspense>
+          )}
         </div>
       </div>
     </ScrollArea>
@@ -63,7 +90,7 @@ export default async function CollectionPage(props) {
 export async function generateMetadata(props) {
   const params = await props.params
   const { slug } = params
-  const bookmarks = await getBookmarks()
+  const bookmarks = await getBookmarkCollections()
   const currentBookmark = bookmarks.find((bookmark) => bookmark.slug === slug)
 
   if (!currentBookmark) return null

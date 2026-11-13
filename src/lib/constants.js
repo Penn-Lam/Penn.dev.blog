@@ -82,11 +82,15 @@ export const COLLECTION_IDS = [
   62741470, // Infra & Hosting
   66769404, // Communication
   66769394, // Monetization
-  56815657, // Art
-  60507989, // Music
   56815349, // Reading
   ...TWEETS_COLLECTION_IDS // 支持多个 Twitter 收藏夹
 ]
+
+// 用实物陈列代替卡片列表的 Raindrop 收藏夹：收藏夹 id → 陈列方式（见 components/shelves）
+// Art 和 Music 不在 Raindrop 里，它们是本地陈列，登记在 lib/local-shelves.js
+export const BOOKMARK_SHELVES = {
+  56369365: 'bookshelf' // books
+}
 
 export const LINKS = [
   {
