@@ -63,50 +63,14 @@ relies on specific Contentful structures, so ensure your setup matches the requi
 
 ### Environment Variables
 
-Before running or deploying the project, you must configure the following environment variables in your `.env` file.
-Create a `.env` file in the root of the project if it doesn't exist.
+All variables are declared in [`.env.schema`](./.env.schema) (names, types, which ones are secret). Values live in
+Infisical (EU), project `penn-blog`:
 
-# Site Configuration (Required for Open Graph images)
-
-NEXT_PUBLIC_SITE_URL=https://your-deployed-domain.com
-
-# Contentful CMS Configuration
-
-CONTENTFUL_SPACE_ID=your_contentful_space_id CONTENTFUL_ACCESS_TOKEN=your_contentful_access_token
-CONTENTFUL_PREVIEW_ACCESS_TOKEN=your_contentful_preview_access_token
-CONTENTFUL_PREVIEW_SECRET=your_contentful_preview_secret
-
-# Supabase Database Configuration
-
-SUPABASE_URL=your_supabase_project_url SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_public_project_url NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_public_anon_key
-
-# Cloudinary Media Storage (Required for Visual Explorer)
-
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-
-# Musings Module Configuration (碎碎念)
-
-MUSING_CODE=your_secret_validation_code GITHUB_PAT=ghp_your_github_personal_access_token
-
-# Optional Integrations
-
-# Analytics & Monitoring
-NEXT_PUBLIC_TINYBIRD_TOKEN=your_tinybird_analytics_token # Optional: additional analytics
-
-# Bookmarks Integration
-NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN=your_raindrop_io_access_token # For Raindrop.io bookmarks feature
-
-# Revalidation & Cache Management
-NEXT_REVALIDATE_SECRET=your_nextjs_revalidation_secret
-
-# Airtable Integration (if using Airtable for data storage)
-AIRTABLE_PERSONAL_ACCESS_TOKEN=your_airtable_personal_access_token
-AIRTABLE_BASE_ID=your_airtable_base_id
-AIRTABLE_BOOKMARKS_TABLE_ID=your_airtable_bookmarks_table_id
-
-Replace `your_...` placeholders with your actual credentials and IDs.
+- **Local development**: put the Infisical machine identity in `.env.local` (gitignored, see `AGENTS.md`). `bun dev`
+  loads values from the Infisical `dev` environment through varlock. Run `bunx varlock load --agent` to check the
+  config with secrets masked.
+- **Vercel**: an Infisical Secret Sync pushes the `prod` environment into the Vercel project. Change a value in
+  Infisical, then redeploy. Do not edit variables in the Vercel dashboard.
 
 **Important for Twitter/Social Media Sharing**: Make sure to set `NEXT_PUBLIC_SITE_URL` to your actual deployed domain
 (e.g., `https://yourdomain.vercel.app`) for Open Graph images to work correctly on social platforms.
@@ -282,11 +246,7 @@ bookmarks. Follow these steps to set up the integration properly:
 
 ### Step 4: Set Environment Variable
 
-Add the access token to your `.env` file:
-
-```
-NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN=your_actual_test_token_here
-```
+Save the access token in Infisical as `RAINDROP_ACCESS_TOKEN` (`dev` for local, `prod` for Vercel).
 
 ### Step 5: Restart Development Server
 

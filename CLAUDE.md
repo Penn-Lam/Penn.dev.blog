@@ -58,7 +58,9 @@ pnpm dev
 
 ### 部署环境
 - 生产环境使用 Vercel
-- 需要环境变量: `MUSING_CODE`, `GITHUB_PAT`, `GITHUB_REPO`
+- 环境变量清单只在 `.env.schema` 维护；值在 Infisical 欧洲区项目 `penn-blog`（`dev` 给本地，`prod` 经 Secret Sync 写进 Vercel）
+- 改变量：在 Infisical 改，然后重新部署。不要在 Vercel 后台直接改，下次同步会被覆盖
+- Agent 查看配置用 `bunx varlock load --agent`（敏感值打码）；不读取、不打印 `.env` / `.env.local`
 - 确保 Vercel 配置使用正确的构建命令
 
 ## 技术栈

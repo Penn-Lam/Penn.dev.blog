@@ -7,7 +7,7 @@ const options = {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN}`
+    Authorization: `Bearer ${process.env.RAINDROP_ACCESS_TOKEN}`
   },
   next: {
     revalidate: 60 * 60 // 1 hour

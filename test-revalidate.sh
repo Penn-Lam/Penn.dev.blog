@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Revalidate API测试脚本
-SECRET="R5SIkzrbOocVTaBngWP8tRN3ESUljZAUvf/fhk0/rMI="
+# 密钥从环境变量读取：bunx varlock run -- bash <本脚本>
+SECRET="${NEXT_REVALIDATE_SECRET:?缺少 NEXT_REVALIDATE_SECRET。用 bunx varlock run -- bash <本脚本> 从 Infisical 注入}"
 BASE_URL=${1:-"http://localhost:3000"}
 
 echo "🚀 Testing Revalidate API at: $BASE_URL"
-echo "🔑 Using secret: ${SECRET:0:10}..."
 echo ""
 
 # 测试1: 错误的密钥
@@ -91,5 +91,5 @@ echo ""
 echo "📊 All tests completed!"
 echo ""
 echo "💡 Usage examples:"
-echo "   Revalidate specific post: curl -X POST $BASE_URL/api/revalidate -H 'x-revalidate-secret: $SECRET' -H 'Content-Type: application/json' -d '{\"contentTypeId\": \"post\", \"slug\": \"your-blog-slug\"}'"
-echo "   Revalidate journey page: curl -X POST $BASE_URL/api/revalidate -H 'x-revalidate-secret: $SECRET' -H 'Content-Type: application/json' -d '{\"contentTypeId\": \"logbook\"}'" 
+echo "   Revalidate specific post: curl -X POST $BASE_URL/api/revalidate -H 'x-revalidate-secret: <NEXT_REVALIDATE_SECRET>' -H 'Content-Type: application/json' -d '{\"contentTypeId\": \"post\", \"slug\": \"your-blog-slug\"}'"
+echo "   Revalidate journey page: curl -X POST $BASE_URL/api/revalidate -H 'x-revalidate-secret: <NEXT_REVALIDATE_SECRET>' -H 'Content-Type: application/json' -d '{\"contentTypeId\": \"logbook\"}'" 

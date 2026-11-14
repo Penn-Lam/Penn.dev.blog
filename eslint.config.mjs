@@ -51,7 +51,8 @@ const config = defineConfig([
     'src/components/base/**',
     'src/components/application/**',
     'src/components/foundations/**',
-    'tools/oxlint/anti-slop/**'
+    'tools/oxlint/anti-slop/**',
+    'env.d.ts'
   ])
 ])
 

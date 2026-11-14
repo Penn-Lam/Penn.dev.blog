@@ -402,7 +402,7 @@ const processedBody = content.replace(/\n/g, '  \n').trim()
    # 重新验证本地开发环境
    ./scripts/revalidate-musings.sh "http://localhost:3000"
    
-   # 使用密钥重新验证（如果配置了 REVALIDATE_SECRET）
+   # /musings 免密；其他路径要带 secret=<NEXT_REVALIDATE_SECRET>
    ./scripts/revalidate-musings.sh "https://pennlam.com" "your-secret"
    ```
 

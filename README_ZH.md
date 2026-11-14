@@ -58,51 +58,10 @@
 
 ### 环境变量
 
-在运行或部署项目之前，你必须在 `.env` 文件中配置以下环境变量。如果项目根目录中不存在 `.env` 文件，请创建一个。
+全部变量在 [`.env.schema`](./.env.schema) 中声明（名称、类型、是否敏感）。值存放在 Infisical 欧洲区的 `penn-blog` 项目：
 
-```bash
-# 站点配置（Open Graph 图片必需）
-NEXT_PUBLIC_SITE_URL=https://your-deployed-domain.com
-
-# Contentful CMS 配置
-CONTENTFUL_SPACE_ID=your_contentful_space_id
-CONTENTFUL_ACCESS_TOKEN=your_contentful_access_token
-CONTENTFUL_PREVIEW_ACCESS_TOKEN=your_contentful_preview_access_token
-CONTENTFUL_PREVIEW_SECRET=your_contentful_preview_secret
-
-# Supabase 数据库配置
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_public_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_public_anon_key
-
-# Cloudinary 媒体存储（Visual Explorer 必需）
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-
-# 碎碎念模块配置
-MUSING_CODE=your_secret_validation_code
-GITHUB_PAT=ghp_your_github_personal_access_token
-
-# 可选集成
-
-# 分析与监控
-NEXT_PUBLIC_TINYBIRD_TOKEN=your_tinybird_analytics_token # 可选：额外分析功能
-
-# 书签集成
-NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN=your_raindrop_io_access_token # Raindrop.io 书签功能
-
-# 重新验证与缓存管理
-NEXT_REVALIDATE_SECRET=your_nextjs_revalidation_secret
-
-# Airtable 集成（如果使用 Airtable 数据存储）
-AIRTABLE_PERSONAL_ACCESS_TOKEN=your_airtable_personal_access_token
-AIRTABLE_BASE_ID=your_airtable_base_id
-AIRTABLE_BOOKMARKS_TABLE_ID=your_airtable_bookmarks_table_id
-```
-
-请将 `your_...` 占位符替换为你的实际凭据和 ID。
+- **本地开发**：在 `.env.local`（不进 Git，写法见 `AGENTS.md`）放 Infisical 机器身份。`bun dev` 经 varlock 从 Infisical 的 `dev` 环境取值。用 `bunx varlock load --agent` 查看打码后的配置。
+- **Vercel**：Infisical Secret Sync 把 `prod` 环境写进 Vercel 项目。改值在 Infisical 改，然后重新部署。不要在 Vercel 后台改变量。
 
 **Twitter/社交媒体分享重要提示**：确保将 `NEXT_PUBLIC_SITE_URL` 设置为你的实际部署域名（例如，`https://yourdomain.vercel.app`），以便 Open Graph 图片在社交平台上正常工作。
 

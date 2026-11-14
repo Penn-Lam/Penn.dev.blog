@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 
-const SECRET = 'R5SIkzrbOocVTaBngWP8tRN3ESUljZAUvf/fhk0/rMI='
+// 密钥从环境变量读取：bunx varlock run -- node <本脚本>
+const SECRET = process.env.NEXT_REVALIDATE_SECRET
+if (!SECRET) {
+  console.error('缺少 NEXT_REVALIDATE_SECRET。用 bunx varlock run -- node <本脚本> 从 Infisical 注入')
+  process.exit(1)
+}
 
 // 测试函数
 async function testRevalidateAPI(baseUrl, testCase) {
@@ -82,7 +87,6 @@ async function runTests() {
   const baseUrl = process.argv[2] || 'http://localhost:3000'
 
   console.info(`🚀 Testing Revalidate API at: ${baseUrl}`)
-  console.info(`🔑 Using secret: ${SECRET.substring(0, 10)}...`)
 
   let passed = 0
   let total = testCases.length
