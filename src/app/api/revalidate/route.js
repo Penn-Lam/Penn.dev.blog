@@ -5,7 +5,17 @@ import { CONTENT_TYPES } from '@/lib/constants'
 
 export const dynamic = 'auto' // https://www.reddit.com/r/nextjs/comments/14iu6td/revalidatepath_not_updating_generatestaticparams/
 
-const secret = `${process.env.NEXT_REVALIDATE_SECRET}`
+// ------------------------------------------------------------
+// 唯一密钥 NEXT_REVALIDATE_SECRET：webhook 放请求头，手动重验证放查询参数
+// 未配置时拒绝所有请求，避免 `${undefined}` 变成可猜的字符串 "undefined"
+// 例外：/musings 免密。quick-post-button 在浏览器里发布后调用它，浏览器拿不到密钥
+// ------------------------------------------------------------
+const PUBLIC_REVALIDATE_PATHS = new Set(['/musings'])
+
+const isValidSecret = (value) => {
+  const secret = process.env.NEXT_REVALIDATE_SECRET
+  return Boolean(secret) && value === secret
+}
 
 export async function POST(request) {
   try {
@@ -15,12 +25,11 @@ export async function POST(request) {
 
     // 如果是手动重新验证特定路径（如 /musings）
     if (manualSecret || path) {
-      // 验证密钥（可选，增加安全性）
-      if (process.env.REVALIDATE_SECRET && manualSecret !== process.env.REVALIDATE_SECRET) {
+      const pathToRevalidate = path || '/musings'
+      if (!PUBLIC_REVALIDATE_PATHS.has(pathToRevalidate) && !isValidSecret(manualSecret)) {
         return NextResponse.json({ message: 'Invalid secret' }, { status: 401 })
       }
 
-      const pathToRevalidate = path || '/musings'
       revalidatePath(pathToRevalidate)
 
       return NextResponse.json({
@@ -34,7 +43,7 @@ export async function POST(request) {
     const requestHeaders = new Headers(request.headers)
     const revalidateSecret = requestHeaders.get('x-revalidate-secret')
 
-    if (revalidateSecret !== secret) {
+    if (!isValidSecret(revalidateSecret)) {
       return Response.json(
         {
           revalidated: false,

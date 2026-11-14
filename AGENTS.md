@@ -38,3 +38,15 @@ This project uses BoardUI (React + Tailwind CSS v4, source-owned components unde
 
 When unsure about a token, a component's API, or working example code, ask the BoardUI MCP server: `get_theme`, `get_component`, `get_usage_examples`.
 <!-- boardui:rules:end -->
+
+# 环境变量
+
+- 变量清单只在 `.env.schema` 维护：新增变量先写进 schema，再在 Infisical 欧洲区项目 `penn-blog` 的 `dev`、`prod` 录值。
+- Vercel 的值由 Infisical Secret Sync 从 `prod` 写入。不要在 Vercel 后台改变量。
+- 查看配置只用 `bunx varlock load --agent`（敏感值打码）。不读取、不打印 `.env`、`.env.local`，不把值写进代码、日志或脚本。
+- ovh-dev 本地开发的 `.env.local`（不进 Git）只放读取机器身份的命令，不放明文：
+
+```bash
+INFISICAL_CLIENT_ID=exec('sudo -n sed -n "s/^INFISICAL_CLIENT_ID=//p" /etc/infisical/agent-dev.env')
+INFISICAL_CLIENT_SECRET=exec('sudo -n sed -n "s/^INFISICAL_CLIENT_SECRET=//p" /etc/infisical/agent-dev.env')
+```

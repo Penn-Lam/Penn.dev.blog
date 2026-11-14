@@ -13,7 +13,8 @@
     ".roo/**",
     ".windsurf/**",
     "tools/oxlint/anti-slop/**",
-    "src/components/workspace/desk-computer/**"
+    "src/components/workspace/desk-computer/**",
+    "env.d.ts"
   ],
   "jsPlugins": [
     {

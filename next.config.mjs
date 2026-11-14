@@ -1,3 +1,12 @@
+// ------------------------------------------------------------
+// varlock：按 .env.schema 校验变量、日志打码、防止敏感值进客户端包
+// 插件在被导入时就要求 __VARLOCK_ENV；bun test 不经过 Next 的 env 加载，所以测试时不加载
+// ------------------------------------------------------------
+const withVarlock =
+  process.env.NODE_ENV === 'test'
+    ? (config) => config
+    : (await import('@varlock/nextjs-integration/plugin')).varlockNextConfigPlugin()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   logging: {
@@ -125,4 +134,4 @@ const nextConfig = {
 }
 
 // Force cache invalidation - 2025-01-07 14:20
-export default nextConfig
+export default withVarlock(nextConfig)
