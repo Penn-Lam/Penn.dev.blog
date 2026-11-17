@@ -241,14 +241,29 @@
 
 /* ==========================================================================
    书架
-   层板画在容器的背景上：背景按行高平铺，每一行的底部是一块板。
+   层板画在一个铺满书架的背景层上：背景按行高平铺，每一行自上而下是 留白、书、层板、层板的影子。
+   影子和层板在同一行里，所以第一层上方不会多出一道影子，最后一层下方也有影子。
    ========================================================================== */
 
 .bookshelf {
   --book-h: 164px;
-  --plank: 14px;
-  --row: calc(var(--book-h) + var(--plank) + 34px);
+  /* 层板：上面一条是板面，下面一条是板的正面 */
+  --plank-top: 5px;
+  --plank-front: 9px;
+  --plank: calc(var(--plank-top) + var(--plank-front));
+  /* 层板下方留给影子的高度 */
+  --under: 18px;
+  /* 书上方留的空，抽书时往上抬不会顶到上一层 */
+  --head: 16px;
+  --row: calc(var(--head) + var(--book-h) + var(--plank) + var(--under));
+  /* 层板两端的圆角 */
+  --plank-radius: 5px;
+  /* 层板上沿、下沿在一行里的位置 */
+  --plank-y0: calc(100% - var(--under) - var(--plank));
+  --plank-y1: calc(100% - var(--under));
 
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
   grid-auto-rows: var(--row);
@@ -256,25 +271,108 @@
   margin: 0;
   padding: 0 14px;
   list-style: none;
-  background-image:
-    linear-gradient(180deg, rgb(0 0 0 / 0.1), transparent 12px),
-    linear-gradient(
-      180deg,
-      transparent calc(100% - var(--plank)),
-      #d2b48a calc(100% - var(--plank)),
-      #c4a174 calc(100% - var(--plank) + 5px),
-      #8d6a40 calc(100% - var(--plank) + 5px),
-      #7a5a35 100%
-    );
-  background-size: 100% var(--row);
-  border-radius: 3px;
 }
 
+.bookshelf::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+      180deg,
+      transparent var(--plank-y0),
+      /* 板面：浅色，受光 */ #efe1c9 var(--plank-y0),
+      #e3d0af calc(var(--plank-y0) + var(--plank-top)),
+      /* 板面与正面交界的一道亮棱 */ #f5ead6 calc(var(--plank-y0) + var(--plank-top)),
+      #f5ead6 calc(var(--plank-y0) + var(--plank-top) + 1px),
+      /* 正面：自上而下略微变深，底边一道暗线 */ #d8bf97 calc(var(--plank-y0) + var(--plank-top) + 1px),
+      #c6a87d calc(var(--plank-y1) - 1px),
+      #b0926a calc(var(--plank-y1) - 1px),
+      #b0926a var(--plank-y1),
+      transparent var(--plank-y1)
+    )
+    0 0 / 100% var(--row);
+  /* 用遮罩把每块层板的两端切成圆角：中间整段保留，左右各留一窄条，窄条里只保留圆角以内的部分 */
+  mask-image:
+    linear-gradient(#000, #000),
+    linear-gradient(
+      180deg,
+      transparent calc(var(--plank-y0) + var(--plank-radius)),
+      #000 calc(var(--plank-y0) + var(--plank-radius)),
+      #000 calc(var(--plank-y1) - var(--plank-radius)),
+      transparent calc(var(--plank-y1) - var(--plank-radius))
+    ),
+    linear-gradient(
+      180deg,
+      transparent calc(var(--plank-y0) + var(--plank-radius)),
+      #000 calc(var(--plank-y0) + var(--plank-radius)),
+      #000 calc(var(--plank-y1) - var(--plank-radius)),
+      transparent calc(var(--plank-y1) - var(--plank-radius))
+    ),
+    radial-gradient(
+      circle var(--plank-radius) at 100% calc(var(--plank-y0) + var(--plank-radius)),
+      #000 calc(100% - 0.5px),
+      transparent
+    ),
+    radial-gradient(
+      circle var(--plank-radius) at 100% calc(var(--plank-y1) - var(--plank-radius)),
+      #000 calc(100% - 0.5px),
+      transparent
+    ),
+    radial-gradient(
+      circle var(--plank-radius) at 0 calc(var(--plank-y0) + var(--plank-radius)),
+      #000 calc(100% - 0.5px),
+      transparent
+    ),
+    radial-gradient(
+      circle var(--plank-radius) at 0 calc(var(--plank-y1) - var(--plank-radius)),
+      #000 calc(100% - 0.5px),
+      transparent
+    );
+  mask-position:
+    var(--plank-radius) 0,
+    0 0,
+    100% 0,
+    0 0,
+    0 0,
+    100% 0,
+    100% 0;
+  mask-size:
+    calc(100% - var(--plank-radius) * 2) 100%,
+    var(--plank-radius) var(--row),
+    var(--plank-radius) var(--row),
+    var(--plank-radius) var(--row),
+    var(--plank-radius) var(--row),
+    var(--plank-radius) var(--row),
+    var(--plank-radius) var(--row);
+  mask-repeat: no-repeat, repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, repeat-y;
+  pointer-events: none;
+}
+
+/* 层板的影子单独一层：贴着板底最深，往下很快散开；左右两端渐隐，不留直边 */
+.bookshelf::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+      180deg,
+      transparent var(--plank-y1),
+      rgb(74 50 24 / 0.18) var(--plank-y1),
+      rgb(74 50 24 / 0.06) calc(var(--plank-y1) + 7px),
+      transparent 100%
+    )
+    0 0 / 100% var(--row);
+  mask-image: linear-gradient(90deg, transparent 4px, #000 36px, #000 calc(100% - 36px), transparent calc(100% - 4px));
+  pointer-events: none;
+}
+
+/* 书立在板面上：书底压进板面 2px，看起来是站在板上而不是贴在板的正面 */
 .bookSlot {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: var(--plank);
+  padding-bottom: calc(var(--under) + var(--plank-front) + 2px);
 }
 
 .book {
@@ -303,12 +401,12 @@
   transform: perspective(700px) rotateY(0deg) translateY(-14px) scale(1.04);
 }
 
-/* 被抽出的书的左右两本各往外让一点 */
-.bookSlot:has(+ .bookSlot .book:hover) .book {
+/* 被抽出的书的左右两本各往外让一点。只限同一层板：由 bookshelf-rows.js 判断后打上 data-lean */
+.bookSlot[data-lean='left'] .book {
   transform: perspective(700px) rotateY(-16deg) rotate(-2.5deg) translateX(-3px);
 }
 
-.bookSlot:has(.book:hover) + .bookSlot .book {
+.bookSlot[data-lean='right'] .book {
   transform: perspective(700px) rotateY(-16deg) rotate(2.5deg) translateX(5px);
 }
 
@@ -458,6 +556,13 @@
 
 .discHandle:active {
   cursor: grabbing;
+}
+
+/* 这位访客取不到音频的唱片：去色、不能拿起；变淡由 record-disc.js 的内联 opacity 管 */
+.discSlot[data-unplayable] .discHandle {
+  cursor: not-allowed;
+  filter: grayscale(1);
+  transition: filter 0.4s ease;
 }
 
 .discHandle:focus-visible {

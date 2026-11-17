@@ -1,0 +1,7 @@
+body.webp and arm.webp are adapted from "Vinyl player component" by Lotta Anidi
+https://www.figma.com/community/file/1650279101562799100/vinyl-player-component
+Licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+
+Changes: exported as separate body and tonearm layers; the author's logo and the
+sample record artwork were removed; the panel seams were softened; the volume
+ticks were removed and are drawn by the page instead.

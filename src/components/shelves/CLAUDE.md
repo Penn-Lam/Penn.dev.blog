@@ -5,13 +5,15 @@
 其余收藏夹仍用卡片列表（`bookmark-list.jsx`）。
 
 ## 数据从哪来
-Art、Music: 本地。条目在 `src/data/shelves/art.json`、`music.json`，封面在 `public/shelves/<slug>/`，由 `lib/local-shelves.js` 读出。不从 Raindrop 同步。
-books: `lib/bookshelf.js`。微信读书优先；未配置 `WEREAD_API_KEY` 或请求失败时回退到 Raindrop 的 books 收藏夹（id 登记在 `lib/constants.js` 的 `BOOKMARK_SHELVES`）。
+Art: 本地。条目在 `src/data/shelves/art.json`，封面在 `public/shelves/art/`，由 `lib/local-shelves.js` 读出。不从 Raindrop 同步。
+Music: 网易云歌单。`lib/netease.js` 取唱机播的那份歌单（`NETEASE_PLAYLIST_ID`），最新加入的 24 首各是一张唱片，封面是歌的专辑图。取不到歌单时才退回本地的 `src/data/shelves/music.json`。
+books: `lib/bookshelf.js`。微信读书优先，取书架上所有非私密的书（不管读没读完）；未配置 `WEREAD_API_KEY` 或请求失败时回退到 Raindrop 的 books 收藏夹（id 登记在 `lib/constants.js` 的 `BOOKMARK_SHELVES`）。
 三者和 Raindrop 收藏夹一起出现在 /bookmarks 的列表里，列表由 `lib/bookmark-collections.js` 拼出。
 
 ## 成员清单
 index.js: 出口 `BookmarkShelf`，按 kind 选陈列，条目为空时给一行空状态。
 gallery-wall.js: 画廊墙。挂线、钉子、画框、卡纸、画芯，下面一块只写标题的展签。
+bookshelf-rows.js: 客户端组件，书架的 ul 外壳。一本书被抽出时让同一层板上左右两本让开；跨层的不动。
 bookshelf.js: 书架。书封面朝外立在层板上，页面上不印书名。
 record-shelf.js: 唱片架。顶部是 `vinyl-player/turntable.js` 的唱机，下面是封套加露出一截的黑胶。
 record-disc.js: 客户端组件，封套里的黑胶。有音源的可以拖到唱机上或点一下飞过去；用 framer-motion 做拖拽和弹簧。

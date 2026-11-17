@@ -23,6 +23,7 @@ test('keeps static workspace, stack and shelf markup outside client boundaries',
     readSource('./pointer-tilt.js'),
     readSource('./shelves/shelf-image.js'),
     readSource('./shelves/record-disc.js'),
+    readSource('./shelves/bookshelf-rows.js'),
     readSource('./vinyl-player/turntable.js'),
     readSource('./workspace/desk-setup-image.js')
   ])

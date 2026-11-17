@@ -18,14 +18,17 @@ import styles from './shelves.module.css'
  */
 
 export function RecordShelf({ items }) {
+  // 交给唱机和黑胶的只有它们用得到的四项
+  const records = items.map((item) => ({ id: item.id, title: item.title, cover: item.cover, audio: item.audio }))
+
   return (
-    <TurntableProvider>
+    <TurntableProvider records={records}>
       <Turntable />
       <ul className={styles.crate}>
-        {items.map((item) => (
+        {items.map((item, index) => (
           <PointerTilt as="li" key={item.id} className={styles.record}>
             <div className={styles.jacket}>
-              <RecordDisc record={{ id: item.id, title: item.title, cover: item.cover, audio: item.audio }} />
+              <RecordDisc record={records[index]} />
               <ShelfLink item={item} className={styles.sleeve}>
                 <ShelfImage
                   src={item.cover}

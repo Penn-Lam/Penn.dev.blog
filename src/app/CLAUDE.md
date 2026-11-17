@@ -22,6 +22,6 @@ llms.txt/: AI agent 使用与发现入口
 about/ contact/ privacy/: 静态信任页
 writing/ bookmarks/ journey/ stack/ workspace/ visual/ friends/ musings/: 内容分区
 sign-in/: 登录
-api/: Route Handlers（auth、comments、draft、revalidate、提交表单等）
+api/: Route Handlers（auth、comments、draft、revalidate、提交表单、唱机歌单 playlist 等）
 
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md

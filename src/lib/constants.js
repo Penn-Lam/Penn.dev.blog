@@ -92,6 +92,9 @@ export const BOOKMARK_SHELVES = {
   56369365: 'bookshelf' // books
 }
 
+// 网易云歌单：/bookmarks/music 的唱机播它，唱片架摆它最新加入的歌
+export const NETEASE_PLAYLIST_ID = process.env.NEXT_PUBLIC_NETEASE_PLAYLIST_ID || '450272643'
+
 export const LINKS = [
   {
     href: '/',

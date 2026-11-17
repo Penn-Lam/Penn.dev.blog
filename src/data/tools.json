@@ -11,7 +11,7 @@
           "url": "https://chat.openai.com",
           "tags": ["AI"],
           "tip": "⌥ + Space to trigger workflow",
-          "shell": "#a8b99a",
+          "shell": "#c9c9c7",
           "label": "/stack/labels/chatgpt.webp"
         },
         {
@@ -31,7 +31,7 @@
           "url": "https://www.notion.so/",
           "tags": ["Notes"],
           "tip": "Ctrl/Cmd + Shift+ L: Quickly switch between dark/bright mode",
-          "shell": "#e6e0d2",
+          "shell": "#2537b1",
           "label": "/stack/labels/notion.webp"
         },
         {
@@ -41,7 +41,7 @@
           "url": "https://paper.design",
           "tags": ["Design"],
           "tip": "",
-          "shell": "#f2eee6",
+          "shell": "#5d8cd7",
           "label": "/stack/labels/paper.webp"
         }
       ]
@@ -67,7 +67,7 @@
           "url": "https://ampcode.com",
           "tags": ["AI", "Dev"],
           "tip": "",
-          "shell": "#2a2a2a",
+          "shell": "#12383a",
           "label": "/stack/labels/amp.webp"
         },
         {
@@ -77,7 +77,7 @@
           "url": "https://zed.dev/",
           "tags": ["Dev", "AI IDE"],
           "tip": "Use ACP to unify the frontend of SWE agents",
-          "shell": "#1f4fbf",
+          "shell": "#0d43c0",
           "label": "/stack/labels/zed.webp"
         }
       ]
@@ -113,7 +113,7 @@
           "url": "https://tailscale.com",
           "tags": ["Infra"],
           "tip": "",
-          "shell": "#a79f8d",
+          "shell": "#e6e2dd",
           "label": "/stack/labels/tailscale.webp"
         },
         {

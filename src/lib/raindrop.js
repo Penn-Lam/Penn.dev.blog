@@ -2,7 +2,17 @@ import 'server-only'
 
 import { COLLECTION_IDS } from '@/lib/constants'
 
-const options = {
+/**
+ * [INPUT]: 依赖环境变量 RAINDROP_ACCESS_TOKEN；依赖 @/lib/constants 的 COLLECTION_IDS；依赖 Raindrop REST API
+ * [OUTPUT]: 对外提供 getBookmarks（收藏夹列表）、getBookmarkItems（一页条目）、getAllBookmarkItems（全部条目）、getBookmark（单个收藏夹）
+ * [POS]: lib/ 的 Raindrop 数据源。/bookmarks 的卡片列表和 books 书架的回退都从这里取数，结果缓存 1 小时。
+ *        超时信号必须每次请求新建：AbortSignal.timeout 从创建那一刻开始计时，放在模块级会让服务启动 30 秒后的所有请求立刻被中止。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
+
+const REQUEST_TIMEOUT_MS = 30000
+
+const requestOptions = () => ({
   cache: 'force-cache',
   method: 'GET',
   headers: {
@@ -12,8 +22,8 @@ const options = {
   next: {
     revalidate: 60 * 60 // 1 hour
   },
-  signal: AbortSignal.timeout(30000) // 30 second timeout to prevent hanging requests
-}
+  signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+})
 
 const RAINDROP_API_URL = 'https://api.raindrop.io/rest/v1'
 
@@ -31,7 +41,7 @@ export const getBookmarkItems = async (id, pageIndex = 0) => {
           page: pageIndex,
           perpage: 50
         }),
-      options
+      requestOptions()
     )
 
     if (!response.ok) {
@@ -74,7 +84,7 @@ export const getAllBookmarkItems = async (id) => {
 
 export const getBookmarks = async () => {
   try {
-    const response = await fetch(`${RAINDROP_API_URL}/collections`, options)
+    const response = await fetch(`${RAINDROP_API_URL}/collections`, requestOptions())
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
@@ -92,7 +102,7 @@ export const getBookmarks = async () => {
 
 export const getBookmark = async (id) => {
   try {
-    const response = await fetch(`${RAINDROP_API_URL}/collection/${id}`, options)
+    const response = await fetch(`${RAINDROP_API_URL}/collection/${id}`, requestOptions())
 
     return await response.json()
   } catch (error) {

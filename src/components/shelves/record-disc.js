@@ -14,6 +14,7 @@ import styles from './shelves.module.css'
  * [POS]: components/shelves 里封套中的那张黑胶。有音源的唱片可以拿起来：拖到页面顶部的转盘上松手，或者直接点一下，它会飞到转盘上并开始播放。
  *        松手时没对准转盘，就弹回封套。唱片在转盘上期间，封套里是空的；被换下或退出后，它从转盘飞回封套。
  *        没有音源的唱片只是摆着，不能拿起。
+ *        播过一次、发现这位访客取不到音频的唱片会变灰，不能再拿起；封套上的外链照常可点，可以去网易云听。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 
@@ -21,16 +22,16 @@ const FLY_SPRING = { type: 'spring', stiffness: 240, damping: 24 }
 
 const RETURN_SPRING = { type: 'spring', stiffness: 360, damping: 26 }
 
-// 唱片落到转盘上之后的直径占转盘直径的比例，与 turntable.module.css 里 .spin 的内缩一致
-const RECORD_ON_PLATTER_RATIO = 0.915
+// 松手时唱片中心离转盘上那张唱片的中心在这个比例（相对其直径）以内，算放上去了。约等于整台唱机的范围
+const DROP_REACH_RATIO = 0.95
 
-// 松手时唱片中心离转盘中心在这个比例（相对转盘直径）以内，算放上去了
-const DROP_REACH_RATIO = 0.62
+// 取不到音频的唱片褪到这个不透明度。写在这里而不是样式表里：唱片的 opacity 由 framer-motion 的内联样式管
+const UNPLAYABLE_OPACITY = 0.45
 
 const centerOf = (bounds) => ({ x: bounds.left + bounds.width / 2, y: bounds.top + bounds.height / 2 })
 
 export function RecordDisc({ record }) {
-  const { platterRef, record: recordOnPlatter, placeRecord, setIsRecordHeld } = useTurntable()
+  const { platterRef, record: recordOnPlatter, placeRecord, setIsRecordHeld, unplayableIds } = useTurntable()
   const handleRef = useRef(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -41,6 +42,7 @@ export function RecordDisc({ record }) {
   // 拖拽结束时指针仍在唱片上，framer-motion 会同时报一次 tap；用它区分“点了一下”和“拖完松手”
   const hasDraggedRef = useRef(false)
   const isOnPlatter = recordOnPlatter?.id === record.id
+  const isUnplayable = unplayableIds.has(record.id)
 
   // 离开转盘（被换下或退出）时飞回封套；首次渲染时三个值本来就在原位，不会动
   useEffect(() => {
@@ -82,7 +84,7 @@ export function RecordDisc({ record }) {
     await Promise.all([
       animate(x, x.get() + offset.dx, FLY_SPRING),
       animate(y, y.get() + offset.dy, FLY_SPRING),
-      animate(scale, (offset.platterSize * RECORD_ON_PLATTER_RATIO) / handleRef.current.offsetWidth, FLY_SPRING)
+      animate(scale, offset.platterSize / handleRef.current.offsetWidth, FLY_SPRING)
     ])
     placeRecord(record)
   }
@@ -106,20 +108,26 @@ export function RecordDisc({ record }) {
   }
 
   return (
-    <div className={styles.discSlot} data-lifted={isLifted || isOnPlatter || undefined}>
+    <div
+      className={styles.discSlot}
+      data-lifted={isLifted || isOnPlatter || undefined}
+      data-unplayable={isUnplayable || undefined}
+    >
       <motion.button
         ref={handleRef}
         type="button"
         className={styles.discHandle}
-        style={{ x, y, scale, rotate, opacity: isOnPlatter ? 0 : 1 }}
-        drag
+        style={{ x, y, scale, rotate, opacity: isOnPlatter ? 0 : isUnplayable ? UNPLAYABLE_OPACITY : 1 }}
+        drag={!isUnplayable}
         dragMomentum={false}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onPointerDown={() => (hasDraggedRef.current = false)}
         onTap={() => !hasDraggedRef.current && flyToPlatter()}
-        disabled={isOnPlatter}
-        aria-label={`Play ${record.title} on the turntable`}
+        disabled={isOnPlatter || isUnplayable}
+        aria-label={
+          isUnplayable ? `${record.title} is not available in your region` : `Play ${record.title} on the turntable`
+        }
       >
         <VinylRecord coverUrl={record.cover} />
       </motion.button>
