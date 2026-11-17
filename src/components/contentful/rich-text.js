@@ -1,3 +1,9 @@
+/**
+ * [INPUT]: 依赖 @contentful/rich-text-react-renderer 把富文本 JSON 转成 React 节点；依赖同目录的 latex-text、code-block、carousel、iframe 渲染各类内嵌条目
+ * [OUTPUT]: 导出 RichText 组件、autolinkDocument 函数
+ * [POS]: Contentful 富文本的唯一渲染器。文章页与 journey 页调用它。内嵌资源和条目按 id 从查询结果的 links 里查找；查询没有取回 links 时，对应节点不渲染。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+ */
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types'
 import dynamic from 'next/dynamic'
