@@ -207,6 +207,9 @@ function options(links, { linkClassName } = {}) {
       [INLINES.EMBEDDED_ENTRY]: async (node) => {
         const entry = findInlineEntry(node.data.target.sys.id)
 
+        // 查询没有取回这条内嵌条目（未取 links，或条目未发布）时不渲染，不让整页构建失败
+        if (!entry) return null
+
         switch (entry.__typename) {
           case 'ContentEmbed': {
             const { embedUrl, title, type } = entry
