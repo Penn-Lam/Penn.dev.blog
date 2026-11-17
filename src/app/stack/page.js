@@ -1,12 +1,13 @@
 /**
- * [INPUT]: 依赖 @/components/stack/cartridge-rack 的 CartridgeRack；依赖 @/components/easter-egg 的 EasterEgg；依赖 @/data/tools.json；依赖 @/lib/contentful 的 getPageSeo
+ * [INPUT]: 依赖 @/components/stack/cartridge-rack 的 CartridgeRack；依赖 @/components/easter-egg 的 EasterEgg；依赖 @/components/notion-mention-link 的 NotionMentionLink；依赖 @/data/tools.json；依赖 @/lib/contentful 的 getPageSeo
  * [OUTPUT]: 默认导出 StackPage 页面、generateMetadata
- * [POS]: /stack 路由。每个工具分类渲染成一个 CartridgeRack（清单 + 一摞卡带）。工具数据只在 tools.json 维护，卡带贴纸在 public/stack/labels。
+ * [POS]: /stack 路由。每个工具分类渲染成一个 CartridgeRack（清单 + 一摞卡带）。工具数据只在 tools.json 维护，卡带贴纸在 public/stack/labels。页面底部署名卡带外壳的参考来源 mamuso.dev。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 import { EasterEgg } from '@/components/easter-egg'
 import { FloatingHeader } from '@/components/floating-header'
 import { GradientBg4 } from '@/components/gradient-bg'
+import { NotionMentionLink } from '@/components/notion-mention-link'
 import { PageTitle } from '@/components/page-title'
 import { ScrollArea } from '@/components/scroll-area'
 import { CartridgeRack } from '@/components/stack/cartridge-rack'
@@ -34,6 +35,10 @@ export default async function StackPage() {
           {toolsData.categories.map((category) => (
             <CartridgeRack key={category.id} category={category} />
           ))}
+
+          <p className="text-body-regular text-text-tertiary mt-12">
+            Cartridge shell inspired by <NotionMentionLink url="https://mamuso.dev">mamuso.dev</NotionMentionLink>
+          </p>
 
           <EasterEgg tools={toolsData.categories} />
         </div>

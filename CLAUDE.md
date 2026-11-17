@@ -27,9 +27,9 @@ pnpm dev
 ```
 
 ### Node.js 版本
-- package.json 中指定: `"node": "20.x"`
-- 当前环境: Node v23.10.0 (虽然有警告但可工作)
-- Bun 运行时可以处理 Node 版本不匹配问题
+- package.json 中指定: `"node": ">=24"`
+- Bun 负责安装依赖、跑测试和启动脚本；eslint、oxlint 这类直接由 Node 执行的工具需要 Node 24
+- 系统 Node 低于 24 时，用 mise 切换：`mise exec node@24 -- node ./node_modules/.bin/eslint .`
 
 ## 🐛 已知问题及解决方案
 
@@ -64,9 +64,10 @@ pnpm dev
 - 确保 Vercel 配置使用正确的构建命令
 
 ## 技术栈
-- Next.js 15.2.4
-- React 19
-- Bun 1.2.2 (包管理器 + 运行时)
+- Next.js 16.3.5
+- React 19.3.0
+- Bun 1.3.8 (包管理器 + 运行时)
+- three 0.187.0（只用于 /stack 的卡带画布，按需加载）
 - Contentful CMS
 - Vercel Analytics
 - Cloudinary (visual assets)

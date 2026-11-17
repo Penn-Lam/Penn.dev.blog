@@ -74,6 +74,7 @@
     "server-only": "^0.0.1",
     "sugar-high": "^0.9.3",
     "tailwind-merge": "^3.3.0",
+    "three": "0.187.0",
     "varlock": "1.22.0",
     "vaul": "^1.1.2",
     "zod": "^3.24.4"
